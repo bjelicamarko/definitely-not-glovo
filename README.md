@@ -1,6 +1,6 @@
-# Glovo na aparatima
+# Nije Glovo
 ## Projekat iz predmeta Napredne tehnike programiranja
-**Glovo na aparatima je web aplikacija za naručivanje hrane i pića zasnovana na mikroservisnoj arhitekturi.**
+**Nije Glovo je web aplikacija za naručivanje hrane i pića zasnovana na mikroservisnoj arhitekturi.**
 
 ## Funkcionalnosti
 - Neregistrovani korisnik
