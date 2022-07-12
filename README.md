@@ -13,7 +13,7 @@
   - Pregled i izmjena profila
   - Pregled i pretraga restorana
   - Pregled i pretraga hrane i pića unutar restorana
-  - Naručivanje 
+  - Naručivanje (kreiranje poruđbenice)
   - Pregled istorije poruđbenica
   
 - Administrator
@@ -26,10 +26,9 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 
 - Gateway servis - Go
 - Korisnički servis - Go
-- Servis za restorane - Go
+- Servis za restorane - Rust
 - Servis za artikle - Go
-- Servis za poruđbenice - Go
-- Servis za izvještaje - Rust
+- Servis za poruđbenice (kreiranje, pregled, izvještaji) - Go
 - Klijentska web aplikacija - Angular (možda React)
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL) <br />
