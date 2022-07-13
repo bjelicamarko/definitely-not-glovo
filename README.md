@@ -16,9 +16,14 @@
   - Naručivanje (kreiranje poruđbenice)
   - Pregled istorije poruđbenica
   
+- Radnik
+
+  - Pregled poruđbenica
+  - Prihvatanje poruđbenice
+  
 - Administrator
   
-  - CRUD nad entitema sistema (korisnici, restorani, artikli)
+  - CRUD nad entitetima sistema (korisnici, restorani, artikli)
   - Izvještaji o poslovanju (prihodi restorana, najprodavaniji artikli)
   
 ## Arhitektura sistema
@@ -32,4 +37,3 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 - Klijentska web aplikacija - Angular (možda React)
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL) <br />
-Za kontejnerizaciju koristiće se Docker. <br />
