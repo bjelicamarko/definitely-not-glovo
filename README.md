@@ -15,16 +15,20 @@
   - Pregled i pretraga hrane i pića unutar restorana
   - Naručivanje (kreiranje poruđbenice)
   - Pregled istorije poruđbenica
+  - Ostavljanje recenzije u vidu komentara i ocjene nakon primljene porudžbine
   
 - Radnik
 
   - Pregled poruđbenica
   - Prihvatanje poruđbenice
+  - Prijava neprikladnih komentara
   
 - Administrator
   
   - CRUD nad entitetima sistema (korisnici, restorani, artikli)
   - Izvještaji o poslovanju (prihodi restorana, najprodavaniji artikli)
+  - Uvid u neprikladne komentare
+  - Mogućnost blokiranja korisnika
   
 ## Arhitektura sistema
 Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
@@ -34,6 +38,7 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 - Servis za restorane - Rust
 - Servis za artikle - Go
 - Servis za poruđbenice (kreiranje, pregled, izvještaji) - Go
+- Servis za recenzije - Go
 - Klijentska web aplikacija - Angular (možda React)
 
-Podaci će biti čuvani u SQL bazi (PostgreSQL) <br />
+Podaci će biti čuvani u SQL bazi (PostgreSQL), svaki mikroservis će imati odvojenu instancu SQL baze. <br />
