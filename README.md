@@ -35,10 +35,11 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 
 - Gateway servis - Go
 - Korisnički servis - Go
-- Servis za restorane - Rust
+- Servis za restorane - Go
 - Servis za artikle - Go
-- Servis za poruđbenice (kreiranje, pregled, izvještaji) - Go
+- Servis za poruđbenice (kreiranje, pregled) - Go
 - Servis za recenzije - Go
+- Servis za izvještaje - Rust
 - Klijentska web aplikacija - Angular (možda React)
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL), svaki mikroservis će imati odvojenu instancu SQL baze. <br />
