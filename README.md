@@ -37,7 +37,7 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 - Korisnički servis - Go
 - Servis za restorane - Go
 - Servis za artikle - Go
-- Servis za poruđbenice (kreiranje, pregled) - Go
+- Servis za poruđbenice - Go
 - Servis za recenzije - Go
 - Servis za izvještaje - Rust
 - Klijentska web aplikacija - Angular (možda React)
