@@ -5,11 +5,9 @@ import (
 	"RestaurantService/handlers"
 	"RestaurantService/repository"
 	"RestaurantService/router"
-	"fmt"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
 	dbConn := db.Init()
 	repository := repository.NewRepository(dbConn)
 	restaurantHandler := handlers.NewRestaurantsHandler(repository)
