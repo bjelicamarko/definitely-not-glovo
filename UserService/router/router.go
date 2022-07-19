@@ -10,12 +10,12 @@ import (
 func MapRoutesAndServe(handler *handlers.UsersHandler) {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/login", handler.Login).Methods("POST")
+	router.HandleFunc("/api/users/login", handler.Login).Methods("POST")
 
-	router.HandleFunc("/authorize/admin", handler.AuthorizeAdmin).Methods("GET")
-	router.HandleFunc("/authorize/appuser", handler.AuthorizeAppUser).Methods("GET")
-	router.HandleFunc("/authorize/employee", handler.AuthorizeEmployee).Methods("GET")
-	router.HandleFunc("/authorize/deliverer", handler.AuthorizeDeliverer).Methods("GET")
+	router.HandleFunc("/api/users/authorize/admin", handler.AuthorizeAdmin).Methods("GET")
+	router.HandleFunc("/api/users/authorize/appuser", handler.AuthorizeAppUser).Methods("GET")
+	router.HandleFunc("/api/users/authorize/employee", handler.AuthorizeEmployee).Methods("GET")
+	router.HandleFunc("/api/users/authorize/deliverer", handler.AuthorizeDeliverer).Methods("GET")
 
 	http.ListenAndServe(":8081", router)
 }
