@@ -50,10 +50,9 @@ export class LoginComponent implements OnInit {
 
         const jwt: JwtHelperService = new JwtHelperService();
         const info = jwt.decodeToken(token);
-        console.log(token)
-        console.log(info)
+        const role = info.role;
 
-        // ovdje navigacija
+        this.router.navigate(["app/main"]);
       }
       
     });

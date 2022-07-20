@@ -13,6 +13,11 @@ import { RegistrationPageComponent } from './pages/registration-page/registratio
 
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
+import { HeaderCommonComponent } from './components/header-common/header-common.component';
+import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
+import { HeaderAppuserComponent } from './components/header-appuser/header-appuser.component';
+import { HeaderEmployeeComponent } from './components/header-employee/header-employee.component';
+import { HeaderDelivererComponent } from './components/header-deliverer/header-deliverer.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +26,11 @@ import { SharedModule } from "../shared/shared.module";
         RootLayoutPageComponent,
         MainPageComponent,
         RegistrationPageComponent,
+        HeaderCommonComponent,
+        HeaderAdminComponent,
+        HeaderAppuserComponent,
+        HeaderEmployeeComponent,
+        HeaderDelivererComponent,
     ],
     imports: [
         BrowserModule,
