@@ -43,7 +43,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
-import { LoginComponent } from './modules/auth/pages/login/login.component';
 
 
 @NgModule({
@@ -95,8 +94,7 @@ import { LoginComponent } from './modules/auth/pages/login/login.component';
     ScrollingModule,
   ],
   declarations: [
-  
-    LoginComponent
+
   ]
 })
 export class MaterialExampleModule {}

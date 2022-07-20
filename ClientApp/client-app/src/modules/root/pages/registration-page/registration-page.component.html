@@ -1,0 +1,80 @@
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                
+                  <h2 class="fw-bold mb-2 text-uppercase">Registration</h2>
+                  <p class="text-white-50 mb-5">Create an account!</p>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" 
+                    formControlName="email"/>
+                    <label class="form-label" for="typeEmailX">Email</label>
+                    <small id='danger-label-email' class="text-danger danger-label" *ngIf="
+                    form.controls['email'].touched &&
+                    form.controls['email'].errors?.['required']">
+                    Email can't be empty!
+                    </small>
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" 
+                    formControlName="password"/>
+                    <label class="form-label" for="typePasswordX">Password</label>
+                    <small id='danger-label-pass' class="text-danger" *ngIf="
+                    form.controls['password'].touched &&
+                    form.controls['password'].errors?.['required']">
+                    Password can't be empty!
+                    </small>
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="text" id="typeFirstNameX" class="form-control form-control-lg"
+                    formControlName="firstName" />
+                    <label class="form-label" for="typeFirstNameX">First Name</label>
+                    <small id='danger-label-firstName' class="text-danger" *ngIf="
+                    form.controls['firstName'].touched &&
+                    form.controls['firstName'].errors?.['required']">
+                    First name can't be empty!
+                    </small>
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="text" id="typeLastNameX" class="form-control form-control-lg" 
+                    formControlName="lastName"/>
+                    <label class="form-label" for="typeLastNameX">Last Name</label>
+                    <small id='danger-label-lastName' class="text-danger" *ngIf="
+                    form.controls['lastName'].touched &&
+                    form.controls['lastName'].errors?.['required']">
+                    Last name can't be empty!
+                    </small>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="typeContactX" class="form-control form-control-lg" 
+                    formControlName="contact"/>
+                    <label class="form-label" for="typeContactX">Contact</label>
+                    <small id='danger-label-contact' class="text-danger" *ngIf="
+                    form.controls['contact'].touched &&
+                    form.controls['contact'].errors?.['required']">
+                    Contact can't be empty!
+                    </small>
+                  </div>
+
+                  <button type="button" type="submit" [disabled]="!form.valid"
+                    class="btn btn-outline-light btn-lg px-5">Register</button>
+              
+              </form> 
+
+              <p class="mb-0" style="margin-top: 5%;">Have already an account? <a href="#!"
+                    class="text-white-50 fw-bold"><u>Login here</u></a></p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>

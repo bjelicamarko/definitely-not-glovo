@@ -2,17 +2,22 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { MainPageComponent } from "./pages/main-page/main-page.component";
 import { NotFoundPageComponent } from "./pages/not-found-page/not-found-page.component";
+import { RegistrationPageComponent } from "./pages/registration-page/registration-page.component";
 import { RootLayoutPageComponent } from "./pages/root-layout-page/root-layout-page.component";
 
 const routes: Routes = [
   {
-    path: "not-glovo",
+    path: "app",
     component: RootLayoutPageComponent,
     children: [
       {
         path: "auth",
         loadChildren: () =>
           import("./../auth/auth.module").then((m) => m.AuthModule),
+      },
+      {
+        path: "registration",
+        component: RegistrationPageComponent
       },
       {
         path: "main",
@@ -22,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: "not-glovo/auth/login",
+    redirectTo: "app/auth/login",
     pathMatch: "full",
   },
   {

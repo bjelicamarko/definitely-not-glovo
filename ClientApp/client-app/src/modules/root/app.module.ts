@@ -9,6 +9,9 @@ import { AuthModule } from "../auth/auth.module";
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { RootLayoutPageComponent } from './pages/root-layout-page/root-layout-page.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
+import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
+
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -16,12 +19,14 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
         NotFoundPageComponent,
         RootLayoutPageComponent,
         MainPageComponent,
+        RegistrationPageComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        ReactiveFormsModule,
         AuthModule,
     ],
     providers: [],
