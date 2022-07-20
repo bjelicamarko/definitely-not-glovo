@@ -12,6 +12,7 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 
 import { ReactiveFormsModule } from "@angular/forms";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { ReactiveFormsModule } from "@angular/forms";
         HttpClientModule,
         ReactiveFormsModule,
         AuthModule,
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

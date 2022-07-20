@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { ResponseMessage } from "src/modules/shared/models/ResponseMessage";
 import { UserDTO } from "src/modules/shared/models/UserDTO";
 
 @Injectable({
@@ -11,16 +12,15 @@ export class AppService {
 
     constructor(private http: HttpClient) {}
 
-    register(userDTO: UserDTO): Observable<HttpResponse<string>> {
+    register(userDTO: UserDTO): Observable<HttpResponse<ResponseMessage>> {
         let queryParams = {};
 
         queryParams = {
         headers: this.headers,
         observe: "response",
-        responseType: "text"
         };
 
-        return this.http.post<HttpResponse<string>>("not-glovo/api/users/register", 
+        return this.http.post<HttpResponse<ResponseMessage>>("not-glovo/api/users/register", 
         userDTO, queryParams);
     }
 }

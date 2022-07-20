@@ -111,3 +111,20 @@ func (uh *UsersHandler) AuthorizeDeliverer(resWriter http.ResponseWriter, req *h
 
 	json.NewEncoder(resWriter).Encode(models.Response{Message: "authorization succeeded"})
 }
+
+func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	var newUserDTO models.NewUserDTO
+	json.NewDecoder(req.Body).Decode(&newUserDTO)
+
+	_, err := uh.repository.CreateUser(&newUserDTO)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "registration failed"})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.Response{Message: "registration succeeded"})
+}

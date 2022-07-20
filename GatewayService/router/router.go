@@ -11,6 +11,7 @@ func MapRoutesAndServe() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/api/users/login", handlers.Login).Methods(http.MethodPost)
+	router.HandleFunc("/api/users/register", handlers.Register).Methods(http.MethodPost)
 
 	router.HandleFunc("/api/restaurants/getRestaurants", handlers.FindAllRestaurants).Methods(http.MethodGet)
 

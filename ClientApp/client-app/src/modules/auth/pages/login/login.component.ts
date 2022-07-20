@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Login } from 'src/modules/shared/models/Login';
 import { AuthService } from '../../services/auth.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private snackBarService: SnackBarService
 
   ) { 
     this.form = this.fb.group({
@@ -39,13 +41,21 @@ export class LoginComponent implements OnInit {
     
     this.authService.login(auth)
     .subscribe((result: any) => {
-      const token = JSON.stringify(result);
-      localStorage.setItem("user", token);
 
-      const jwt: JwtHelperService = new JwtHelperService();
-      const info = jwt.decodeToken(token);
-      console.log(token)
-      console.log(info)
+      if (result !== null) {
+        this.snackBarService.openSnackBar("Successful login!");
+
+        const token = JSON.stringify(result);
+        localStorage.setItem("user", token);
+
+        const jwt: JwtHelperService = new JwtHelperService();
+        const info = jwt.decodeToken(token);
+        console.log(token)
+        console.log(info)
+
+        // ovdje navigacija
+      }
+      
     });
   }
 }

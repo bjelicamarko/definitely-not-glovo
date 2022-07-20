@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ResponseMessage } from 'src/modules/shared/models/ResponseMessage';
 import { UserDTO } from 'src/modules/shared/models/UserDTO';
+import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -14,7 +17,9 @@ export class RegistrationPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private appService: AppService
+    private appService: AppService,
+    private snackBarService: SnackBarService,
+    private router: Router,
   ) { 
     this.form = this.fb.group({
       email: [null, Validators.required],
@@ -39,9 +44,16 @@ export class RegistrationPageComponent implements OnInit {
 
     console.log(userDTO)
 
-    // this.appService.register(userDTO)
-    // .subscribe((response) => {
-    //   console.log(response.body);
-    // })
+    this.appService.register(userDTO)
+    .subscribe((response) => {
+      console.log(response.body)
+      var message = response.body?.message as string
+      this.snackBarService.openSnackBar(message)
+
+      if (message === "registration succeeded") {
+        this.router.navigate(["/app/auth/login"]);
+      }
+
+    })
   }
 }

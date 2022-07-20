@@ -7,3 +7,11 @@ type UserDTO struct {
 	LastName  string `json:"LastName"`
 	Contact   string `json:"Contact"`
 }
+
+type NewUserDTO struct {
+	Email     string `json:"Email"`
+	Password  string `json:"Password"`
+	FirstName string `json:"FirstName"`
+	LastName  string `json:"LastName"`
+	Contact   string `json:"Contact"`
+}
