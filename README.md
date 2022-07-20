@@ -16,6 +16,7 @@
   - Naručivanje (kreiranje poruđbenice)
   - Pregled istorije poruđbenica
   - Ostavljanje recenzije u vidu komentara i ocjene nakon primljene porudžbine
+  - Mogućnost ostavljanja napojnice dostavljaču (+)
   
 - Radnik
 
@@ -30,6 +31,10 @@
   - Uvid u neprikladne komentare
   - Mogućnost blokiranja korisnika
   
+- Dostavljač (+)
+  
+  - Preuzimanje i dostavljanje porudžbine (+)
+  
 ## Arhitektura sistema
 Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 
@@ -43,3 +48,7 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 - Klijentska web aplikacija - Angular (možda React)
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL), svaki mikroservis će imati odvojenu instancu SQL baze. <br />
+Za kontejnerizaciju biće korišćen Docker. (+)   <br />  <br />
+
+
+**_Funkcionalnosti označene sa (+) su proširenja za diplomski rad._**
