@@ -12,6 +12,9 @@ func MapRoutesAndServe() {
 
 	router.HandleFunc("/api/users/login", handlers.Login).Methods(http.MethodPost)
 	router.HandleFunc("/api/users/register", handlers.Register).Methods(http.MethodPost)
+	router.HandleFunc("/api/users/getUsers", handlers.FindAllUsers).Methods(http.MethodGet)
+	router.HandleFunc("/api/users/updateUser", handlers.UpdateUser).Methods(http.MethodPut)
+	router.HandleFunc("/api/users/deleteUser/{id:[0-9]+}", handlers.DeleteUser).Methods(http.MethodDelete)
 
 	router.HandleFunc("/api/restaurants/getRestaurants", handlers.FindAllRestaurants).Methods(http.MethodGet)
 

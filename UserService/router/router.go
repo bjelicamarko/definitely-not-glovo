@@ -18,5 +18,9 @@ func MapRoutesAndServe(handler *handlers.UsersHandler) {
 	router.HandleFunc("/api/users/authorize/employee", handler.AuthorizeEmployee).Methods("GET")
 	router.HandleFunc("/api/users/authorize/deliverer", handler.AuthorizeDeliverer).Methods("GET")
 
+	router.HandleFunc("/api/users/getUsers", handler.GetUsers).Methods("GET")
+	router.HandleFunc("/api/users/updateUser", handler.UpdateUser).Methods("PUT")
+	router.HandleFunc("/api/users/deleteUser/{id:[0-9]+}", handler.DeleteUser).Methods("DELETE")
+
 	http.ListenAndServe(":8081", router)
 }

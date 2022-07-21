@@ -5,10 +5,12 @@ import (
 	"UserService/repository"
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/mux"
 )
 
 type UsersHandler struct {
@@ -127,4 +129,45 @@ func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Reques
 	}
 
 	json.NewEncoder(resWriter).Encode(models.Response{Message: "registration succeeded"})
+}
+
+func (uh *UsersHandler) GetUsers(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	users, _ := uh.repository.FindAll()
+
+	json.NewEncoder(resWriter).Encode(users)
+}
+
+func (uh *UsersHandler) UpdateUser(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	var updatedUser models.UserDTO
+	json.NewDecoder(req.Body).Decode(&updatedUser)
+
+	_, err := uh.repository.UpdateUser(&updatedUser)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.Response{Message: err.Error()})
+	} else {
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "User successfully updated"})
+	}
+}
+
+func (uh *UsersHandler) DeleteUser(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	err := uh.repository.DeleteUser(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "error while deleting user"})
+	} else {
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully deleted"})
+	}
 }
