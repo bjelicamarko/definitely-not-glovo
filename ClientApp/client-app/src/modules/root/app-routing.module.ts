@@ -21,7 +21,14 @@ const routes: Routes = [
       },
       {
         path: "main",
-        component: MainPageComponent
+        component: MainPageComponent,
+        children: [
+          {
+            path: "admin",
+            loadChildren: () =>
+              import("./../admin/admin.module").then((m) => m.AdminModule),
+          }
+        ]
       }
     ]
   },

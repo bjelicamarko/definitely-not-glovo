@@ -3,6 +3,8 @@ package repository
 import (
 	"UserService/models"
 	"errors"
+	"net/http"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -13,6 +15,26 @@ type Repository struct {
 
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{db}
+}
+
+func Paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		page, _ := strconv.Atoi(r.URL.Query().Get("page"))
+		if page < 0 {
+			page = 0
+		}
+
+		pageSize, _ := strconv.Atoi(r.URL.Query().Get("size"))
+		switch {
+		case pageSize > 100:
+			pageSize = 100
+		case pageSize <= 0:
+			pageSize = 10
+		}
+
+		offset := page * pageSize
+		return db.Offset(offset).Limit(pageSize)
+	}
 }
 
 func (repo *Repository) CheckCredentials(email string, password string) (*models.User, error) {
@@ -31,22 +53,25 @@ func (repo *Repository) CheckCredentials(email string, password string) (*models
 	return &user, nil
 }
 
-func (repo *Repository) FindAll() ([]models.UserDTO, error) {
+func (repo *Repository) FindAll(r *http.Request) ([]models.UserDTO, int64, error) {
 	var usersDTO []models.UserDTO
 
 	var users []*models.User
 
-	result := repo.db.Table("users").Where("role != ?", models.ADMIN).Find(&users)
+	var totalElements int64
+
+	result := repo.db.Scopes(Paginate(r)).Table("users").Where("role != ?", models.ADMIN).Find(&users)
+	repo.db.Table("users").Where("role != ? and deleted_at IS NULL", models.ADMIN).Count(&totalElements)
 
 	if result.Error != nil {
-		return nil, result.Error
+		return nil, totalElements, result.Error
 	}
 
 	for _, user := range users {
 		usersDTO = append(usersDTO, user.ToUserDTO())
 	}
 
-	return usersDTO, nil
+	return usersDTO, totalElements, nil
 }
 
 func (repo *Repository) CreateUser(newUserDTO *models.NewUserDTO) (*models.User, error) {

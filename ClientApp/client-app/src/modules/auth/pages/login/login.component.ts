@@ -52,7 +52,11 @@ export class LoginComponent implements OnInit {
         const info = jwt.decodeToken(token);
         const role = info.role;
 
-        this.router.navigate(["app/main"]);
+        if (role === "ADMIN") {
+          this.router.navigate(["/app/main/admin/users"]);
+        } else {
+          this.router.navigate(["app/main"]);
+        }
       }
       
     });

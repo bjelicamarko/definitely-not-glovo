@@ -49,8 +49,11 @@ func Register(resWriter http.ResponseWriter, r *http.Request) {
 func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	page := r.URL.Query().Get("page")
+	size := r.URL.Query().Get("size")
+
 	response, err := http.Get(
-		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/getUsers")
+		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/getUsers?page=" + page + "&size=" + size)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusGatewayTimeout)

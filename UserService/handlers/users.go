@@ -134,9 +134,9 @@ func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Reques
 func (uh *UsersHandler) GetUsers(resWriter http.ResponseWriter, req *http.Request) {
 	AdjustResponseHeaderJson(&resWriter)
 
-	users, _ := uh.repository.FindAll()
+	users, totalElements, _ := uh.repository.FindAll(req)
 
-	json.NewEncoder(resWriter).Encode(users)
+	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: users, TotalElements: totalElements})
 }
 
 func (uh *UsersHandler) UpdateUser(resWriter http.ResponseWriter, req *http.Request) {

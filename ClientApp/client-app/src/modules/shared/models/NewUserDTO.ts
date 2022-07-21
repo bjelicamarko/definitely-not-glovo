@@ -1,9 +1,7 @@
-export interface UserDTO {
-    Id: number;
+export interface NewUserDTO {
     Email: string;
+    Password: string;
     FirstName: string;
     LastName: string;
     Contact: string;
-    Role: string;
-    Banned: boolean;
 }

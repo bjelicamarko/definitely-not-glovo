@@ -17,3 +17,8 @@ type NewUserDTO struct {
 	LastName  string `json:"LastName"`
 	Contact   string `json:"Contact"`
 }
+
+type UsersPageable struct {
+	Elements      []UserDTO `json:"Elements"`
+	TotalElements int64     `json:"TotalElements"`
+}

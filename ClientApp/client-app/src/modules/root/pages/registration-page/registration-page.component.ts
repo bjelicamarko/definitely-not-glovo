@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseMessage } from 'src/modules/shared/models/ResponseMessage';
-import { UserDTO } from 'src/modules/shared/models/UserDTO';
+import { NewUserDTO } from 'src/modules/shared/models/NewUserDTO';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { AppService } from '../../services/app.service';
 
@@ -34,7 +34,7 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   submit() {
-    const userDTO: UserDTO = {
+    const newUserDTO: NewUserDTO = {
       Email: this.form.value.email,
       Password: this.form.value.password,
       FirstName: this.form.value.firstName,
@@ -42,9 +42,9 @@ export class RegistrationPageComponent implements OnInit {
       Contact: this.form.value.contact
     };
 
-    console.log(userDTO)
+    console.log(newUserDTO)
 
-    this.appService.register(userDTO)
+    this.appService.register(newUserDTO)
     .subscribe((response) => {
       console.log(response.body)
       var message = response.body?.message as string
