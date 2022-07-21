@@ -1,0 +1,19 @@
+<div class="card text-white bg-dark mb-3" style="width: 18rem;">
+    <img src="{{user.Image}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{user.FirstName}} {{user.LastName}}</h5>
+      <p class="card-text">
+        Email: {{user.Email}} <br>
+        Contact: {{user.Contact}} <br>
+        Role: {{user.Role === 'ADMIN' ? 'Admin' : 
+        user.Role === 'APPUSER' ? 'App User' : 
+        user.Role === 'DELIVERER' ? 'Deliverer' : 
+        user.Role === 'EMPLOYEE' ? 'Employee' : 'Unassigned' }}
+      </p>
+    </div>
+    <div class="card-body">
+      <a *ngIf="user.Banned" href="#" class="card-link">Unban User</a>
+      <a *ngIf="!user.Banned" href="#" class="card-link">Ban User</a>
+      <a href="#" class="card-link">Delete User</a>
+    </div>
+</div>

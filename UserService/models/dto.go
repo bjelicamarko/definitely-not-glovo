@@ -8,6 +8,7 @@ type UserDTO struct {
 	Contact   string `json:"Contact"`
 	Role      string `json:"Role"`
 	Banned    bool   `json:"Banned"`
+	Image     string `json:"Image"`
 }
 
 type NewUserDTO struct {

@@ -9,5 +9,6 @@ func (user *User) ToUserDTO() UserDTO {
 		Contact:   user.Contact,
 		Role:      string(user.Role),
 		Banned:    user.Banned,
+		Image:     user.Image,
 	}
 }

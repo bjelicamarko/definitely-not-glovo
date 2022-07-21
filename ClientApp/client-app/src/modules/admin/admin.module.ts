@@ -7,10 +7,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialExampleModule } from 'src/material.module';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { SharedModule } from "../shared/shared.module";
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 @NgModule({
    declarations: [
-    UsersPageComponent
+    UsersPageComponent,
+    UserCardComponent
   ],
     imports: [
         CommonModule,

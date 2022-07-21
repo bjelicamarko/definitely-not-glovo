@@ -11,4 +11,5 @@ type User struct {
 	Contact   string `gorm:"not null"`
 	Role      Role   `gorm:"not null"`
 	Banned    bool   `gorm:"not null"`
+	Image     string `gorm:"not null"`
 }

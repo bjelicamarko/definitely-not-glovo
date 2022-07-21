@@ -18,7 +18,7 @@ export class UsersPageComponent implements OnInit {
 
   constructor(private usersService: UsersService) { 
     this.users = [];
-    this.pageSize = 2;
+    this.pageSize = 5;
     this.currentPage = 1;
     this.totalSize = 1;
   }
@@ -55,4 +55,7 @@ export class UsersPageComponent implements OnInit {
 
   }
   
+  renderList() {
+    
+  }
 }

@@ -6,4 +6,5 @@ export interface UserDTO {
     Contact: string;
     Role: string;
     Banned: boolean;
+    Image: string;
 }
