@@ -26,10 +26,11 @@
   
 - Administrator
   
+  - Pregled i pretraga nad entitetima sistema (korisnici, restorani, artikli) 
   - CRUD nad entitetima sistema (korisnici, restorani, artikli)
   - Izvještaji o poslovanju (prihodi restorana, najprodavaniji artikli)
   - Uvid u neprikladne komentare
-  - Mogućnost blokiranja korisnika
+  - Mogućnost blokiranja i odblokiranja korisnika
   
 - Dostavljač (+)
   
@@ -45,7 +46,7 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 - Servis za poruđbenice - Go
 - Servis za recenzije - Go
 - Servis za izvještaje - Rust
-- Klijentska web aplikacija - Angular (možda React)
+- Klijentska web aplikacija - Angular
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL), svaki mikroservis će imati odvojenu instancu SQL baze. <br />
 Za kontejnerizaciju biće korišćen Docker. (+)   <br />  <br />
