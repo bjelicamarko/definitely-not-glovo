@@ -15,6 +15,8 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/users/getUsers", handlers.FindAllUsers).Methods(http.MethodGet)
 	router.HandleFunc("/api/users/updateUser", handlers.UpdateUser).Methods(http.MethodPut)
 	router.HandleFunc("/api/users/deleteUser/{id:[0-9]+}", handlers.DeleteUser).Methods(http.MethodDelete)
+	router.HandleFunc("/api/users/banUser/{id:[0-9]+}", handlers.BanUser).Methods(http.MethodPatch)
+	router.HandleFunc("/api/users/unbanUser/{id:[0-9]+}", handlers.UnbanUser).Methods(http.MethodPatch)
 
 	router.HandleFunc("/api/restaurants/getRestaurants", handlers.FindAllRestaurants).Methods(http.MethodGet)
 

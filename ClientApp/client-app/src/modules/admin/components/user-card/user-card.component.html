@@ -12,8 +12,8 @@
       </p>
     </div>
     <div class="card-body">
-      <a *ngIf="user.Banned" href="#" class="card-link">Unban User</a>
-      <a *ngIf="!user.Banned" href="#" class="card-link">Ban User</a>
-      <a href="#" class="card-link">Delete User</a>
+      <button type="button" class="btn btn-light" *ngIf="!user.Banned" (click)="banUser(user.Id)">Ban User</button>
+      <button type="button" class="btn btn-light" *ngIf="user.Banned" (click)="unbanUser(user.Id)">Unban User</button>
+      <button type="button" style="margin-left: 5%;" class="btn btn-danger" (click)="deleteUser(user.Id)">Delete User</button>
     </div>
 </div>

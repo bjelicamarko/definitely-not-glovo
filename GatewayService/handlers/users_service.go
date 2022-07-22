@@ -104,3 +104,49 @@ func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
 
 	utils.DelegateResponse(response, resWriter)
 }
+
+func BanUser(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	userId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	req, _ := http.NewRequest(http.MethodPatch,
+		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/banUser/"+strconv.FormatUint(uint64(userId), 10),
+		r.Body)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
+func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	userId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	req, _ := http.NewRequest(http.MethodPatch,
+		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/unbanUser/"+strconv.FormatUint(uint64(userId), 10),
+		r.Body)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}

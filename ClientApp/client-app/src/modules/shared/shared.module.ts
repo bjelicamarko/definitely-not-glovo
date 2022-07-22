@@ -7,12 +7,14 @@ import { MaterialExampleModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { UtilsService } from "./services/utils.service";
+import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
 
 @NgModule({
     declarations: [
 
     
-    PaginationComponent
+    PaginationComponent,
+            ConformationDialogComponent
   ],
     imports: [
         CommonModule,

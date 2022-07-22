@@ -56,6 +56,13 @@ export class UsersPageComponent implements OnInit {
   }
   
   renderList() {
-    
+    this.usersService.getUsers(this.currentPage - 1, this.pageSize)
+      .subscribe((response) => {
+        var temp = response.body as UsersPageable;
+        console.log(temp);
+        this.totalSize = Number(temp.TotalElements);
+        this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
+        this.users = temp.Elements as UserDTO[];
+    });
   }
 }

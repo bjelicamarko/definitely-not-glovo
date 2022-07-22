@@ -120,7 +120,36 @@ func (repo *Repository) UpdateUser(userDTO *models.UserDTO) (*models.User, error
 }
 
 func (repo *Repository) DeleteUser(id uint) error {
+
 	result := repo.db.Where("id = ?", id).Delete(&models.User{})
 
 	return result.Error
+}
+
+func (repo *Repository) BanUser(id uint) error {
+	var user models.User
+	result := repo.db.Where("id = ?", id).First(&user)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	user.Banned = true
+	repo.db.Table("users").Save(&user)
+
+	return nil
+}
+
+func (repo *Repository) UnbanUser(id uint) error {
+	var user models.User
+	result := repo.db.Where("id = ?", id).First(&user)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	user.Banned = false
+	repo.db.Table("users").Save(&user)
+
+	return nil
 }

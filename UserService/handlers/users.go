@@ -171,3 +171,37 @@ func (uh *UsersHandler) DeleteUser(resWriter http.ResponseWriter, req *http.Requ
 		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully deleted"})
 	}
 }
+
+func (uh *UsersHandler) BanUser(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	err := uh.repository.BanUser(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "error while banning user"})
+	} else {
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully banned"})
+	}
+}
+
+func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	err := uh.repository.UnbanUser(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "error while unbanning user"})
+	} else {
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully unbanned"})
+	}
+}
