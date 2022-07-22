@@ -152,6 +152,7 @@ func (repo *Repository) UpdateUser(userDTO *models.UserDTO) (*models.User, error
 	user.Contact = userDTO.Contact
 	user.Banned = userDTO.Banned
 	user.Role = models.Role(userDTO.Role)
+	user.Image = userDTO.Image
 
 	result2 := repo.db.Table("users").Save(&user)
 
@@ -195,4 +196,17 @@ func (repo *Repository) UnbanUser(id uint) error {
 	repo.db.Table("users").Save(&user)
 
 	return nil
+}
+
+func (repo *Repository) FindUserById(id uint) (*models.UserDTO, error) {
+	var user models.User
+
+	result := repo.db.Where("id = ?", id).First(&user)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	var userDTO models.UserDTO = user.ToUserDTO()
+	return &userDTO, nil
 }

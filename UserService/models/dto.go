@@ -23,3 +23,9 @@ type UsersPageable struct {
 	Elements      []UserDTO `json:"Elements"`
 	TotalElements int64     `json:"TotalElements"`
 }
+
+type ImageMessage struct {
+	Image string `json:"Image"`
+	Path  string `json:"Path"`
+	Id    uint   `json:"Id"`
+}

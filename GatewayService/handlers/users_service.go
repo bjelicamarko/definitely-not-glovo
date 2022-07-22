@@ -169,3 +169,39 @@ func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
 
 	utils.DelegateResponse(response, resWriter)
 }
+
+func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	userId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	response, err := http.Get(
+		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/findUserById/" + strconv.FormatUint(uint64(userId), 10))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
+func SaveImageUser(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	req, _ := http.NewRequest(http.MethodPost,
+		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/saveImageUser", r.Body)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}

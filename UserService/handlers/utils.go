@@ -1,10 +1,16 @@
 package handlers
 
 import (
+	"bytes"
 	"encoding/base64"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 )
 
 func AdjustResponseHeaderJson(resWriter *http.ResponseWriter) {
@@ -33,4 +39,26 @@ func GetB64Image(image string) string {
 
 	base64Encoding += toBase64(bytes)
 	return base64Encoding
+}
+
+func ToImage(base64Image string, filePath string) {
+	coI := strings.Index(base64Image, ",")
+	mimeType := strings.TrimSuffix(base64Image[5:coI], ";base64")
+	rawImage := (base64Image)[coI+1:]
+
+	unbased, _ := base64.StdEncoding.DecodeString(rawImage)
+	r := bytes.NewReader(unbased)
+
+	var im image.Image
+
+	switch mimeType {
+	case "image/jpeg":
+		im, _ = jpeg.Decode(r)
+		f, _ := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0777)
+		_ = jpeg.Encode(f, im, &jpeg.Options{Quality: 75})
+	case "image/png":
+		im, _ = png.Decode(r)
+		f, _ := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0777)
+		_ = png.Encode(f, im)
+	}
 }

@@ -8,13 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { UtilsService } from "./services/utils.service";
 import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
+import { ProfileInfoPageComponent } from './pages/profile-info-page/profile-info-page.component';
 
 @NgModule({
     declarations: [
 
     
     PaginationComponent,
-            ConformationDialogComponent
+            ConformationDialogComponent,
+            ProfileInfoPageComponent
   ],
     imports: [
         CommonModule,

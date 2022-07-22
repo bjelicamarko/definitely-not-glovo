@@ -24,6 +24,9 @@ func MapRoutesAndServe(handler *handlers.UsersHandler) {
 	router.HandleFunc("/api/users/banUser/{id:[0-9]+}", handler.BanUser).Methods("PATCH")
 	router.HandleFunc("/api/users/unbanUser/{id:[0-9]+}", handler.UnbanUser).Methods("PATCH")
 	router.HandleFunc("/api/users/searchUsers", handler.SearchUsers).Methods("GET")
+	router.HandleFunc("/api/users/findUserById/{id:[0-9]+}", handler.FindUserById).Methods("GET")
+
+	router.HandleFunc("/api/users/saveImageUser", handler.SaveImageUser).Methods("POST")
 
 	http.ListenAndServe(":8081", router)
 }

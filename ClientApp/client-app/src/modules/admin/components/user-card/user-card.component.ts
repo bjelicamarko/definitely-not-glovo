@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ConformationDialogComponent } from 'src/modules/shared/components/conformation-dialog/conformation-dialog.component';
 import { UserDTO } from 'src/modules/shared/models/UserDTO';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
@@ -27,7 +28,8 @@ export class UserCardComponent implements OnInit {
   
   constructor(public dialog: MatDialog,
     private usersService: UsersService,
-    private snackBarService: SnackBarService) { }
+    private snackBarService: SnackBarService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -91,6 +93,9 @@ export class UserCardComponent implements OnInit {
         })
       }
     })
+  }
 
+  profileInfo(id: number): void {
+    this.router.navigate(["/app/main/admin/profile-info/" + id]);
   }
 }

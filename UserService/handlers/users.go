@@ -5,6 +5,7 @@ import (
 	"UserService/repository"
 	"encoding/json"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -212,4 +213,52 @@ func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Reque
 	} else {
 		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully unbanned"})
 	}
+}
+
+func (uh *UsersHandler) FindUserById(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	user, err := uh.repository.FindUserById(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(user)
+}
+
+func (uh *UsersHandler) SaveImageUser(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	var imageMessage models.ImageMessage
+
+	json.NewDecoder(req.Body).Decode(&imageMessage)
+
+	_ = os.Remove("images/" + imageMessage.Path)
+
+	ToImage(imageMessage.Image, "images/"+imageMessage.Path)
+
+	user, err := uh.repository.FindUserById(imageMessage.Id)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	user.Image = GetB64Image("images/" + imageMessage.Path)
+
+	_, err2 := uh.repository.UpdateUser(user)
+
+	if err2 != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(user)
+
 }

@@ -18,6 +18,8 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/users/deleteUser/{id:[0-9]+}", handlers.DeleteUser).Methods(http.MethodDelete)
 	router.HandleFunc("/api/users/banUser/{id:[0-9]+}", handlers.BanUser).Methods(http.MethodPatch)
 	router.HandleFunc("/api/users/unbanUser/{id:[0-9]+}", handlers.UnbanUser).Methods(http.MethodPatch)
+	router.HandleFunc("/api/users/findUserById/{id:[0-9]+}", handlers.FindUserById).Methods(http.MethodGet)
+	router.HandleFunc("/api/users/saveImageUser", handlers.SaveImageUser).Methods(http.MethodPost)
 
 	router.HandleFunc("/api/restaurants/getRestaurants", handlers.FindAllRestaurants).Methods(http.MethodGet)
 
