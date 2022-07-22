@@ -23,6 +23,7 @@ func MapRoutesAndServe(handler *handlers.UsersHandler) {
 	router.HandleFunc("/api/users/deleteUser/{id:[0-9]+}", handler.DeleteUser).Methods("DELETE")
 	router.HandleFunc("/api/users/banUser/{id:[0-9]+}", handler.BanUser).Methods("PATCH")
 	router.HandleFunc("/api/users/unbanUser/{id:[0-9]+}", handler.UnbanUser).Methods("PATCH")
+	router.HandleFunc("/api/users/searchUsers", handler.SearchUsers).Methods("GET")
 
 	http.ListenAndServe(":8081", router)
 }

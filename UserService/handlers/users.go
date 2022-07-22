@@ -139,6 +139,14 @@ func (uh *UsersHandler) GetUsers(resWriter http.ResponseWriter, req *http.Reques
 	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: users, TotalElements: totalElements})
 }
 
+func (uh *UsersHandler) SearchUsers(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	users, totalElements, _ := uh.repository.SearchUsers(req)
+
+	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: users, TotalElements: totalElements})
+}
+
 func (uh *UsersHandler) UpdateUser(resWriter http.ResponseWriter, req *http.Request) {
 	AdjustResponseHeaderJson(&resWriter)
 

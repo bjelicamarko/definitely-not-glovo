@@ -26,6 +26,24 @@ export class UsersService {
         return this.http.get<HttpResponse<UsersPageable>>("not-glovo/api/users/getUsers", queryParams);
     }
 
+    searchUsers(searchFieldVal: string, userTypeVal: string, 
+        pageNum: number, pageSize: number): Observable<HttpResponse<UsersPageable>> {
+
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        params: {
+            searchField: searchFieldVal,
+            userType: userTypeVal,
+            size: pageSize,
+            page: pageNum
+        }};
+
+        return this.http.get<HttpResponse<UsersPageable>>("not-glovo/api/users/searchUsers", queryParams);
+    }
+
     banUser(id: number): Observable<HttpResponse<ResponseMessage>> {
         let queryParams = {};
 

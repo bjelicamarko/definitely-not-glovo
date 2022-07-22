@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaginationComponent } from 'src/modules/shared/components/pagination/pagination.component';
 import { UserDTO } from 'src/modules/shared/models/UserDTO';
 import { UsersPageable } from 'src/modules/shared/models/UsersPageable';
@@ -16,11 +17,18 @@ export class UsersPageComponent implements OnInit {
   totalSize: number;
   users: UserDTO[];
 
-  constructor(private usersService: UsersService) { 
+  searchFormGroup: FormGroup;
+
+  constructor(private fb: FormBuilder,
+    private usersService: UsersService) { 
     this.users = [];
     this.pageSize = 5;
     this.currentPage = 1;
     this.totalSize = 1;
+    this.searchFormGroup = this.fb.group({
+      searchField: [''],
+      userType: [''],
+    }); 
   }
 
   ngOnInit(): void {
@@ -32,6 +40,8 @@ export class UsersPageComponent implements OnInit {
         this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
         this.users = temp.Elements as UserDTO[];
     });
+
+    this.onChanges();
   }
 
   setPagination(totalItemsHeader: string | null, currentPageHeader: string | null) {
@@ -64,5 +74,14 @@ export class UsersPageComponent implements OnInit {
         this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
         this.users = temp.Elements as UserDTO[];
     });
+  }
+
+  onChanges(): void {
+    this.searchFormGroup.valueChanges
+    .subscribe(val => {
+      if (!this.searchFormGroup.get('searchField')?.valid)
+        return;
+      console.log(val.searchField, val.userType)
+    })
   }
 }

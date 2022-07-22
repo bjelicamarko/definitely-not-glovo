@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -15,6 +16,10 @@ type Repository struct {
 
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{db}
+}
+
+func concat(str string) string {
+	return "%" + strings.ToLower(str) + "%"
 }
 
 func Paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
@@ -74,6 +79,44 @@ func (repo *Repository) FindAll(r *http.Request) ([]models.UserDTO, int64, error
 	return usersDTO, totalElements, nil
 }
 
+func (repo *Repository) SearchUsers(r *http.Request) ([]models.UserDTO, int64, error) {
+	var usersDTO []models.UserDTO
+	var users []*models.User
+	var totalElements int64
+
+	searchField := r.URL.Query().Get("searchField")
+	userType := r.URL.Query().Get("userType")
+
+	result := repo.db.Scopes(Paginate(r)).Table("users").
+		Where("(deleted_at IS NULL and role != ?) and "+
+			"('' = ? or "+
+			"first_name LIKE ? or "+
+			"last_name LIKE ? or "+
+			"email LIKE ?) and"+
+			"('' = ? or role = ?)",
+			models.ADMIN, searchField, concat(searchField), concat(searchField), concat(searchField), userType, userType).
+		Find(&users)
+
+	repo.db.Table("users").
+		Where("(deleted_at IS NULL and role != ?) and "+
+			"('' = ? or "+
+			"first_name LIKE ? or "+
+			"last_name LIKE ? or "+
+			"email LIKE ?) and"+
+			"('' = ? or role = ?)",
+			models.ADMIN, searchField, concat(searchField), concat(searchField), concat(searchField), userType, userType).
+		Count(&totalElements)
+
+	if result.Error != nil {
+		return nil, totalElements, result.Error
+	}
+
+	for _, user := range users {
+		usersDTO = append(usersDTO, user.ToUserDTO())
+	}
+
+	return usersDTO, totalElements, nil
+}
 func (repo *Repository) CreateUser(newUserDTO *models.NewUserDTO) (*models.User, error) {
 	var user models.User
 

@@ -1,3 +1,31 @@
+<form class="row p-4 align-items-center justify-content-center" [formGroup]="searchFormGroup"
+    (keydown.enter)="$event.preventDefault()">
+    <div class="col-4 align-items-center justify-content-center">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Search</mat-label>
+            <input style="color: white;"
+             id="searchFieldInput" matInput type="text" formControlName="searchField">
+            <button id="clearSearchField" *ngIf="searchFormGroup.controls['searchField'].value" matSuffix
+                mat-icon-button aria-label="Clear" (click)="searchFormGroup.controls['searchField'].setValue('')">
+            </button>
+        </mat-form-field>
+        <small *ngIf="(searchFormGroup.controls['searchField'].touched || searchFormGroup.controls['searchField'].dirty) 
+                         &&
+                       searchFormGroup.controls['searchField'].errors?.['invalidUsername']">Invalid search input
+        </small>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field appearance="fill">
+            <mat-label style="color:white">Role</mat-label>
+            <mat-select formControlName="userType">
+                <mat-option value="all">Any</mat-option>
+                <mat-option value="APPUSER">App User</mat-option>
+                <mat-option value="EMPLOYEE">Employee</mat-option>
+                <mat-option value="DELIVERER">Deliverer</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>
 <div class="row">
         <h2 *ngIf="users.length == 0"> Search has no results. </h2>
         <div *ngFor="let user of users" class="col">
