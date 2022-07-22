@@ -54,7 +54,8 @@ export class UsersPageComponent implements OnInit {
   }
 
   changePage(newPage: number) {
-    this.usersService.getUsers(newPage - 1, this.pageSize)
+    this.usersService.searchUsers(this.searchFormGroup.value.searchField, this.searchFormGroup.value.userType,
+      newPage - 1, this.pageSize)
       .subscribe((response) => {
         var temp = response.body as UsersPageable;
         console.log(temp);
@@ -81,7 +82,19 @@ export class UsersPageComponent implements OnInit {
     .subscribe(val => {
       if (!this.searchFormGroup.get('searchField')?.valid)
         return;
-      console.log(val.searchField, val.userType)
+      
+      this.usersService.searchUsers(val.searchField, val.userType, 
+        0, this.pageSize).subscribe((response) => {
+          if (response.body != null) {
+            var temp = response.body as UsersPageable;
+            this.totalSize = Number(temp.TotalElements);
+            this.setPagination((this.totalSize).toString(), (0).toString());
+            this.users = temp.Elements as UserDTO[];
+            if (this.pagination) {
+              this.pagination.setActivePage(1);
+            } 
+          }
+        })
     })
   }
 }

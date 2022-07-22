@@ -63,6 +63,25 @@ func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 	utils.DelegateResponse(response, resWriter)
 }
 
+func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	searchField := r.URL.Query().Get("searchField")
+	userType := r.URL.Query().Get("userType")
+	page := r.URL.Query().Get("page")
+	size := r.URL.Query().Get("size")
+	//searchUsers?searchField=brank&userType=DELIVERER&page=0&size=5
+	response, err := http.Get(
+		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/searchUsers?searchField=" + searchField + "&userType=" + userType + "&page=" + page + "&size=" + size)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
 func UpdateUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 

@@ -28,6 +28,11 @@ export class UsersService {
 
     searchUsers(searchFieldVal: string, userTypeVal: string, 
         pageNum: number, pageSize: number): Observable<HttpResponse<UsersPageable>> {
+        
+        if (!searchFieldVal)
+            searchFieldVal = ''
+        if (!userTypeVal || userTypeVal === 'all')
+            userTypeVal = ''
 
         let queryParams = {};
 
