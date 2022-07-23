@@ -138,7 +138,7 @@ func (repo *Repository) CreateUser(newUserDTO *models.NewUserDTO) (*models.User,
 	return &user, nil
 }
 
-func (repo *Repository) UpdateUser(userDTO *models.UserDTO) (*models.User, error) {
+func (repo *Repository) UpdateUser(userDTO *models.UserDTO, indicator bool) (*models.User, error) {
 	var user models.User
 
 	result := repo.db.Table("users").Where("email = ?", userDTO.Email).First(&user)
@@ -152,7 +152,10 @@ func (repo *Repository) UpdateUser(userDTO *models.UserDTO) (*models.User, error
 	user.Contact = userDTO.Contact
 	user.Banned = userDTO.Banned
 	user.Role = models.Role(userDTO.Role)
-	user.Image = userDTO.Image
+
+	if indicator {
+		user.Image = userDTO.Image
+	}
 
 	result2 := repo.db.Table("users").Save(&user)
 

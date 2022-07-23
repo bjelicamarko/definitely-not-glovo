@@ -1,5 +1,7 @@
 package models
 
+import "UserService/utils"
+
 func (user *User) ToUserDTO() UserDTO {
 	return UserDTO{
 		Id:        user.ID,
@@ -9,6 +11,6 @@ func (user *User) ToUserDTO() UserDTO {
 		Contact:   user.Contact,
 		Role:      string(user.Role),
 		Banned:    user.Banned,
-		Image:     user.Image,
+		Image:     utils.GetB64Image(user.Image),
 	}
 }

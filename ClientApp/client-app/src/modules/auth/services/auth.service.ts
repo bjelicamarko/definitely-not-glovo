@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Token } from "@angular/compiler";
 import { Injectable } from "@angular/core";
+import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from "rxjs";
 import { Login } from "src/modules/shared/models/Login";
 
@@ -29,6 +30,14 @@ export class AuthService {
           return false;
         }
         return true;
+    }
+
+    getInfo(): any {
+        const token = localStorage.getItem("user");
+
+        const jwt: JwtHelperService = new JwtHelperService();
+        const info = jwt.decodeToken(token!);
+        return info
     }
     
 }

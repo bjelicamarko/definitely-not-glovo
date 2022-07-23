@@ -1,7 +1,6 @@
 package db
 
 import (
-	"UserService/handlers"
 	"UserService/models"
 	"fmt"
 
@@ -19,7 +18,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.ADMIN,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -30,7 +29,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.APPUSER,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -41,7 +40,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.DELIVERER,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -52,7 +51,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.EMPLOYEE,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -63,7 +62,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.EMPLOYEE,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -74,7 +73,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.EMPLOYEE,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -85,7 +84,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.APPUSER,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -96,7 +95,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.APPUSER,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -107,7 +106,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.APPUSER,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 	{
 		Model:     gorm.Model{},
@@ -118,7 +117,7 @@ var users = []models.User{
 		Contact:   "231321",
 		Role:      models.DELIVERER,
 		Banned:    false,
-		Image:     handlers.GetB64Image("images/default.jpg"),
+		Image:     "images/default.jpg",
 	},
 }
 

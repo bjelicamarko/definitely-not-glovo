@@ -21,21 +21,31 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">First Name</label>
-                        <input type="text" class="form-control" placeholder="first name" value="{{user.FirstName}}"></div>
+                        <input type="text" class="form-control" 
+                        [(ngModel)]="user.FirstName" placeholder="first name" value="{{user.FirstName}}"></div>
                     <div class="col-md-6"><label class="labels">Last Name</label>
-                        <input type="text" class="form-control" value="{{user.LastName}}" placeholder="last name"></div>
+                        <input type="text" class="form-control" value="{{user.LastName}}"
+                        [(ngModel)]="user.LastName" placeholder="last name"></div>
                 </div>
                 <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Email</label>
+                        <input type="text" class="form-control" placeholder="enter email" value="{{user.Email}}"
+                        [(ngModel)]="user.Email" readonly></div>
                     <div class="col-md-12"><label class="labels">Contact</label>
-                        <input type="text" class="form-control" placeholder="enter phone number" value="{{user.Contact}}"></div>
+                        <input type="text" class="form-control" placeholder="enter phone number" value="{{user.Contact}}"
+                        [(ngModel)]="user.Contact"></div>
                     <div class="col-md-12"><label class="labels">Banned</label>
-                        <input type="text" class="form-control" placeholder="enter address line 1" value="{{user.Banned}}"></div>
+                        <input type="text" class="form-control" placeholder="enter address line 1" value="{{user.Banned}}"
+                        [(ngModel)]="user.Banned" readonly></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
                     <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
                 </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                <div class="mt-5 text-center">
+                    <button class="btn btn-primary profile-button" type="button"
+                    (click)="updateProfile()">Update Profile</button>
+                </div>
             </div>
         </div>
         <div class="col-md-4">

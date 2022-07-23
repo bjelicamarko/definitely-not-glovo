@@ -3,6 +3,7 @@ package handlers
 import (
 	"UserService/models"
 	"UserService/repository"
+	"UserService/utils"
 	"encoding/json"
 	"net/http"
 	"os"
@@ -25,7 +26,7 @@ func NewUsersHandler(repository *repository.Repository) *UsersHandler {
 var jwtKey = []byte("z7031Q8Qy9zVO-T2o7lsFIZSrd05hH0PaeaWIBvLh9s")
 
 func (uh *UsersHandler) Login(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	var credentials models.Credentials
 	json.NewDecoder(req.Body).Decode(&credentials)
@@ -60,7 +61,7 @@ func Authorize(r *http.Request) (*jwt.Token, error) {
 }
 
 func (uh *UsersHandler) AuthorizeAdmin(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	token, err := Authorize(req)
 
@@ -74,7 +75,7 @@ func (uh *UsersHandler) AuthorizeAdmin(resWriter http.ResponseWriter, req *http.
 }
 
 func (uh *UsersHandler) AuthorizeAppUser(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	token, err := Authorize(req)
 
@@ -88,7 +89,7 @@ func (uh *UsersHandler) AuthorizeAppUser(resWriter http.ResponseWriter, req *htt
 }
 
 func (uh *UsersHandler) AuthorizeEmployee(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	token, err := Authorize(req)
 
@@ -102,7 +103,7 @@ func (uh *UsersHandler) AuthorizeEmployee(resWriter http.ResponseWriter, req *ht
 }
 
 func (uh *UsersHandler) AuthorizeDeliverer(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	token, err := Authorize(req)
 
@@ -116,7 +117,7 @@ func (uh *UsersHandler) AuthorizeDeliverer(resWriter http.ResponseWriter, req *h
 }
 
 func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	var newUserDTO models.NewUserDTO
 	json.NewDecoder(req.Body).Decode(&newUserDTO)
@@ -133,7 +134,7 @@ func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Reques
 }
 
 func (uh *UsersHandler) GetUsers(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	users, totalElements, _ := uh.repository.FindAll(req)
 
@@ -141,7 +142,7 @@ func (uh *UsersHandler) GetUsers(resWriter http.ResponseWriter, req *http.Reques
 }
 
 func (uh *UsersHandler) SearchUsers(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	users, totalElements, _ := uh.repository.SearchUsers(req)
 
@@ -149,23 +150,24 @@ func (uh *UsersHandler) SearchUsers(resWriter http.ResponseWriter, req *http.Req
 }
 
 func (uh *UsersHandler) UpdateUser(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	var updatedUser models.UserDTO
 	json.NewDecoder(req.Body).Decode(&updatedUser)
 
-	_, err := uh.repository.UpdateUser(&updatedUser)
+	user, err := uh.repository.UpdateUser(&updatedUser, false)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.Response{Message: err.Error()})
-	} else {
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "User successfully updated"})
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "unsuccessfully updated"})
+		return
 	}
+
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "successfully updated", UserDTO: user.ToUserDTO()})
 }
 
 func (uh *UsersHandler) DeleteUser(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	params := mux.Vars(req)
 	idStr := params["id"]
@@ -182,7 +184,7 @@ func (uh *UsersHandler) DeleteUser(resWriter http.ResponseWriter, req *http.Requ
 }
 
 func (uh *UsersHandler) BanUser(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	params := mux.Vars(req)
 	idStr := params["id"]
@@ -199,7 +201,7 @@ func (uh *UsersHandler) BanUser(resWriter http.ResponseWriter, req *http.Request
 }
 
 func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	params := mux.Vars(req)
 	idStr := params["id"]
@@ -216,7 +218,7 @@ func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Reque
 }
 
 func (uh *UsersHandler) FindUserById(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	params := mux.Vars(req)
 	idStr := params["id"]
@@ -233,7 +235,7 @@ func (uh *UsersHandler) FindUserById(resWriter http.ResponseWriter, req *http.Re
 }
 
 func (uh *UsersHandler) SaveImageUser(resWriter http.ResponseWriter, req *http.Request) {
-	AdjustResponseHeaderJson(&resWriter)
+	utils.AdjustResponseHeaderJson(&resWriter)
 
 	var imageMessage models.ImageMessage
 
@@ -241,18 +243,19 @@ func (uh *UsersHandler) SaveImageUser(resWriter http.ResponseWriter, req *http.R
 
 	_ = os.Remove("images/" + imageMessage.Path)
 
-	ToImage(imageMessage.Image, "images/"+imageMessage.Path)
+	utils.ToImage(imageMessage.Image, "images/"+imageMessage.Path)
 
 	user, err := uh.repository.FindUserById(imageMessage.Id)
+	user.Image = "images/" + imageMessage.Path
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	user.Image = GetB64Image("images/" + imageMessage.Path)
+	_, err2 := uh.repository.UpdateUser(user, true)
 
-	_, err2 := uh.repository.UpdateUser(user)
+	user.Image = utils.GetB64Image("images/" + imageMessage.Path)
 
 	if err2 != nil {
 		resWriter.WriteHeader(http.StatusBadRequest)

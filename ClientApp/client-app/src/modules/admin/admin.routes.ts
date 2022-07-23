@@ -12,5 +12,10 @@ export const AdminRoutes: Routes = [
         path: "profile-info/:userId",
         pathMatch: "full",
         component: ProfileInfoPageComponent
+    },
+    {
+        path: "createUser",
+        pathMatch: "full",
+        component: ProfileInfoPageComponent
     }
 ];

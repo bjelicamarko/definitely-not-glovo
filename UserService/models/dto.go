@@ -29,3 +29,8 @@ type ImageMessage struct {
 	Path  string `json:"Path"`
 	Id    uint   `json:"Id"`
 }
+
+type UserDTOMessage struct {
+	UserDTO UserDTO `json:"UserDTO"`
+	Message string  `json:"Message"`
+}
