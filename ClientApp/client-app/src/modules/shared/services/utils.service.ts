@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ImageMessage } from "../models/ImageMessage";
+import { RestaurantsPageable } from "../models/RestaurantsPageable";
 import { UserDTO } from "../models/UserDTO";
 import { UserDTOMessage } from "../models/UserDTOMessage";
 
@@ -48,5 +49,19 @@ export class UtilsService {
         }
 
         return this.http.put<HttpResponse<UserDTOMessage>>("not-glovo/api/users/updateUser", userDTO, queryParams);
+    }
+
+    getRestaurants(page: number, size: number): Observable<HttpResponse<RestaurantsPageable>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        params: new HttpParams()
+            .set("page", String(page))
+            .append("size", String(size))
+        };
+
+        return this.http.get<HttpResponse<RestaurantsPageable>>("not-glovo/api/restaurants/getRestaurants", queryParams);
     }
 }

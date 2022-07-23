@@ -60,9 +60,7 @@ func (repo *Repository) CheckCredentials(email string, password string) (*models
 
 func (repo *Repository) FindAll(r *http.Request) ([]models.UserDTO, int64, error) {
 	var usersDTO []models.UserDTO
-
 	var users []*models.User
-
 	var totalElements int64
 
 	result := repo.db.Scopes(Paginate(r)).Table("users").Where("role != ?", models.ADMIN).Find(&users)

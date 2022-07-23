@@ -2,7 +2,7 @@ export interface RestaurantDTO {
     Id: number;
     RestaurantName: string;
     ContactPhone: string;
-    Image: string;
+    Image: string | ArrayBuffer | null;
     ImagePath: string;
     Country: string;
     City: string;

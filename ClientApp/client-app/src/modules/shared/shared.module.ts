@@ -9,6 +9,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { UtilsService } from "./services/utils.service";
 import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
 import { ProfileInfoPageComponent } from './pages/profile-info-page/profile-info-page.component';
+import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
+import { RestaurantCardComponent } from './components/restaurant-card/restaurant-card.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,9 @@ import { ProfileInfoPageComponent } from './pages/profile-info-page/profile-info
     
     PaginationComponent,
             ConformationDialogComponent,
-            ProfileInfoPageComponent
+            ProfileInfoPageComponent,
+            RestaurantsPageComponent,
+            RestaurantCardComponent
   ],
     imports: [
         CommonModule,

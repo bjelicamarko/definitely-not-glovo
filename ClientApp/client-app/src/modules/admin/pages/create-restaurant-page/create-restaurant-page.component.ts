@@ -12,6 +12,10 @@ import { RestaurantDTO } from 'src/modules/shared/models/RestaurantDTO';
 import { Point } from 'ol/geom';
 import Vector from 'ol/layer/Vector';
 import VectorTemp from 'ol/source/Vector';
+import { RestaurantsService } from '../../services/restaurants.service';
+import { RestaurantDTOMessage } from 'src/modules/shared/models/RestaurantDTOMessage';
+import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -40,7 +44,10 @@ export class CreateRestaurantPageComponent implements OnInit {
   
   public selectedFile: File | undefined
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private restaurantsService: RestaurantsService,
+    private snackBarService: SnackBarService,
+    private router: Router) { }
 
   ngOnInit(): void {
     var iconFeature = new Feature();
@@ -96,7 +103,29 @@ export class CreateRestaurantPageComponent implements OnInit {
   }
 
   saveRestaurant() {
-    
+    if (this.restaurant.RestaurantName && this.restaurant.ContactPhone && 
+      this.restaurant.City && this.restaurant.Street && this.restaurant.StreetNumber &&
+      this.restaurant.Image && this.restaurant.Country
+      && this.restaurant.Image !== "assets/restaurant.png") {
+        let reader = new FileReader();
+        reader.readAsDataURL(this.selectedFile!);
+        reader.onload = () => {
+          //console.log(reader.result);
+          this.restaurant.Image = reader.result;
+          this.restaurant.ImagePath = this.selectedFile?.name as string;
+          
+          this.restaurantsService.saveRestaurant(this.restaurant)
+          .subscribe((response) => {
+            var temp = response.body as RestaurantDTOMessage;
+            this.snackBarService.openSnackBar(temp.Message);
+            this.restaurant = temp.RestaurantDTO;
+            this.router.navigate(["/app/main/admin/restaurants"]);
+          })
+        };
+        reader.onerror = function (error) {
+         console.log('Error: ', error);
+        };
+    }
   }
 
   onFileChanged(event: any) {

@@ -3,12 +3,13 @@ package handlers
 import (
 	"RestaurantService/models"
 	"RestaurantService/repository"
+	"RestaurantService/utils"
 	"encoding/json"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"gorm.io/gorm"
 )
 
 type RestaurantsHandler struct {
@@ -22,26 +23,29 @@ func NewRestaurantsHandler(repository *repository.Repository) *RestaurantsHandle
 func (rh *RestaurantsHandler) GetRestaurants(resWriter http.ResponseWriter, req *http.Request) {
 	AdjustResponseHeaderJson(&resWriter)
 
-	restaurants, _ := rh.repository.FindAll()
+	restaurants, totalElements, _ := rh.repository.FindAll(req)
 
-	json.NewEncoder(resWriter).Encode(restaurants)
+	json.NewEncoder(resWriter).Encode(models.RestaurantsPageable{Elements: restaurants, TotalElements: totalElements})
 }
 
 func (rh *RestaurantsHandler) CreateRestaurant(resWriter http.ResponseWriter, req *http.Request) {
 	AdjustResponseHeaderJson(&resWriter)
 
-	var newRestaurant models.Restaurant
+	var newRestaurant models.RestaurantDTO
 	json.NewDecoder(req.Body).Decode(&newRestaurant)
 
-	newRestaurant.Model = gorm.Model{}
-	_, err := rh.repository.SaveRestaurant(&newRestaurant)
+	restaurant, err := rh.repository.SaveRestaurant(&newRestaurant)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.Response{Message: err.Error()})
-	} else {
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "Restaurant successfully created"})
+		json.NewEncoder(resWriter).Encode(models.RestaurantDTOMessage{Message: err.Error()})
+		return
 	}
+
+	_ = os.Remove(newRestaurant.ImagePath)
+	utils.ToImage(newRestaurant.Image, newRestaurant.ImagePath)
+
+	json.NewEncoder(resWriter).Encode(models.RestaurantDTOMessage{Message: "Restaurant successfully created", RestaurantDTO: restaurant.ToRestaurantDTO()})
 }
 
 func (rh *RestaurantsHandler) UpdateRestaurant(resWriter http.ResponseWriter, req *http.Request) {
