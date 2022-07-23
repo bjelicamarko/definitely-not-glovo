@@ -32,12 +32,14 @@ export class CreateRestaurantPageComponent implements OnInit {
     Ptt: 0,
     Longitude: 0,
     Latitude: 0,
-    Image: '',
-    ImagePath: '',
+    Image: 'assets/restaurant.png',
+    ImagePath: 'assets/restaurant.png',
     Country: '',
     DisplayName: ''
   }
   
+  public selectedFile: File | undefined
+
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -93,4 +95,12 @@ export class CreateRestaurantPageComponent implements OnInit {
   });
   }
 
+  saveRestaurant() {
+    
+  }
+
+  onFileChanged(event: any) {
+    this.selectedFile = event.target.files[0]
+  }
+  
 }
