@@ -49,7 +49,7 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 - Klijentska web aplikacija - Angular
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL), svaki mikroservis će imati odvojenu instancu SQL baze. <br />
-Za kontejnerizaciju biće korišćen Docker. (+)   <br />  <br />
-
+Za kontejnerizaciju biće korišćen Docker. (+)  
+Kreiranje lokacije restorana uz pomoć mape i prikaz lokacije restorana na mapi. (+) <br />  <br />
 
 **_Funkcionalnosti označene sa (+) su proširenja za diplomski rad._**
