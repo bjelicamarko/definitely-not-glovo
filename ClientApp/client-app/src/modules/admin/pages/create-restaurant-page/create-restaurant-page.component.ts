@@ -16,7 +16,7 @@ import { RestaurantsService } from '../../services/restaurants.service';
 import { RestaurantDTOMessage } from 'src/modules/shared/models/RestaurantDTOMessage';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UtilsService } from 'src/modules/shared/services/utils.service';
+import { RestaurantsUtilsService } from 'src/modules/shared/services/restaurants-utils';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -40,7 +40,8 @@ export class CreateRestaurantPageComponent implements OnInit {
     Image: 'assets/restaurant.png',
     ImagePath: 'assets/restaurant.png',
     Country: '',
-    DisplayName: ''
+    DisplayName: '',
+    Changed: false
   }
   
   public selectedFile: File | undefined
@@ -49,7 +50,7 @@ export class CreateRestaurantPageComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private restaurantsService: RestaurantsService,
-    private utilsService: UtilsService,
+    private restaurantsUtilsService: RestaurantsUtilsService,
     private snackBarService: SnackBarService,
     private router: Router,
     private route: ActivatedRoute) { 
@@ -67,9 +68,12 @@ export class CreateRestaurantPageComponent implements OnInit {
     var latitude = 42.7060377
 
     if (this.restaurantIdFromRoute !== 0) {
-      this.utilsService.findRestaurantById(this.restaurantIdFromRoute)
+      this.restaurantsUtilsService.findRestaurantById(this.restaurantIdFromRoute)
       .subscribe((response) => {
-        this.restaurant = response.body as RestaurantDTO;
+        var temp = response.body as RestaurantDTOMessage;
+        this.restaurant = temp.RestaurantDTO;
+        this.snackBarService.openSnackBar(temp.Message)
+
         iconFeature = new Feature({
           geometry: new Point(fromLonLat([this.restaurant.Longitude, this.restaurant.Latitude])),
         });
@@ -141,10 +145,7 @@ export class CreateRestaurantPageComponent implements OnInit {
         let reader = new FileReader();
         reader.readAsDataURL(this.selectedFile!);
         reader.onload = () => {
-          //console.log(reader.result);
           this.restaurant.Image = reader.result;
-          //this.restaurant.ImagePath = "images/" + this.selectedFile?.name as string;
-          
           this.restaurantsService.createRestaurant(this.restaurant)
           .subscribe((response) => {
             var temp = response.body as RestaurantDTOMessage;
@@ -160,11 +161,43 @@ export class CreateRestaurantPageComponent implements OnInit {
   }
 
   updateRestaurant() {
+    if (this.restaurant.RestaurantName && this.restaurant.ContactPhone && 
+      this.restaurant.City && this.restaurant.Street && this.restaurant.StreetNumber &&
+      this.restaurant.Image && this.restaurant.Country && 
+      this.restaurant.ImagePath !== 'assets/restaurant.png') {
+      
+      if (this.restaurant.Changed) {
+        let reader = new FileReader();
+        reader.readAsDataURL(this.selectedFile!);
+        reader.onload = () => {
+          this.restaurant.Image = reader.result;
+          this.restaurantsService.updateRestaurant(this.restaurant)
+          .subscribe((response) => {
+            var temp = response.body as RestaurantDTOMessage;
+            this.snackBarService.openSnackBar(temp.Message);
+            this.restaurant = temp.RestaurantDTO;
+            this.router.navigate(["/app/main/admin/restaurants"]);
+          })
+        };
+        reader.onerror = function (error) {
+         console.log('Error: ', error);
+        };
+      } else {
+        this.restaurantsService.updateRestaurant(this.restaurant)
+        .subscribe((response) => {
+          var temp = response.body as RestaurantDTOMessage;
+          this.snackBarService.openSnackBar(temp.Message);
+          this.restaurant = temp.RestaurantDTO;
+          this.router.navigate(["/app/main/admin/restaurants"]);
+        })
+      }
+    }
   }
 
   onFileChanged(event: any) {
     this.selectedFile = event.target.files[0]
     this.restaurant.ImagePath = "images/" + this.selectedFile?.name as string;
+    this.restaurant.Changed = true
   }
   
 }

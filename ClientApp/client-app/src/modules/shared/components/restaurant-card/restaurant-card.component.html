@@ -2,5 +2,15 @@
     <img src="{{restaurant.Image}}" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{restaurant.RestaurantName}}</h5>
+      <p class="card-text">
+        Contact Phone: {{restaurant.ContactPhone}} <br>
+        Street: {{restaurant.Street}} <br>
+        StreetNumber: {{restaurant.StreetNumber}} <br>
+        City: {{restaurant.City}}
+      </p>
+    </div>
+    <div class="card-body">
+      <button type="button" class="btn btn-light" (click)="updateRestaurant(restaurant.Id)">Update</button>
+      <button type="button" style="margin-left: 5%;" class="btn btn-danger" (click)="deleteRestaurant(restaurant.Id)">Delete</button>
     </div>
 </div>

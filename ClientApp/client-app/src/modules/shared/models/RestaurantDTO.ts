@@ -12,4 +12,5 @@ export interface RestaurantDTO {
     DisplayName: string;
     Longitude: number;
     Latitude: number;
+    Changed: boolean;
 }

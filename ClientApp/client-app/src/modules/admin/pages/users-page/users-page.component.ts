@@ -32,7 +32,7 @@ export class UsersPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usersService.getUsers(this.currentPage - 1, this.pageSize)
+    this.usersService.findAllUsers(this.currentPage - 1, this.pageSize)
       .subscribe((response) => {
         var temp = response.body as UsersPageable;
         console.log(temp);
@@ -58,7 +58,6 @@ export class UsersPageComponent implements OnInit {
       newPage - 1, this.pageSize)
       .subscribe((response) => {
         var temp = response.body as UsersPageable;
-        console.log(temp);
         this.totalSize = Number(temp.TotalElements);
         this.setPagination((this.totalSize).toString(), (newPage - 1).toString());
         this.users = temp.Elements as UserDTO[];
@@ -67,7 +66,7 @@ export class UsersPageComponent implements OnInit {
   }
   
   renderList() {
-    this.usersService.getUsers(this.currentPage - 1, this.pageSize)
+    this.usersService.findAllUsers(this.currentPage - 1, this.pageSize)
       .subscribe((response) => {
         var temp = response.body as UsersPageable;
         console.log(temp);

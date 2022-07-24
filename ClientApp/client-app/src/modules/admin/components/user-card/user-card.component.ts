@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConformationDialogComponent } from 'src/modules/shared/components/conformation-dialog/conformation-dialog.component';
 import { UserDTO } from 'src/modules/shared/models/UserDTO';
+import { UserDTOMessage } from 'src/modules/shared/models/UserDTOMessage';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { UsersService } from '../../services/users.service';
 
@@ -21,7 +22,10 @@ export class UserCardComponent implements OnInit {
     Contact: '',
     Role: '',
     Banned: false,
-    Image: ''
+    Image: '',
+    Password: '',
+    ImagePath: '',
+    Changed: false
   }
 
   @Output() renderList: EventEmitter<any> = new EventEmitter();
@@ -45,11 +49,12 @@ export class UserCardComponent implements OnInit {
       if (result) {
         this.usersService.banUser(id)
         .subscribe((response) => {
-          var message = response.body?.message as string
-          this.snackBarService.openSnackBar(message)
-          if (message === "user successfully banned") {
-            this.user.Banned = true
-          }
+          var temp = response.body as UserDTOMessage;
+          this.snackBarService.openSnackBar(temp.Message)
+          // if (message === "user successfully banned") {
+          //   this.user.Banned = true
+          // }
+          this.user = temp.UserDTO;
         })
       }
     })
@@ -66,11 +71,12 @@ export class UserCardComponent implements OnInit {
       if (result) {
         this.usersService.unbanUser(id)
         .subscribe((response) => {
-          var message = response.body?.message as string
-          this.snackBarService.openSnackBar(message)
-          if (message === "user successfully unbanned") {
-            this.user.Banned = false
-          }
+          var temp = response.body as UserDTOMessage;
+          this.snackBarService.openSnackBar(temp.Message)
+          // if (message === "user successfully unbanned") {
+          //   this.user.Banned = false
+          // }
+          this.user = temp.UserDTO;
         })
       }
     })
@@ -87,15 +93,16 @@ export class UserCardComponent implements OnInit {
       if (result) {
         this.usersService.deleteUser(id)
         .subscribe((response) => {
-          var message = response.body?.message as string
-          this.snackBarService.openSnackBar(message)
+          var temp = response.body as UserDTOMessage;
+          this.snackBarService.openSnackBar(temp.Message)
           this.renderList.emit(null);
         })
       }
     })
   }
 
-  profileInfo(id: number): void {
-    this.router.navigate(["/app/main/admin/profile-info/" + id]);
+  updateUser(id: number): void {
+    //this.router.navigate(["/app/main/admin/profile-info/" + id]);
+    this.router.navigate(["/app/main/admin/user-info/" + id]);
   }
 }

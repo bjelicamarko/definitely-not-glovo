@@ -23,4 +23,25 @@ export class RestaurantsService {
         return this.http.post<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/createRestaurant", restaurantDTO, queryParams);
     }
 
+    updateRestaurant(restaurantDTO: RestaurantDTO): Observable<HttpResponse<RestaurantDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.put<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/updateRestaurant", restaurantDTO, queryParams);
+    }
+
+    deleteRestaurant(id: number): Observable<HttpResponse<RestaurantDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.delete<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/deleteRestaurant/" + id, queryParams);
+    }
 }

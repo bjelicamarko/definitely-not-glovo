@@ -129,6 +129,23 @@ func (repo *Repository) FindUserById(id uint) (*models.UserDTO, error) {
 	return &userDTO, nil
 }
 
+func (repo *Repository) Register(userDTO *models.UserDTO) error {
+	var user models.User
+
+	user.Model = gorm.Model{}
+	user.Email = userDTO.Email
+	user.Password = userDTO.Password
+	user.FirstName = userDTO.FirstName
+	user.LastName = userDTO.LastName
+	user.Contact = userDTO.Contact
+	user.Role = models.APPUSER
+	user.Banned = false
+	user.Image = "images/default.jpg"
+
+	result := repo.db.Table("users").Create(&user)
+	return result.Error
+}
+
 func (repo *Repository) CreateUser(userDTO *models.UserDTO) (*models.UserDTO, error) {
 	var user models.User = userDTO.ToUser()
 	result := repo.db.Table("users").Create(&user)

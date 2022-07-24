@@ -8,9 +8,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { UtilsService } from "./services/utils.service";
 import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
-import { ProfileInfoPageComponent } from './pages/profile-info-page/profile-info-page.component';
 import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
 import { RestaurantCardComponent } from './components/restaurant-card/restaurant-card.component';
+import { RestaurantsUtilsService } from "./services/restaurants-utils";
+import { UsersUtilsService } from "./services/users-utils.service";
+import { RestaurantInfoComponent } from './pages/restaurant-info/restaurant-info.component';
+import { UserInfoComponent } from './pages/user-info/user-info.component';
 
 @NgModule({
     declarations: [
@@ -18,9 +21,10 @@ import { RestaurantCardComponent } from './components/restaurant-card/restaurant
     
     PaginationComponent,
             ConformationDialogComponent,
-            ProfileInfoPageComponent,
             RestaurantsPageComponent,
-            RestaurantCardComponent
+            RestaurantCardComponent,
+            RestaurantInfoComponent,
+            UserInfoComponent
   ],
     imports: [
         CommonModule,
@@ -35,6 +39,8 @@ import { RestaurantCardComponent } from './components/restaurant-card/restaurant
     providers: [
         SnackBarService,
         UtilsService,
+        RestaurantsUtilsService,
+        UsersUtilsService
     ]
 })
 export class SharedModule { }

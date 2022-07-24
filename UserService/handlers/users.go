@@ -116,22 +116,22 @@ func (uh *UsersHandler) AuthorizeDeliverer(resWriter http.ResponseWriter, req *h
 	json.NewEncoder(resWriter).Encode(models.Response{Message: "authorization succeeded"})
 }
 
-// func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Request) {
-// 	utils.AdjustResponseHeaderJson(&resWriter)
+func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
 
-// 	var newUserDTO models.NewUserDTO
-// 	json.NewDecoder(req.Body).Decode(&newUserDTO)
+	var newUserDTO models.UserDTO
+	json.NewDecoder(req.Body).Decode(&newUserDTO)
 
-// 	_, err := uh.repository.CreateUser(&newUserDTO)
+	err := uh.repository.Register(&newUserDTO)
 
-// 	if err != nil {
-// 		resWriter.WriteHeader(http.StatusBadRequest)
-// 		json.NewEncoder(resWriter).Encode(models.Response{Message: "registration failed"})
-// 		return
-// 	}
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.Response{Message: "registration failed"})
+		return
+	}
 
-// 	json.NewEncoder(resWriter).Encode(models.Response{Message: "registration succeeded"})
-// }
+	json.NewEncoder(resWriter).Encode(models.Response{Message: "registration succeeded"})
+}
 
 func (uh *UsersHandler) FindAllUsers(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
@@ -261,35 +261,3 @@ func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Reque
 
 	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully unbanned", UserDTO: *userDTO})
 }
-
-// func (uh *UsersHandler) SaveImageUser(resWriter http.ResponseWriter, req *http.Request) {
-// 	utils.AdjustResponseHeaderJson(&resWriter)
-
-// 	var imageMessage models.ImageMessage
-
-// 	json.NewDecoder(req.Body).Decode(&imageMessage)
-
-// 	_ = os.Remove("images/" + imageMessage.Path)
-
-// 	utils.ToImage(imageMessage.Image, "images/"+imageMessage.Path)
-
-// 	user, err := uh.repository.FindUserById(imageMessage.Id)
-// 	user.Image = "images/" + imageMessage.Path
-
-// 	if err != nil {
-// 		resWriter.WriteHeader(http.StatusBadRequest)
-// 		return
-// 	}
-
-// 	_, err2 := uh.repository.UpdateUser(user, true)
-
-// 	user.Image = utils.GetB64Image("images/" + imageMessage.Path)
-
-// 	if err2 != nil {
-// 		resWriter.WriteHeader(http.StatusBadRequest)
-// 		return
-// 	}
-
-// 	json.NewEncoder(resWriter).Encode(user)
-
-// }

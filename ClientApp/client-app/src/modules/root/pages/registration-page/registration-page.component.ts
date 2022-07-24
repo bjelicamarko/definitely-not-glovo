@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ResponseMessage } from 'src/modules/shared/models/ResponseMessage';
-import { NewUserDTO } from 'src/modules/shared/models/NewUserDTO';
+import { UserDTO } from 'src/modules/shared/models/UserDTO';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { AppService } from '../../services/app.service';
 
@@ -34,12 +33,18 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   submit() {
-    const newUserDTO: NewUserDTO = {
+    const newUserDTO: UserDTO = {
       Email: this.form.value.email,
       Password: this.form.value.password,
       FirstName: this.form.value.firstName,
       LastName: this.form.value.lastName,
-      Contact: this.form.value.contact
+      Contact: this.form.value.contact,
+      Id: 0,
+      Role: '',
+      Banned: false,
+      Image: null,
+      ImagePath: '',
+      Changed: false
     };
 
     console.log(newUserDTO)

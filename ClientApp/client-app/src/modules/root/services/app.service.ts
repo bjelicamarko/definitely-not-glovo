@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ResponseMessage } from "src/modules/shared/models/ResponseMessage";
-import { NewUserDTO } from "src/modules/shared/models/NewUserDTO";
+import { UserDTO } from "src/modules/shared/models/UserDTO";
 
 @Injectable({
     providedIn: "root",
@@ -12,7 +12,7 @@ export class AppService {
 
     constructor(private http: HttpClient) {}
 
-    register(newUserDTO: NewUserDTO): Observable<HttpResponse<ResponseMessage>> {
+    register(userDTO: UserDTO): Observable<HttpResponse<ResponseMessage>> {
         let queryParams = {};
 
         queryParams = {
@@ -21,6 +21,6 @@ export class AppService {
         };
 
         return this.http.post<HttpResponse<ResponseMessage>>("not-glovo/api/users/register", 
-        newUserDTO, queryParams);
+        userDTO, queryParams);
     }
 }

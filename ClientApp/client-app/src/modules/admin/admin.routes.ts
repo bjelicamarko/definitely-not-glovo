@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
-import { ProfileInfoPageComponent } from "../shared/pages/profile-info-page/profile-info-page.component";
 import { RestaurantsPageComponent } from "../shared/pages/restaurants-page/restaurants-page.component";
 import { CreateRestaurantPageComponent } from "./pages/create-restaurant-page/create-restaurant-page.component";
+import { CreateUserPageComponent } from "./pages/create-user-page/create-user-page.component";
 import { UsersPageComponent } from "./pages/users-page/users-page.component";
 
 export const AdminRoutes: Routes = [
@@ -11,14 +11,9 @@ export const AdminRoutes: Routes = [
         component: UsersPageComponent,
     },
     {
-        path: "profile-info/:userId",
+        path: "user-info/:userId",
         pathMatch: "full",
-        component: ProfileInfoPageComponent
-    },
-    {
-        path: "createUser",
-        pathMatch: "full",
-        component: ProfileInfoPageComponent
+        component: CreateUserPageComponent,
     },
     {
         path: "restaurant-info/:restaurantId",

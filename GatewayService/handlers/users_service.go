@@ -205,22 +205,3 @@ func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
 
 	utils.DelegateResponse(response, resWriter)
 }
-
-func SaveImageUser(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
-
-	req, _ := http.NewRequest(http.MethodPost,
-		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/saveImageUser", r.Body)
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	response, err := client.Do(req)
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusGatewayTimeout)
-		return
-	}
-
-	utils.DelegateResponse(response, resWriter)
-}
