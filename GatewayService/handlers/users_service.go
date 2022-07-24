@@ -53,7 +53,7 @@ func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 	size := r.URL.Query().Get("size")
 
 	response, err := http.Get(
-		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/getUsers?page=" + page + "&size=" + size)
+		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/findAllUsers?page=" + page + "&size=" + size)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusGatewayTimeout)
@@ -73,6 +73,42 @@ func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
 	//searchUsers?searchField=brank&userType=DELIVERER&page=0&size=5
 	response, err := http.Get(
 		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/searchUsers?searchField=" + searchField + "&userType=" + userType + "&page=" + page + "&size=" + size)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
+func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	userId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	response, err := http.Get(
+		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/findUserById/" + strconv.FormatUint(uint64(userId), 10))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
+func CreateUser(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	req, _ := http.NewRequest(http.MethodPost,
+		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/createUser", r.Body)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusGatewayTimeout)
@@ -161,23 +197,6 @@ func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
 
 	client := &http.Client{}
 	response, err := client.Do(req)
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusGatewayTimeout)
-		return
-	}
-
-	utils.DelegateResponse(response, resWriter)
-}
-
-func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
-
-	params := mux.Vars(r)
-	userId, _ := strconv.ParseUint(params["id"], 10, 32)
-
-	response, err := http.Get(
-		utils.UsersServiceRoot.Next().Host + UsersServiceApi + "/findUserById/" + strconv.FormatUint(uint64(userId), 10))
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusGatewayTimeout)

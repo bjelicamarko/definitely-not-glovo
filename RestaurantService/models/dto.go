@@ -14,6 +14,7 @@ type RestaurantDTO struct {
 	DisplayName    string  `json:"DisplayName"`
 	Longitude      float32 `json:"Longitude"`
 	Latitude       float32 `json:"Latitude"`
+	Changed        bool    `json:"Changed"`
 }
 
 type RestaurantDTOMessage struct {

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Repository struct {
@@ -58,7 +59,7 @@ func (repo *Repository) CheckCredentials(email string, password string) (*models
 	return &user, nil
 }
 
-func (repo *Repository) FindAll(r *http.Request) ([]models.UserDTO, int64, error) {
+func (repo *Repository) FindAllUsers(r *http.Request) ([]models.UserDTO, int64, error) {
 	var usersDTO []models.UserDTO
 	var users []*models.User
 	var totalElements int64
@@ -115,45 +116,47 @@ func (repo *Repository) SearchUsers(r *http.Request) ([]models.UserDTO, int64, e
 
 	return usersDTO, totalElements, nil
 }
-func (repo *Repository) CreateUser(newUserDTO *models.NewUserDTO) (*models.User, error) {
+
+func (repo *Repository) FindUserById(id uint) (*models.UserDTO, error) {
 	var user models.User
-
-	user.Model = gorm.Model{}
-	user.Email = newUserDTO.Email
-	user.Password = newUserDTO.Password
-	user.FirstName = newUserDTO.FirstName
-	user.LastName = newUserDTO.LastName
-	user.Contact = newUserDTO.Contact
-	user.Banned = false
-	user.Role = models.APPUSER
-
-	result := repo.db.Table("users").Create(&user)
-
-	if result.Error != nil {
-		return &user, result.Error
-	}
-
-	return &user, nil
-}
-
-func (repo *Repository) UpdateUser(userDTO *models.UserDTO, indicator bool) (*models.User, error) {
-	var user models.User
-
-	result := repo.db.Table("users").Where("email = ?", userDTO.Email).First(&user)
+	result := repo.db.Where("id = ?", id).First(&user)
 
 	if result.Error != nil {
 		return nil, errors.New("user cannot be found")
+	}
+
+	var userDTO models.UserDTO = user.ToUserDTO()
+	return &userDTO, nil
+}
+
+func (repo *Repository) CreateUser(userDTO *models.UserDTO) (*models.UserDTO, error) {
+	var user models.User = userDTO.ToUser()
+	result := repo.db.Table("users").Create(&user)
+
+	if result.Error != nil {
+		return nil, errors.New("error while creating user")
+	}
+
+	var retValue models.UserDTO = user.ToUserDTO()
+	return &retValue, nil
+}
+
+func (repo *Repository) UpdateUser(userDTO *models.UserDTO) (*models.UserDTO, error) {
+	var user models.User
+	result := repo.db.Table("users").Where("id = ?", userDTO.Id).First(&user)
+
+	if result.Error != nil {
+		return nil, errors.New("user cannot be found")
+	}
+
+	if userDTO.Changed {
+		user.Image = userDTO.ImagePath
 	}
 
 	user.FirstName = userDTO.FirstName
 	user.LastName = userDTO.LastName
 	user.Contact = userDTO.Contact
 	user.Banned = userDTO.Banned
-	user.Role = models.Role(userDTO.Role)
-
-	if indicator {
-		user.Image = userDTO.Image
-	}
 
 	result2 := repo.db.Table("users").Save(&user)
 
@@ -161,51 +164,54 @@ func (repo *Repository) UpdateUser(userDTO *models.UserDTO, indicator bool) (*mo
 		return nil, errors.New("error while updating user")
 	}
 
-	return &user, nil
+	var retValue models.UserDTO = user.ToUserDTO()
+	return &retValue, nil
 }
 
-func (repo *Repository) DeleteUser(id uint) error {
+func (repo *Repository) DeleteUser(id uint) (*models.UserDTO, error) {
+	var user models.User
+	result := repo.db.Where("id = ?", id).Clauses(clause.Returning{}).Delete(&user)
 
-	result := repo.db.Where("id = ?", id).Delete(&models.User{})
+	if result.Error != nil {
+		return nil, errors.New("error while deleting user")
+	}
 
-	return result.Error
+	var userDTO models.UserDTO = user.ToUserDTO()
+	return &userDTO, nil
 }
 
-func (repo *Repository) BanUser(id uint) error {
+func (repo *Repository) BanUser(id uint) (*models.UserDTO, error) {
 	var user models.User
 	result := repo.db.Where("id = ?", id).First(&user)
 
 	if result.Error != nil {
-		return result.Error
+		return nil, errors.New("user cannot be found")
 	}
 
 	user.Banned = true
-	repo.db.Table("users").Save(&user)
+	result2 := repo.db.Table("users").Save(&user)
 
-	return nil
+	if result2.Error != nil {
+		return nil, errors.New("error while banning user")
+	}
+
+	var userDTO models.UserDTO = user.ToUserDTO()
+	return &userDTO, nil
 }
 
-func (repo *Repository) UnbanUser(id uint) error {
+func (repo *Repository) UnbanUser(id uint) (*models.UserDTO, error) {
 	var user models.User
 	result := repo.db.Where("id = ?", id).First(&user)
 
 	if result.Error != nil {
-		return result.Error
+		return nil, errors.New("user cannot be found")
 	}
 
 	user.Banned = false
-	repo.db.Table("users").Save(&user)
+	result2 := repo.db.Table("users").Save(&user)
 
-	return nil
-}
-
-func (repo *Repository) FindUserById(id uint) (*models.UserDTO, error) {
-	var user models.User
-
-	result := repo.db.Where("id = ?", id).First(&user)
-
-	if result.Error != nil {
-		return nil, result.Error
+	if result2.Error != nil {
+		return nil, errors.New("error while unbanning user")
 	}
 
 	var userDTO models.UserDTO = user.ToUserDTO()

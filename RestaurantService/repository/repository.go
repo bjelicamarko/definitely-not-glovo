@@ -5,8 +5,10 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Repository struct {
@@ -15,6 +17,10 @@ type Repository struct {
 
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{db}
+}
+
+func concat(str string) string {
+	return "%" + strings.ToLower(str) + "%"
 }
 
 func Paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
@@ -37,7 +43,7 @@ func Paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
 	}
 }
 
-func (repo *Repository) FindAll(r *http.Request) ([]models.RestaurantDTO, int64, error) {
+func (repo *Repository) FindAllRestaurants(r *http.Request) ([]models.RestaurantDTO, int64, error) {
 	var restaurantsDTO []models.RestaurantDTO
 	var restaurants []*models.Restaurant
 	var totalElements int64
@@ -56,29 +62,100 @@ func (repo *Repository) FindAll(r *http.Request) ([]models.RestaurantDTO, int64,
 	return restaurantsDTO, totalElements, nil
 }
 
-func (repo *Repository) SaveRestaurant(restaurantDTO *models.RestaurantDTO) (*models.Restaurant, error) {
+func (repo *Repository) SearchRestaurants(r *http.Request) ([]models.RestaurantDTO, int64, error) {
+	var restaurantsDTO []models.RestaurantDTO
+	var restaurants []*models.Restaurant
+	var totalElements int64
+
+	searchField := r.URL.Query().Get("searchField")
+
+	result := repo.db.Scopes(Paginate(r)).Table("restaurants").
+		Where("(deleted_at IS NULL) and "+
+			"('' = ? or restaurant_name LIKE ?)",
+			searchField, concat(searchField)).
+		Find(&restaurants)
+
+	repo.db.Table("restaurants").
+		Where("(deleted_at IS NULL) and "+
+			"('' = ? or restaurant_name LIKE ?)",
+			searchField, concat(searchField)).
+		Count(&totalElements)
+
+	if result.Error != nil {
+		return nil, totalElements, result.Error
+	}
+
+	for _, restaurant := range restaurants {
+		restaurantsDTO = append(restaurantsDTO, restaurant.ToRestaurantDTO())
+	}
+
+	return restaurantsDTO, totalElements, nil
+}
+
+func (repo *Repository) FindRestaurantById(id uint) (*models.RestaurantDTO, error) {
+	var restaurant models.Restaurant
+	result := repo.db.Table("restaurants").Where("id = ?", id).First(&restaurant)
+
+	if result.Error != nil {
+		return nil, errors.New("restaurant cannot be found")
+	}
+
+	var restaurantDTO models.RestaurantDTO = restaurant.ToRestaurantDTO()
+	return &restaurantDTO, nil
+}
+
+func (repo *Repository) CreateRestaurant(restaurantDTO *models.RestaurantDTO) (*models.RestaurantDTO, error) {
 	var restaurant models.Restaurant = restaurantDTO.ToRestaurant()
-	result := repo.db.Create(restaurant)
+	result := repo.db.Table("restaurants").Create(&restaurant)
 
 	if result.Error != nil {
-		return nil, errors.New("error while saving restaurant")
+		return nil, errors.New("error while creating restaurant")
 	}
 
-	return &restaurant, nil
+	var retValue models.RestaurantDTO = restaurant.ToRestaurantDTO()
+	return &retValue, nil
 }
 
-func (repo *Repository) UpdateRestaurant(updatedRestaurant *models.Restaurant) (*models.Restaurant, error) {
-	result := repo.db.Save(updatedRestaurant)
+func (repo *Repository) UpdateRestaurant(restaurantDTO *models.RestaurantDTO) (*models.RestaurantDTO, error) {
+	var restaurant models.Restaurant
+	result := repo.db.Table("restaurants").Where("id = ?", restaurantDTO.Id).First(&restaurant)
 
 	if result.Error != nil {
-		return updatedRestaurant, errors.New("error while updating restaurant")
+		return nil, errors.New("restaurant cannot be found")
 	}
 
-	return updatedRestaurant, nil
+	if restaurantDTO.Changed {
+		restaurant.Image = restaurantDTO.ImagePath
+	}
+
+	restaurant.ContactPhone = restaurantDTO.ContactPhone
+	restaurant.Country = restaurantDTO.Country
+	restaurant.City = restaurantDTO.City
+	restaurant.Street = restaurantDTO.Street
+	restaurant.StreetNumber = restaurantDTO.StreetNumber
+	restaurant.Ptt = restaurantDTO.Ptt
+	restaurant.DisplayName = restaurantDTO.DisplayName
+	restaurant.Longitude = restaurantDTO.Longitude
+	restaurant.Latitude = restaurantDTO.Latitude
+
+	result2 := repo.db.Table("restaurants").Save(&restaurant)
+
+	if result2.Error != nil {
+		return nil, errors.New("error while updating restaurant")
+	}
+
+	var retValue models.RestaurantDTO = restaurant.ToRestaurantDTO()
+	return &retValue, nil
 }
 
-func (repo *Repository) DeleteRestaurant(id uint) error {
-	result := repo.db.Where("id = ?", id).Delete(&models.Restaurant{})
+func (repo *Repository) DeleteRestaurant(id uint) (*models.RestaurantDTO, error) {
+	var restaurant models.Restaurant
+	result := repo.db.Where("id = ?", id).Clauses(clause.Returning{}).Delete(&restaurant)
 
-	return result.Error
+	if result.Error != nil {
+		return nil, errors.New("error while deleting restaurant")
+	}
+
+	var retValue models.RestaurantDTO = restaurant.ToRestaurantDTO()
+	return &retValue, nil
 }

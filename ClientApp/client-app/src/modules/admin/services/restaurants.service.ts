@@ -12,7 +12,7 @@ export class RestaurantsService {
     
     constructor(private http: HttpClient) {}
 
-    saveRestaurant(restaurantDTO: RestaurantDTO): Observable<HttpResponse<RestaurantDTOMessage>> {
+    createRestaurant(restaurantDTO: RestaurantDTO): Observable<HttpResponse<RestaurantDTOMessage>> {
         let queryParams = {};
 
         queryParams = {
@@ -20,6 +20,7 @@ export class RestaurantsService {
         observe: "response",
         }
 
-        return this.http.post<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/saveRestaurant", restaurantDTO, queryParams);
+        return this.http.post<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/createRestaurant", restaurantDTO, queryParams);
     }
+
 }

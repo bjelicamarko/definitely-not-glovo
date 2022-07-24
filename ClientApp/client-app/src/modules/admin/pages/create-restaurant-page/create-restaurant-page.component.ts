@@ -9,13 +9,14 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import { MapAddress } from 'src/modules/shared/models/MapAddress';
 import { RestaurantDTO } from 'src/modules/shared/models/RestaurantDTO';
-import { Point } from 'ol/geom';
+import { Geometry, Point } from 'ol/geom';
 import Vector from 'ol/layer/Vector';
 import VectorTemp from 'ol/source/Vector';
 import { RestaurantsService } from '../../services/restaurants.service';
 import { RestaurantDTOMessage } from 'src/modules/shared/models/RestaurantDTOMessage';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UtilsService } from 'src/modules/shared/services/utils.service';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -44,14 +45,43 @@ export class CreateRestaurantPageComponent implements OnInit {
   
   public selectedFile: File | undefined
 
+  public restaurantIdFromRoute: number
+
   constructor(private http: HttpClient,
     private restaurantsService: RestaurantsService,
+    private utilsService: UtilsService,
     private snackBarService: SnackBarService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { 
+      this.restaurantIdFromRoute = 0
+    }
 
   ngOnInit(): void {
-    var iconFeature = new Feature();
+    const routeParams = this.route.snapshot.paramMap;
+    this.restaurantIdFromRoute = Number(routeParams.get('restaurantId'));
+  
+    var iconFeature: Feature<Geometry>
+    iconFeature = new Feature();
 
+    var longitude = 18.3501358
+    var latitude = 42.7060377
+
+    if (this.restaurantIdFromRoute !== 0) {
+      this.utilsService.findRestaurantById(this.restaurantIdFromRoute)
+      .subscribe((response) => {
+        this.restaurant = response.body as RestaurantDTO;
+        iconFeature = new Feature({
+          geometry: new Point(fromLonLat([this.restaurant.Longitude, this.restaurant.Latitude])),
+        });
+        this.initMap(this.restaurant.Longitude, this.restaurant.Latitude, iconFeature)
+      })
+    } else {
+      this.initMap(longitude, latitude, iconFeature)
+    }
+    
+  }
+
+  initMap(longitude: number, latitude: number, iconFeature: Feature<Geometry>) {
     iconFeature.setStyle(
       new Style({
         image: new Icon({
@@ -65,7 +95,7 @@ export class CreateRestaurantPageComponent implements OnInit {
 
     this.map = new Map({
       view: new View({
-        center: fromLonLat([18.3501358, 42.7060377]),
+        center: fromLonLat([longitude, latitude]),
         zoom: 15,
       }),
       layers: [
@@ -99,22 +129,23 @@ export class CreateRestaurantPageComponent implements OnInit {
 
           iconFeature.set('geometry', new Point(fromLonLat([coordinate[0], coordinate[1]])));
       })
-  });
+    });
   }
 
-  saveRestaurant() {
+
+  createRestaurant() {
     if (this.restaurant.RestaurantName && this.restaurant.ContactPhone && 
       this.restaurant.City && this.restaurant.Street && this.restaurant.StreetNumber &&
-      this.restaurant.Image && this.restaurant.Country
-      && this.restaurant.Image !== "assets/restaurant.png") {
+      this.restaurant.Image && this.restaurant.Country && 
+      this.restaurant.ImagePath !== 'assets/restaurant.png') {
         let reader = new FileReader();
         reader.readAsDataURL(this.selectedFile!);
         reader.onload = () => {
           //console.log(reader.result);
           this.restaurant.Image = reader.result;
-          this.restaurant.ImagePath = this.selectedFile?.name as string;
+          //this.restaurant.ImagePath = "images/" + this.selectedFile?.name as string;
           
-          this.restaurantsService.saveRestaurant(this.restaurant)
+          this.restaurantsService.createRestaurant(this.restaurant)
           .subscribe((response) => {
             var temp = response.body as RestaurantDTOMessage;
             this.snackBarService.openSnackBar(temp.Message);
@@ -128,8 +159,12 @@ export class CreateRestaurantPageComponent implements OnInit {
     }
   }
 
+  updateRestaurant() {
+  }
+
   onFileChanged(event: any) {
     this.selectedFile = event.target.files[0]
+    this.restaurant.ImagePath = "images/" + this.selectedFile?.name as string;
   }
   
 }

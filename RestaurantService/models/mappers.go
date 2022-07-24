@@ -21,6 +21,7 @@ func (restaurant *Restaurant) ToRestaurantDTO() RestaurantDTO {
 		DisplayName:    restaurant.DisplayName,
 		Longitude:      restaurant.Longitude,
 		Latitude:       restaurant.Latitude,
+		Changed:        false,
 	}
 }
 

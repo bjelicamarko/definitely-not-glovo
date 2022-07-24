@@ -116,105 +116,37 @@ func (uh *UsersHandler) AuthorizeDeliverer(resWriter http.ResponseWriter, req *h
 	json.NewEncoder(resWriter).Encode(models.Response{Message: "authorization succeeded"})
 }
 
-func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Request) {
+// func (uh *UsersHandler) Register(resWriter http.ResponseWriter, req *http.Request) {
+// 	utils.AdjustResponseHeaderJson(&resWriter)
+
+// 	var newUserDTO models.NewUserDTO
+// 	json.NewDecoder(req.Body).Decode(&newUserDTO)
+
+// 	_, err := uh.repository.CreateUser(&newUserDTO)
+
+// 	if err != nil {
+// 		resWriter.WriteHeader(http.StatusBadRequest)
+// 		json.NewEncoder(resWriter).Encode(models.Response{Message: "registration failed"})
+// 		return
+// 	}
+
+// 	json.NewEncoder(resWriter).Encode(models.Response{Message: "registration succeeded"})
+// }
+
+func (uh *UsersHandler) FindAllUsers(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 
-	var newUserDTO models.NewUserDTO
-	json.NewDecoder(req.Body).Decode(&newUserDTO)
+	usersDTO, totalElements, _ := uh.repository.FindAllUsers(req)
 
-	_, err := uh.repository.CreateUser(&newUserDTO)
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "registration failed"})
-		return
-	}
-
-	json.NewEncoder(resWriter).Encode(models.Response{Message: "registration succeeded"})
-}
-
-func (uh *UsersHandler) GetUsers(resWriter http.ResponseWriter, req *http.Request) {
-	utils.AdjustResponseHeaderJson(&resWriter)
-
-	users, totalElements, _ := uh.repository.FindAll(req)
-
-	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: users, TotalElements: totalElements})
+	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: usersDTO, TotalElements: totalElements})
 }
 
 func (uh *UsersHandler) SearchUsers(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 
-	users, totalElements, _ := uh.repository.SearchUsers(req)
+	usersDTO, totalElements, _ := uh.repository.SearchUsers(req)
 
-	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: users, TotalElements: totalElements})
-}
-
-func (uh *UsersHandler) UpdateUser(resWriter http.ResponseWriter, req *http.Request) {
-	utils.AdjustResponseHeaderJson(&resWriter)
-
-	var updatedUser models.UserDTO
-	json.NewDecoder(req.Body).Decode(&updatedUser)
-
-	user, err := uh.repository.UpdateUser(&updatedUser, false)
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "unsuccessfully updated"})
-		return
-	}
-
-	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "successfully updated", UserDTO: user.ToUserDTO()})
-}
-
-func (uh *UsersHandler) DeleteUser(resWriter http.ResponseWriter, req *http.Request) {
-	utils.AdjustResponseHeaderJson(&resWriter)
-
-	params := mux.Vars(req)
-	idStr := params["id"]
-	idInt, _ := strconv.ParseInt(idStr, 10, 64)
-
-	err := uh.repository.DeleteUser(uint(idInt))
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "error while deleting user"})
-	} else {
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully deleted"})
-	}
-}
-
-func (uh *UsersHandler) BanUser(resWriter http.ResponseWriter, req *http.Request) {
-	utils.AdjustResponseHeaderJson(&resWriter)
-
-	params := mux.Vars(req)
-	idStr := params["id"]
-	idInt, _ := strconv.ParseInt(idStr, 10, 64)
-
-	err := uh.repository.BanUser(uint(idInt))
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "error while banning user"})
-	} else {
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully banned"})
-	}
-}
-
-func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Request) {
-	utils.AdjustResponseHeaderJson(&resWriter)
-
-	params := mux.Vars(req)
-	idStr := params["id"]
-	idInt, _ := strconv.ParseInt(idStr, 10, 64)
-
-	err := uh.repository.UnbanUser(uint(idInt))
-
-	if err != nil {
-		resWriter.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "error while unbanning user"})
-	} else {
-		json.NewEncoder(resWriter).Encode(models.Response{Message: "user successfully unbanned"})
-	}
+	json.NewEncoder(resWriter).Encode(models.UsersPageable{Elements: usersDTO, TotalElements: totalElements})
 }
 
 func (uh *UsersHandler) FindUserById(resWriter http.ResponseWriter, req *http.Request) {
@@ -224,44 +156,140 @@ func (uh *UsersHandler) FindUserById(resWriter http.ResponseWriter, req *http.Re
 	idStr := params["id"]
 	idInt, _ := strconv.ParseInt(idStr, 10, 64)
 
-	user, err := uh.repository.FindUserById(uint(idInt))
+	userDTO, err := uh.repository.FindUserById(uint(idInt))
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: err.Error()})
 		return
 	}
 
-	json.NewEncoder(resWriter).Encode(user)
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully found", UserDTO: *userDTO})
 }
 
-func (uh *UsersHandler) SaveImageUser(resWriter http.ResponseWriter, req *http.Request) {
+func (uh *UsersHandler) CreateUser(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 
-	var imageMessage models.ImageMessage
+	var newUserDTO models.UserDTO
+	json.NewDecoder(req.Body).Decode(&newUserDTO)
 
-	json.NewDecoder(req.Body).Decode(&imageMessage)
+	_ = os.Remove(newUserDTO.ImagePath)
+	utils.ToImage(newUserDTO.Image, newUserDTO.ImagePath)
 
-	_ = os.Remove("images/" + imageMessage.Path)
-
-	utils.ToImage(imageMessage.Image, "images/"+imageMessage.Path)
-
-	user, err := uh.repository.FindUserById(imageMessage.Id)
-	user.Image = "images/" + imageMessage.Path
+	userDTO, err := uh.repository.CreateUser(&newUserDTO)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: err.Error()})
 		return
 	}
 
-	_, err2 := uh.repository.UpdateUser(user, true)
-
-	user.Image = utils.GetB64Image("images/" + imageMessage.Path)
-
-	if err2 != nil {
-		resWriter.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
-	json.NewEncoder(resWriter).Encode(user)
-
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully created", UserDTO: *userDTO})
 }
+
+func (uh *UsersHandler) UpdateUser(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	var updatedUser models.UserDTO
+	json.NewDecoder(req.Body).Decode(&updatedUser)
+
+	if updatedUser.Changed {
+		_ = os.Remove(updatedUser.ImagePath)
+		utils.ToImage(updatedUser.Image, updatedUser.ImagePath)
+	}
+
+	userDTO, err := uh.repository.UpdateUser(&updatedUser)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: err.Error()})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully updated", UserDTO: *userDTO})
+}
+
+func (uh *UsersHandler) DeleteUser(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	userDTO, err := uh.repository.DeleteUser(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: err.Error()})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully deleted", UserDTO: *userDTO})
+}
+
+func (uh *UsersHandler) BanUser(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	userDTO, err := uh.repository.BanUser(uint(idInt))
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: err.Error()})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully banned", UserDTO: *userDTO})
+}
+
+func (uh *UsersHandler) UnbanUser(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	userDTO, err := uh.repository.UnbanUser(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: err.Error()})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.UserDTOMessage{Message: "user successfully unbanned", UserDTO: *userDTO})
+}
+
+// func (uh *UsersHandler) SaveImageUser(resWriter http.ResponseWriter, req *http.Request) {
+// 	utils.AdjustResponseHeaderJson(&resWriter)
+
+// 	var imageMessage models.ImageMessage
+
+// 	json.NewDecoder(req.Body).Decode(&imageMessage)
+
+// 	_ = os.Remove("images/" + imageMessage.Path)
+
+// 	utils.ToImage(imageMessage.Image, "images/"+imageMessage.Path)
+
+// 	user, err := uh.repository.FindUserById(imageMessage.Id)
+// 	user.Image = "images/" + imageMessage.Path
+
+// 	if err != nil {
+// 		resWriter.WriteHeader(http.StatusBadRequest)
+// 		return
+// 	}
+
+// 	_, err2 := uh.repository.UpdateUser(user, true)
+
+// 	user.Image = utils.GetB64Image("images/" + imageMessage.Path)
+
+// 	if err2 != nil {
+// 		resWriter.WriteHeader(http.StatusBadRequest)
+// 		return
+// 	}
+
+// 	json.NewEncoder(resWriter).Encode(user)
+
+// }

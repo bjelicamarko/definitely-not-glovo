@@ -61,8 +61,10 @@
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" 
-                        (click)="saveRestaurant()" type="button">Save Restaurant</button>
+                        <button *ngIf="restaurantIdFromRoute === 0" class="btn btn-primary profile-button" 
+                        (click)="createRestaurant()" type="button">Create Restaurant</button>
+                        <button *ngIf="restaurantIdFromRoute !== 0" class="btn btn-primary profile-button" 
+                        (click)="updateRestaurant()" type="button">Update Restaurant</button>
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ export const AdminRoutes: Routes = [
         component: ProfileInfoPageComponent
     },
     {
-        path: "createRestaurant",
+        path: "restaurant-info/:restaurantId",
         pathMatch: "full",
         component: CreateRestaurantPageComponent
     },
@@ -29,5 +29,5 @@ export const AdminRoutes: Routes = [
         path: "restaurants",
         pathMatch: "full",
         component: RestaurantsPageComponent
-    }
+    },
 ];

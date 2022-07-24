@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/comm
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ImageMessage } from "../models/ImageMessage";
+import { RestaurantDTO } from "../models/RestaurantDTO";
 import { RestaurantsPageable } from "../models/RestaurantsPageable";
 import { UserDTO } from "../models/UserDTO";
 import { UserDTOMessage } from "../models/UserDTOMessage";
@@ -63,5 +64,16 @@ export class UtilsService {
         };
 
         return this.http.get<HttpResponse<RestaurantsPageable>>("not-glovo/api/restaurants/getRestaurants", queryParams);
+    }
+
+    findRestaurantById(id: number): Observable<HttpResponse<RestaurantDTO>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.get<HttpResponse<RestaurantDTO>>("not-glovo/api/restaurants/findRestaurantById/" + id, queryParams);
     }
 }
