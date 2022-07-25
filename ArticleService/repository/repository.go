@@ -100,22 +100,22 @@ func (repo *Repository) SearchArticles(r *http.Request) ([]models.ArticleDTO, in
 	priceTo := r.URL.Query().Get("priceTo")
 
 	result := repo.db.Scopes(Paginate(r)).Table("articles").
-		Where("(deleted_at IS NULL and restaurant_name = ?) and "+
+		Where("deleted_at IS NULL and ('' = ? or LOWER(restaurant_name) LIKE ?) and "+
 			"('' = ? or LOWER(article_name) LIKE ?) and "+
-			"('' = ? or article_type = ?) and "+
+			"('' = ? or LOWER(article_type) LIKE ?) and "+
 			"(price >= ? and price <= ?)",
-			restaurantName,
-			searchField, concat(searchField), articleType, articleType,
+			restaurantName, concat(restaurantName),
+			searchField, concat(searchField), articleType, concat(articleType),
 			priceFrom, priceTo).
 		Find(&articles)
 
 	repo.db.Table("articles").
-		Where("(deleted_at IS NULL and restaurant_name = ?) and "+
+		Where("deleted_at IS NULL and ('' = ? or LOWER(restaurant_name) LIKE ?) and "+
 			"('' = ? or LOWER(article_name) LIKE ?) and "+
-			"('' = ? or article_type = ?) and "+
+			"('' = ? or LOWER(article_type) LIKE ?) and "+
 			"(price >= ? and price <= ?)",
-			restaurantName,
-			searchField, concat(searchField), articleType, articleType,
+			restaurantName, concat(restaurantName),
+			searchField, concat(searchField), articleType, concat(articleType),
 			priceFrom, priceTo).
 		Count(&totalElements)
 

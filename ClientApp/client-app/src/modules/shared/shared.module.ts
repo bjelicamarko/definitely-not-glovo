@@ -14,6 +14,9 @@ import { RestaurantsUtilsService } from "./services/restaurants-utils";
 import { UsersUtilsService } from "./services/users-utils.service";
 import { RestaurantInfoComponent } from './pages/restaurant-info/restaurant-info.component';
 import { UserInfoComponent } from './pages/user-info/user-info.component';
+import { ArticlesUtilsService } from "./services/articles-utils";
+import { ArticleCardComponent } from './components/article-card/article-card.component';
+import { ArticlesPageComponent } from './pages/articles-page/articles-page.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +27,9 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
             RestaurantsPageComponent,
             RestaurantCardComponent,
             RestaurantInfoComponent,
-            UserInfoComponent
+            UserInfoComponent,
+            ArticleCardComponent,
+            ArticlesPageComponent
   ],
     imports: [
         CommonModule,
@@ -40,7 +45,8 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
         SnackBarService,
         UtilsService,
         RestaurantsUtilsService,
-        UsersUtilsService
+        UsersUtilsService,
+        ArticlesUtilsService
     ]
 })
 export class SharedModule { }

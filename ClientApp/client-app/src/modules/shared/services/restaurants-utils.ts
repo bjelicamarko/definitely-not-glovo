@@ -38,9 +38,9 @@ export class RestaurantsUtilsService {
                 searchField: searchFieldVal,
                 size: pageSize,
                 page: pageNum
-            }};
+        }};
 
-            return this.http.get<HttpResponse<RestaurantsPageable>>("not-glovo/api/restaurants/searchRestaurants", queryParams);
+        return this.http.get<HttpResponse<RestaurantsPageable>>("not-glovo/api/restaurants/searchRestaurants", queryParams);
     }
 
     findRestaurantById(id: number): Observable<HttpResponse<RestaurantDTOMessage>> {

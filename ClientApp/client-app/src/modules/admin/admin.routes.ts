@@ -1,5 +1,7 @@
 import { Routes } from "@angular/router";
+import { ArticlesPageComponent } from "../shared/pages/articles-page/articles-page.component";
 import { RestaurantsPageComponent } from "../shared/pages/restaurants-page/restaurants-page.component";
+import { CreateArticlePageComponent } from "./pages/create-article-page/create-article-page.component";
 import { CreateRestaurantPageComponent } from "./pages/create-restaurant-page/create-restaurant-page.component";
 import { CreateUserPageComponent } from "./pages/create-user-page/create-user-page.component";
 import { UsersPageComponent } from "./pages/users-page/users-page.component";
@@ -16,13 +18,23 @@ export const AdminRoutes: Routes = [
         component: CreateUserPageComponent,
     },
     {
+        path: "restaurants",
+        pathMatch: "full",
+        component: RestaurantsPageComponent
+    },
+    {
         path: "restaurant-info/:restaurantId",
         pathMatch: "full",
         component: CreateRestaurantPageComponent
     },
     {
-        path: "restaurants",
+        path: "articles",
         pathMatch: "full",
-        component: RestaurantsPageComponent
+        component: ArticlesPageComponent
     },
+    {
+        path: "article-info/:articleId",
+        pathMatch: "full",
+        component: CreateArticlePageComponent
+    }
 ];

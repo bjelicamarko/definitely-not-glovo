@@ -89,9 +89,9 @@ func (repo *Repository) SearchUsers(r *http.Request) ([]models.UserDTO, int64, e
 	result := repo.db.Scopes(Paginate(r)).Table("users").
 		Where("(deleted_at IS NULL and role != ?) and "+
 			"('' = ? or "+
-			"first_name LIKE ? or "+
-			"last_name LIKE ? or "+
-			"email LIKE ?) and"+
+			"lower(first_name) LIKE ? or "+
+			"lower(last_name) LIKE ? or "+
+			"lower(email) LIKE ?) and"+
 			"('' = ? or role = ?)",
 			models.ADMIN, searchField, concat(searchField), concat(searchField), concat(searchField), userType, userType).
 		Find(&users)
@@ -99,9 +99,9 @@ func (repo *Repository) SearchUsers(r *http.Request) ([]models.UserDTO, int64, e
 	repo.db.Table("users").
 		Where("(deleted_at IS NULL and role != ?) and "+
 			"('' = ? or "+
-			"first_name LIKE ? or "+
-			"last_name LIKE ? or "+
-			"email LIKE ?) and"+
+			"lower(first_name) LIKE ? or "+
+			"lower(last_name) LIKE ? or "+
+			"lower(email) LIKE ?) and"+
 			"('' = ? or role = ?)",
 			models.ADMIN, searchField, concat(searchField), concat(searchField), concat(searchField), userType, userType).
 		Count(&totalElements)

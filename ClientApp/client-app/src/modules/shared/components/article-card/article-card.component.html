@@ -1,0 +1,16 @@
+<div class="card text-white bg-dark mb-3" style="width: 18rem;">
+    <img src="{{article.Image}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{article.ArticleName}}</h5>
+      <p class="card-text">
+        Article Type: {{article.ArticleType}} <br>
+        Price: {{article.Price}} <br>
+        Description: {{article.Description}} <br>
+        RestaurantName: {{article.RestaurantName}}
+      </p>
+    </div>
+    <div class="card-body">
+      <button type="button" class="btn btn-light" (click)="updateArticle(article.Id)">Update</button>
+      <button type="button" style="margin-left: 5%;" class="btn btn-danger" (click)="deleteArticle(article.Id)">Delete</button>
+    </div>
+</div>

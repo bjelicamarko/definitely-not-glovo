@@ -10,13 +10,15 @@ import { SharedModule } from "../shared/shared.module";
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { CreateUserPageComponent } from './pages/create-user-page/create-user-page.component';
 import { CreateRestaurantPageComponent } from './pages/create-restaurant-page/create-restaurant-page.component';
+import { CreateArticlePageComponent } from './pages/create-article-page/create-article-page.component';
 
 @NgModule({
    declarations: [
     UsersPageComponent,
     UserCardComponent,
     CreateUserPageComponent,
-    CreateRestaurantPageComponent
+    CreateRestaurantPageComponent,
+    CreateArticlePageComponent,
   ],
     imports: [
         CommonModule,
