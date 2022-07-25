@@ -61,17 +61,6 @@ export class UsersService {
         return this.http.post<HttpResponse<UserDTOMessage>>("not-glovo/api/users/createUser", userDTO, queryParams); 
     }
 
-    updateUser(userDTO: UserDTO): Observable<HttpResponse<UserDTOMessage>> {
-        let queryParams = {};
-
-        queryParams = {
-        headers: this.headers,
-        observe: "response",
-        };
-
-        return this.http.put<HttpResponse<UserDTOMessage>>("not-glovo/api/users/updateUser", userDTO, queryParams); 
-    }
-
     deleteUser(id: number): Observable<HttpResponse<UserDTOMessage>>{
         let queryParams = {};
 

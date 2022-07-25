@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { UserInfoComponent } from "../shared/pages/user-info/user-info.component";
 import { MainPageComponent } from "./pages/main-page/main-page.component";
 import { NotFoundPageComponent } from "./pages/not-found-page/not-found-page.component";
 import { RegistrationPageComponent } from "./pages/registration-page/registration-page.component";
@@ -27,6 +28,10 @@ const routes: Routes = [
             path: "admin",
             loadChildren: () =>
               import("./../admin/admin.module").then((m) => m.AdminModule),
+          },
+          {
+            path: "profile",
+            component: UserInfoComponent
           }
         ]
       }

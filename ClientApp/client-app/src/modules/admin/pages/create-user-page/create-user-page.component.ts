@@ -88,7 +88,7 @@ export class CreateUserPageComponent implements OnInit {
         reader.readAsDataURL(this.selectedFile!);
         reader.onload = () => {
           this.user.Image = reader.result;
-          this.usersService.updateUser(this.user)
+          this.usersUtilsService.updateUser(this.user)
           .subscribe((response) => {
             var temp = response.body as UserDTOMessage;
             this.snackBarService.openSnackBar(temp.Message);
@@ -100,7 +100,7 @@ export class CreateUserPageComponent implements OnInit {
           console.log('Error: ', error);
         };
       } else {
-        this.usersService.updateUser(this.user)
+        this.usersUtilsService.updateUser(this.user)
         .subscribe((response) => {
           var temp = response.body as UserDTOMessage;
           this.snackBarService.openSnackBar(temp.Message);

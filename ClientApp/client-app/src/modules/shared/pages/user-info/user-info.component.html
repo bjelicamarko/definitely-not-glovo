@@ -1,1 +1,70 @@
-<p>user-info works!</p>
+<div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" 
+                    src="{{user.Image}}">
+                    <span class="font-weight-bold">{{user.FirstName}} {{user.LastName}}</span>
+                    <span class="text-black-50">{{user.Email}}</span><span>
+                    </span>
+                </div>
+
+                <input
+                    style="display: none"
+                    type="file" (change)="onFileChanged($event)"
+                    #fileInput>
+                    <button style="margin-right: 10%;margin-left: 15%;" (click)="fileInput.click()" class="btn btn-primary profile-button" type="button">Select File</button>
+                    <p>{{selectedFile?.name}}</p>
+            </div>
+
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">
+                            Profile Info
+                        </h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">First Name</label>
+                            <input type="text" class="form-control" 
+                            placeholder="First Name" value="{{user.FirstName}}"
+                            [(ngModel)]="user.FirstName">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Last Name</label>
+                            <input type="text" class="form-control" value="{{user.LastName}}"
+                             placeholder="Last Name"  [(ngModel)]="user.LastName">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Email</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Email" value="{{user.Email}}"
+                            [(ngModel)]="user.Email" readonly>
+                        </div>
+                        <div class="col-md-12"><label class="labels">Contact</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Contact" value="{{user.Contact}}"
+                            [(ngModel)]="user.Contact">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Role</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Role" value="{{user.Role}}"
+                            [(ngModel)]="user.Role" readonly>
+                        </div>
+                        <div class="col-md-12"><label class="labels">Banned</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Banned" value="{{user.Banned}}"
+                            [(ngModel)]="user.Banned" readonly>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" 
+                        (click)="updateUser()" type="button">Update User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

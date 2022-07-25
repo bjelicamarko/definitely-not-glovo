@@ -22,7 +22,7 @@ export class HeaderCommonComponent implements OnInit {
   }
 
   profile(): void {
-    var info = this.authService.getInfo()
-    //this.router.navigate(["/app/main/admin/profile-info/" + info.Id]);
+    //var info = this.authService.getInfo()
+    this.router.navigate(["/app/main/profile"]);
   }
 }
