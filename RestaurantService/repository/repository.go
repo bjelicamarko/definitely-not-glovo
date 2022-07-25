@@ -71,13 +71,13 @@ func (repo *Repository) SearchRestaurants(r *http.Request) ([]models.RestaurantD
 
 	result := repo.db.Scopes(Paginate(r)).Table("restaurants").
 		Where("(deleted_at IS NULL) and "+
-			"('' = ? or restaurant_name LIKE ?)",
+			"('' = ? or lower(restaurant_name) LIKE ?)",
 			searchField, concat(searchField)).
 		Find(&restaurants)
 
 	repo.db.Table("restaurants").
 		Where("(deleted_at IS NULL) and "+
-			"('' = ? or restaurant_name LIKE ?)",
+			"('' = ? or lower(restaurant_name) LIKE ?)",
 			searchField, concat(searchField)).
 		Count(&totalElements)
 

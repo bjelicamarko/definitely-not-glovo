@@ -29,5 +29,13 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/restaurants/updateRestaurant", handlers.UpdateRestaurant).Methods(http.MethodPut)
 	router.HandleFunc("/api/restaurants/deleteRestaurant/{id:[0-9]+}", handlers.DeleteRestaurant).Methods(http.MethodDelete)
 
+	router.HandleFunc("/api/articles/findAllArticles", handlers.FindAllArticles).Methods(http.MethodGet)
+	router.HandleFunc("/api/articles/findAllArticlesFromRestaurant", handlers.FindAllArticlesFromRestaurant).Methods(http.MethodGet)
+	router.HandleFunc("/api/articles/searchArticles", handlers.SearchArticles).Methods(http.MethodGet)
+	router.HandleFunc("/api/articles/findArticleById/{id:[0-9]+}", handlers.FindArticleById).Methods(http.MethodGet)
+	router.HandleFunc("/api/articles/createArticle", handlers.CreateArticle).Methods(http.MethodPost)
+	router.HandleFunc("/api/articles/updateArticle", handlers.UpdateArticle).Methods(http.MethodPut)
+	router.HandleFunc("/api/articles/deleteArticle/{id:[0-9]+}", handlers.DeleteArticle).Methods(http.MethodDelete)
+
 	http.ListenAndServe(":8080", router)
 }

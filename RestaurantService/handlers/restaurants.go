@@ -37,7 +37,7 @@ func (rh *RestaurantsHandler) SearchRestaurants(resWriter http.ResponseWriter, r
 }
 
 func (rh *RestaurantsHandler) FindRestaurantById(resWriter http.ResponseWriter, req *http.Request) {
-	utils.AdjustResponseHeaderJson(&resWriter)
+	AdjustResponseHeaderJson(&resWriter)
 
 	params := mux.Vars(req)
 	idStr := params["id"]
