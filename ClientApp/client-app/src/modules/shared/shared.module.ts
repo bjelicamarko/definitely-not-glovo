@@ -12,7 +12,6 @@ import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-p
 import { RestaurantCardComponent } from './components/restaurant-card/restaurant-card.component';
 import { RestaurantsUtilsService } from "./services/restaurants-utils";
 import { UsersUtilsService } from "./services/users-utils.service";
-import { RestaurantInfoComponent } from './pages/restaurant-info/restaurant-info.component';
 import { UserInfoComponent } from './pages/user-info/user-info.component';
 import { ArticlesUtilsService } from "./services/articles-utils";
 import { ArticleCardComponent } from './components/article-card/article-card.component';
@@ -28,7 +27,6 @@ import { Interceptor } from "./interceptors/interceptor.interceptor";
             ConformationDialogComponent,
             RestaurantsPageComponent,
             RestaurantCardComponent,
-            RestaurantInfoComponent,
             UserInfoComponent,
             ArticleCardComponent,
             ArticlesPageComponent
@@ -41,7 +39,8 @@ import { Interceptor } from "./interceptors/interceptor.interceptor";
         ReactiveFormsModule
     ],
     exports: [
-        PaginationComponent
+        PaginationComponent,
+        ArticlesPageComponent
     ],
     providers: [
         SnackBarService,

@@ -23,7 +23,8 @@ export class UserInfoComponent implements OnInit {
     Banned: false,
     Image: null,
     ImagePath: '',
-    Changed: false
+    Changed: false,
+    RestaurantName: ''
   }
   
   public selectedFile: File | undefined

@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleDTO } from 'src/modules/shared/models/ArticleDTO';
 import { ArticleDTOMessage } from 'src/modules/shared/models/ArticleDTOMessage';
+import { RestaurantDTO } from 'src/modules/shared/models/RestaurantDTO';
+import { RestaurantsPageable } from 'src/modules/shared/models/RestaurantsPageable';
 import { ArticlesUtilsService } from 'src/modules/shared/services/articles-utils';
+import { RestaurantsUtilsService } from 'src/modules/shared/services/restaurants-utils';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { ArticlesService } from '../../services/articles.service';
 
@@ -28,13 +31,17 @@ export class CreateArticlePageComponent implements OnInit {
 
   public articleIdFromRoute: number
 
+  restaurants: RestaurantDTO[];
+
   constructor(private articlesService: ArticlesService,
     private articlesUtilsService: ArticlesUtilsService,
     private snackBarService: SnackBarService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private restaurantsUtilsService: RestaurantsUtilsService
   ) { 
     this.articleIdFromRoute = 0
+    this.restaurants = [];
   }
 
   ngOnInit(): void {
@@ -47,6 +54,14 @@ export class CreateArticlePageComponent implements OnInit {
         var temp = response.body as ArticleDTOMessage;
         this.article = temp.ArticleDTO;
         this.snackBarService.openSnackBar(temp.Message);
+      })
+    }
+
+    if (this.articleIdFromRoute === 0) {
+      this.restaurantsUtilsService.findAllRestaurants(0, 100)
+      .subscribe((response) => {
+        var temp = response.body as RestaurantsPageable;
+        this.restaurants = temp.Elements as RestaurantDTO[];
       })
     }
   }

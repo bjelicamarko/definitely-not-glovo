@@ -10,4 +10,5 @@ export interface UserDTO {
     Image: string | ArrayBuffer | null;
     ImagePath: string;
     Changed: boolean;
+    RestaurantName: string;
 }

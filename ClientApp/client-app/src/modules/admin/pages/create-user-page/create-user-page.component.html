@@ -41,11 +41,15 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Email</label>
-                            <input type="text" class="form-control" 
+                            <input type="text" class="form-control"  *ngIf="userIdFromRoute === 0"
                             placeholder="Email" value="{{user.Email}}"
                             [(ngModel)]="user.Email">
+                            <input type="text" class="form-control"  *ngIf="userIdFromRoute !== 0"
+                            placeholder="Email" value="{{user.Email}}"
+                            [(ngModel)]="user.Email" readonly>
                         </div>
-                        <div class="col-md-12"><label class="labels">Password</label>
+                        <div class="col-md-12" *ngIf="userIdFromRoute === 0">
+                            <label class="labels">Password</label>
                             <input type="password" class="form-control" 
                             placeholder="Password" value="{{user.Password}}"
                             [(ngModel)]="user.Password">
@@ -55,7 +59,24 @@
                             placeholder="Contact" value="{{user.Contact}}"
                             [(ngModel)]="user.Contact">
                         </div>
-                        <div class="col-md-12"><label class="labels" style="margin-top: 10%;">Role</label>
+                        <div class="col-md-12" 
+                        *ngIf="user.Role === 'DELIVERER' || user.Role === 'EMPLOYEE'">
+                        <label class="labels">Restaurant Name</label>
+                            <input type="text" class="form-control" 
+                            *ngIf="userIdFromRoute !== 0"
+                            placeholder="Restaurant Name" value="{{user.RestaurantName}}"
+                            [(ngModel)]="user.RestaurantName" readonly>
+                            <mat-form-field style="margin-left: 2%; margin-top: 2%;"
+                            appearance="fill" 
+                            *ngIf="userIdFromRoute === 0">
+                                <mat-select [(ngModel)]="user.RestaurantName" name="restaurantName">
+                                  <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.RestaurantName">
+                                    {{restaurant.RestaurantName}}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div *ngIf="userIdFromRoute === 0" class="col-md-12"><label class="labels" style="margin-top: 10%;">Role</label>
                             <mat-form-field appearance="fill">
                                 <mat-label>Role</mat-label>
                                 <mat-select [(ngModel)]="user.Role" name="role">
@@ -64,6 +85,11 @@
                                       </mat-option>
                                 </mat-select>
                             </mat-form-field>
+                        </div>
+                        <div *ngIf="userIdFromRoute !== 0"  class="col-md-12"><label class="labels">Role</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Role" value="{{user.Role}}"
+                            [(ngModel)]="user.Role" readonly>
                         </div>
                     </div>
                     <div class="mt-5 text-center">

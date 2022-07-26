@@ -44,7 +44,8 @@ export class RegistrationPageComponent implements OnInit {
       Banned: false,
       Image: null,
       ImagePath: '',
-      Changed: false
+      Changed: false,
+      RestaurantName: ''
     };
 
     console.log(newUserDTO)

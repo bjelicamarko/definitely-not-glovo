@@ -10,8 +10,11 @@
     <div class="col-2" style="margin-left: 0px;">
         <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
             <mat-label style="color: white;">Restaurant Name</mat-label>
-            <input style="color: white;"
+            <input style="color: white;" *ngIf="!changed"
              id="restaurantNameInput" matInput type="text" formControlName="restaurantName">
+            <input style="color: white;" *ngIf="changed"
+             id="restaurantNameInput" matInput type="text" formControlName="restaurantName" 
+             readonly>
         </mat-form-field>
     </div>
     <div class="col-2" style="margin-left: 0px;">

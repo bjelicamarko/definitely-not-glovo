@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RestaurantDTO } from 'src/modules/shared/models/RestaurantDTO';
+import { RestaurantsPageable } from 'src/modules/shared/models/RestaurantsPageable';
 import { UserDTO } from 'src/modules/shared/models/UserDTO';
 import { UserDTOMessage } from 'src/modules/shared/models/UserDTOMessage';
+import { RestaurantsUtilsService } from 'src/modules/shared/services/restaurants-utils';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { UsersUtilsService } from 'src/modules/shared/services/users-utils.service';
 import { UsersService } from '../../services/users.service';
@@ -27,20 +30,25 @@ export class CreateUserPageComponent implements OnInit {
     Banned: false,
     Image: 'assets/user.jpg',
     ImagePath: 'assets/user.jpg',
-    Changed: false
+    Changed: false,
+    RestaurantName: ''
   }
   
   public selectedFile: File | undefined
 
   public userIdFromRoute: number
 
+  restaurants: RestaurantDTO[];
+  
   constructor(private usersService: UsersService,
     private usersUtilsService: UsersUtilsService,
     private snackBarService: SnackBarService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private restaurantsUtilsService: RestaurantsUtilsService
   ) {
     this.userIdFromRoute = 0
+    this.restaurants = []
   }
 
   ngOnInit(): void {
@@ -53,6 +61,14 @@ export class CreateUserPageComponent implements OnInit {
         var temp = response.body as UserDTOMessage;
         this.user = temp.UserDTO;
         this.snackBarService.openSnackBar(temp.Message);
+      })
+    }
+
+    if (this.userIdFromRoute === 0) {
+      this.restaurantsUtilsService.findAllRestaurants(0, 100)
+      .subscribe((response) => {
+        var temp = response.body as RestaurantsPageable;
+        this.restaurants = temp.Elements as RestaurantDTO[];
       })
     }
   }

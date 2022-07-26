@@ -9,8 +9,11 @@
         RestaurantName: {{article.RestaurantName}}
       </p>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="role === 'ADMIN'">
       <button type="button" class="btn btn-light" (click)="updateArticle(article.Id)">Update</button>
       <button type="button" style="margin-left: 5%;" class="btn btn-danger" (click)="deleteArticle(article.Id)">Delete</button>
+    </div>
+    <div class="card-body" *ngIf="role === 'APPUSER'">
+      <button type="button" class="btn btn-light">Order</button>
     </div>
 </div>

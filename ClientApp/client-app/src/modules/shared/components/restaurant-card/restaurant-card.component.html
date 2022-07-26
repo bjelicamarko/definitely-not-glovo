@@ -9,8 +9,11 @@
         City: {{restaurant.City}}
       </p>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="role === 'ADMIN'">
       <button type="button" class="btn btn-light" (click)="updateRestaurant(restaurant.Id)">Update</button>
       <button type="button" style="margin-left: 5%;" class="btn btn-danger" (click)="deleteRestaurant(restaurant.Id)">Delete</button>
+    </div>
+    <div class="card-body" *ngIf="role === 'APPUSER'">
+      <button type="button" class="btn btn-light" (click)="restaurantInfo(restaurant.Id)">Details</button>
     </div>
 </div>

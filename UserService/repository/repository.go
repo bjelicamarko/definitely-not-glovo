@@ -141,6 +141,7 @@ func (repo *Repository) Register(userDTO *models.UserDTO) error {
 	user.Role = models.APPUSER
 	user.Banned = false
 	user.Image = "images/default.jpg"
+	user.RestaurantName = ""
 
 	result := repo.db.Table("users").Create(&user)
 	return result.Error
@@ -174,6 +175,7 @@ func (repo *Repository) UpdateUser(userDTO *models.UserDTO) (*models.UserDTO, er
 	user.LastName = userDTO.LastName
 	user.Contact = userDTO.Contact
 	user.Banned = userDTO.Banned
+	user.RestaurantName = userDTO.RestaurantName
 
 	result2 := repo.db.Table("users").Save(&user)
 

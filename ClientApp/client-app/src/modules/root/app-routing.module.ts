@@ -31,10 +31,15 @@ const routes: Routes = [
               import("./../admin/admin.module").then((m) => m.AdminModule),
           },
           {
+            path: "appuser",
+            loadChildren: () =>
+              import("./../appuser/appuser.module").then((m) => m.AppUserModule)
+          },
+          {
             path: "profile",
             component: UserInfoComponent,
             canActivate: [RoleGuard],
-            data: { expectedRoles: "ADMIN" },
+            data: { expectedRoles: "ADMIN|APPUSER" },
           }
         ]
       }

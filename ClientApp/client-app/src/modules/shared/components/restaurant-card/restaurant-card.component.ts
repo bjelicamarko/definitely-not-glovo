@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RestaurantsService } from 'src/modules/admin/services/restaurants.service';
+import { AuthService } from 'src/modules/auth/services/auth.service';
 import { RestaurantDTO } from '../../models/RestaurantDTO';
 import { RestaurantDTOMessage } from '../../models/RestaurantDTOMessage';
 import { SnackBarService } from '../../services/snack-bar.service';
@@ -32,17 +33,21 @@ export class RestaurantCardComponent implements OnInit {
 
   @Output() renderList: EventEmitter<any> = new EventEmitter();
   
+  role: string = "";
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private restaurantsService: RestaurantsService,
-    private snackBarService: SnackBarService) { }
+    private snackBarService: SnackBarService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
+    var info = this.authService.getInfo();
+    this.role = info.role;
   }
 
   restaurantInfo(id: number): void {
-    // ovdje ce ici info stranica
-    //this.router.navigate(["/app/main/admin/restaurant-info/" + id]);
+    this.router.navigate(["/app/main/appuser/restaurant-info/" + id]);
   }
 
   updateRestaurant(id: number) {

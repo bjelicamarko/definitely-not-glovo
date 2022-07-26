@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { ArticleDTO } from '../../models/ArticleDTO';
@@ -17,6 +17,9 @@ export class ArticlesPageComponent implements OnInit {
   totalSize: number;
   articles: ArticleDTO[];
 
+  restaurantName: string = '';
+  changed: boolean = false;
+
   searchFormGroup: FormGroup;
   
   constructor(private fb: FormBuilder,
@@ -33,16 +36,30 @@ export class ArticlesPageComponent implements OnInit {
         priceTo: ['']
       }); 
   }
+  
+  setRestaurantName(newName: string) {
+    this.restaurantName = newName;
+    this.articlesUtilsService.findAllArticlesFromRestaurant(this.restaurantName,
+      this.currentPage - 1, this.pageSize)
+      .subscribe((response) => {
+        var temp = response.body as ArticlesPageable;
+        this.totalSize = Number(temp.TotalElements)
+        this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
+        this.articles = temp.Elements as ArticleDTO[];
+        this.changed = true;
+        this.searchFormGroup.get('restaurantName')?.setValue(this.restaurantName);
+    })
+  }
 
   ngOnInit(): void {
     this.articlesUtilsService.findAllArticles(this.currentPage - 1, this.pageSize)
-    .subscribe((response) => {
-      var temp = response.body as ArticlesPageable;
-      this.totalSize = Number(temp.TotalElements)
-      this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
-      this.articles = temp.Elements as ArticleDTO[];
-    })
-
+      .subscribe((response) => {
+        var temp = response.body as ArticlesPageable;
+        this.totalSize = Number(temp.TotalElements)
+        this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
+        this.articles = temp.Elements as ArticleDTO[];
+    })  
+     
     this.onChanges();
   }
 

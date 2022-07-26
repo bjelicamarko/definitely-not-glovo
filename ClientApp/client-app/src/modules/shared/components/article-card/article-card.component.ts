@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ArticlesService } from 'src/modules/admin/services/articles.service';
+import { AuthService } from 'src/modules/auth/services/auth.service';
 import { ArticleDTO } from '../../models/ArticleDTO';
 import { ArticleDTOMessage } from '../../models/ArticleDTOMessage';
 import { ArticlesUtilsService } from '../../services/articles-utils';
@@ -29,13 +30,17 @@ export class ArticleCardComponent implements OnInit {
 
   @Output() renderList: EventEmitter<any> = new EventEmitter();
   
+  role: string = "";
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private articlesService: ArticlesService,
-    private articlesUtilsService: ArticlesUtilsService,
+    private authService: AuthService,
     private snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
+    var info = this.authService.getInfo();
+    this.role = info.role;
   }
 
   updateArticle(id: number) {

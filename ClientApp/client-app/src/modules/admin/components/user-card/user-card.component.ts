@@ -25,7 +25,8 @@ export class UserCardComponent implements OnInit {
     Image: '',
     Password: '',
     ImagePath: '',
-    Changed: false
+    Changed: false,
+    RestaurantName: ''
   }
 
   @Output() renderList: EventEmitter<any> = new EventEmitter();
