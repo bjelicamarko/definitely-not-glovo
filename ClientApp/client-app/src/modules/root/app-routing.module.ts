@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { RoleGuard } from "../auth/role-guard/role.guard";
 import { UserInfoComponent } from "../shared/pages/user-info/user-info.component";
 import { MainPageComponent } from "./pages/main-page/main-page.component";
 import { NotFoundPageComponent } from "./pages/not-found-page/not-found-page.component";
@@ -31,7 +32,9 @@ const routes: Routes = [
           },
           {
             path: "profile",
-            component: UserInfoComponent
+            component: UserInfoComponent,
+            canActivate: [RoleGuard],
+            data: { expectedRoles: "ADMIN" },
           }
         ]
       }

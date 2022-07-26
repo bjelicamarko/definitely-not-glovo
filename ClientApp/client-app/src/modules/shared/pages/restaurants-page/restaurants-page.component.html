@@ -16,7 +16,7 @@
     </div>
 </form>
 <div class="row">
-        <h2 *ngIf="restaurants.length == 0"> Search has no results. </h2>
+        <h2 *ngIf="totalSize === 0"> Search has no results. </h2>
         <div *ngFor="let restaurant of restaurants" class="col">
             <app-restaurant-card (renderList)="renderList()" [restaurant]="restaurant"></app-restaurant-card>
         </div>

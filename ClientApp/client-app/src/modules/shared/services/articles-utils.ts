@@ -51,7 +51,7 @@ export class ArticlesUtilsService {
             restaurantName = ''
         if (!searchField)
             searchField = ''
-        if (!articleType)
+        if (!articleType || articleType === 'all')
             articleType = ''
         
         if (!priceFrom || priceFrom < 0)

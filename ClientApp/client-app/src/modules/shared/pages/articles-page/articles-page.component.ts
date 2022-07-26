@@ -90,14 +90,12 @@ export class ArticlesPageComponent implements OnInit {
       this.articlesUtilsService.searchArticles(val.restaurantName, 
         val.searchField, val.articleType, val.priceFrom, val.priceTo, 0, this.pageSize)
         .subscribe((response) => {
-          if (response.body != null) {
-            var temp = response.body as ArticlesPageable;
-            this.totalSize = temp.TotalElements;
-            this.setPagination((this.totalSize).toString(), (0).toString());
-            this.articles = temp.Elements as ArticleDTO[];
-            if (this.pagination) {
-              this.pagination.setActivePage(1);
-            }
+          var temp = response.body  as ArticlesPageable;
+          this.totalSize = temp.TotalElements;
+          this.setPagination((this.totalSize).toString(), (0).toString());
+          this.articles = temp.Elements as ArticleDTO[];
+          if (this.pagination) {
+            this.pagination.setActivePage(1);
           }
         })
     })

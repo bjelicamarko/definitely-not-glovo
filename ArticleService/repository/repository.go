@@ -99,6 +99,12 @@ func (repo *Repository) SearchArticles(r *http.Request) ([]models.ArticleDTO, in
 	priceFrom := r.URL.Query().Get("priceFrom")
 	priceTo := r.URL.Query().Get("priceTo")
 
+	if priceFrom == "" {
+		priceFrom = strconv.FormatFloat(0, 'E', -1, 64)
+	}
+	if priceTo == "" {
+		priceTo = strconv.FormatFloat(10000, 'E', -1, 64)
+	}
 	result := repo.db.Scopes(Paginate(r)).Table("articles").
 		Where("deleted_at IS NULL and ('' = ? or LOWER(restaurant_name) LIKE ?) and "+
 			"('' = ? or LOWER(article_name) LIKE ?) and "+

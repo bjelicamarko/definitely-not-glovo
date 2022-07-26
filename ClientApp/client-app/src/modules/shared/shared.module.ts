@@ -17,6 +17,8 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
 import { ArticlesUtilsService } from "./services/articles-utils";
 import { ArticleCardComponent } from './components/article-card/article-card.component';
 import { ArticlesPageComponent } from './pages/articles-page/articles-page.component';
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { Interceptor } from "./interceptors/interceptor.interceptor";
 
 @NgModule({
     declarations: [
@@ -46,7 +48,8 @@ import { ArticlesPageComponent } from './pages/articles-page/articles-page.compo
         UtilsService,
         RestaurantsUtilsService,
         UsersUtilsService,
-        ArticlesUtilsService
+        ArticlesUtilsService,
+        { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     ]
 })
 export class SharedModule { }

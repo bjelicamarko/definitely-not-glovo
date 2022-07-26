@@ -55,7 +55,7 @@ func SearchArticles(resWriter http.ResponseWriter, r *http.Request) {
 	size := r.URL.Query().Get("size")
 
 	response, err := http.Get(
-		utils.ArticlesServiceRoot.Next().Host + ArticlesServiceApi + "/findAllArticlesFromRestaurant?restaurantName=" + restaurantName +
+		utils.ArticlesServiceRoot.Next().Host + ArticlesServiceApi + "/searchArticles?restaurantName=" + restaurantName +
 			"&searchField=" + searchField + "&articleType=" + articleType +
 			"&priceFrom=" + priceFrom + "&priceTo=" + priceTo +
 			"&page=" + page + "&size=" + size)
