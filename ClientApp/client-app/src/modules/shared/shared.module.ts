@@ -18,6 +18,7 @@ import { ArticleCardComponent } from './components/article-card/article-card.com
 import { ArticlesPageComponent } from './pages/articles-page/articles-page.component';
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Interceptor } from "./interceptors/interceptor.interceptor";
+import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { Interceptor } from "./interceptors/interceptor.interceptor";
             RestaurantCardComponent,
             UserInfoComponent,
             ArticleCardComponent,
-            ArticlesPageComponent
+            ArticlesPageComponent,
+            OrdersPageComponent
   ],
     imports: [
         CommonModule,

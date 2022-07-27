@@ -17,7 +17,7 @@ type OrderDTO struct {
 	IdEmployee    uint           `json:"IdEmployee"`
 	IdDeliverer   uint           `json:"IdDeliverer"`
 	OrderStatus   string         `json:"OrderStatus"`
-	TotalPrice    float32        `json:"TotalCost"`
+	TotalPrice    float32        `json:"TotalPrice"`
 	Tip           float32        `json:"Tip"`
 	Note          string         `json:"Note"`
 	DateTime      string         `json:"DateTime"`
