@@ -19,6 +19,14 @@ func NewOrdersHandler(repository *repository.Repository) *OrdersHandler {
 	return &OrdersHandler{repository}
 }
 
+func (oh *OrdersHandler) SearchOrders(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	ordersDTO, totalElements, _ := oh.repository.SearchOrders(req)
+
+	json.NewEncoder(resWriter).Encode(models.OrdersPageable{Elements: ordersDTO, TotalElements: totalElements})
+}
+
 func (oh *OrdersHandler) SearchOrdersByRestaurantAndStatus(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 

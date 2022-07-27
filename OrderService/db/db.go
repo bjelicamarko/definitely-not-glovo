@@ -12,8 +12,8 @@ var orders = []models.Order{
 	{
 		Model:        gorm.Model{},
 		IdRestaurant: 1,
-		IdAppUser:    1,
-		IdEmployee:   2,
+		IdAppUser:    2,
+		IdEmployee:   4,
 		IdDeliverer:  3,
 		OrderStatus:  models.DELIVERED,
 		TotalPrice:   1200.0,
@@ -24,8 +24,8 @@ var orders = []models.Order{
 	{
 		Model:        gorm.Model{},
 		IdRestaurant: 2,
-		IdAppUser:    1,
-		IdEmployee:   2,
+		IdAppUser:    2,
+		IdEmployee:   4,
 		IdDeliverer:  3,
 		OrderStatus:  models.DELIVERED,
 		TotalPrice:   600.0,
@@ -36,8 +36,8 @@ var orders = []models.Order{
 	{
 		Model:        gorm.Model{},
 		IdRestaurant: 3,
-		IdAppUser:    1,
-		IdEmployee:   2,
+		IdAppUser:    2,
+		IdEmployee:   4,
 		IdDeliverer:  3,
 		OrderStatus:  models.DELIVERED,
 		TotalPrice:   2400.0,
@@ -48,8 +48,8 @@ var orders = []models.Order{
 	{
 		Model:        gorm.Model{},
 		IdRestaurant: 1,
-		IdAppUser:    1,
-		IdEmployee:   2,
+		IdAppUser:    2,
+		IdEmployee:   4,
 		IdDeliverer:  3,
 		OrderStatus:  models.ACCEPTED,
 		TotalPrice:   2400.0,

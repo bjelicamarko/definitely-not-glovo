@@ -37,5 +37,11 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/articles/updateArticle", handlers.UpdateArticle).Methods(http.MethodPut)
 	router.HandleFunc("/api/articles/deleteArticle/{id:[0-9]+}", handlers.DeleteArticle).Methods(http.MethodDelete)
 
+	router.HandleFunc("/api/orders/searchOrders", handlers.SearchOrders).Methods(http.MethodGet)
+	router.HandleFunc("/api/orders/searchOrdersByRestaurantAndStatus", handlers.SearchOrdersByRestaurantAndStatus).Methods(http.MethodGet)
+	router.HandleFunc("/api/orders/findOrderById/{id:[0-9]+}", handlers.FindOrderById).Methods(http.MethodGet)
+	router.HandleFunc("/api/orders/createOrder", handlers.CreateOrder).Methods(http.MethodPost)
+	router.HandleFunc("/api/orders/changeStatusOfOrder", handlers.ChangeStatusOfOrder).Methods(http.MethodPut)
+
 	http.ListenAndServe(":8080", router)
 }
