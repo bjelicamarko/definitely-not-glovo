@@ -1,0 +1,53 @@
+<form class="row p-4 align-items-center justify-content-center" [formGroup]="searchFormGroup"
+    (keydown.enter)="$event.preventDefault()">
+    <div class="col-4 align-items-center justify-content-center">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Search</mat-label>
+            <input style="color: white;"
+             id="searchFieldInput" matInput type="text" formControlName="searchField">
+        </mat-form-field>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Restaurant Name</mat-label>
+            <input style="color: white;" *ngIf="!changed"
+             id="restaurantNameInput" matInput type="text" formControlName="restaurantName">
+            <input style="color: white;" *ngIf="changed"
+             id="restaurantNameInput" matInput type="text" formControlName="restaurantName" 
+             readonly>
+        </mat-form-field>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Price From</mat-label>
+            <input style="color: white;"
+             id="priceFromInput" matInput type="number" formControlName="priceFrom">
+        </mat-form-field>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Price To</mat-label>
+            <input style="color: white;"
+             id="priceToInput" matInput type="number" formControlName="priceTo">
+        </mat-form-field>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field appearance="fill">
+            <mat-label style="color:white">Type</mat-label>
+            <mat-select formControlName="articleType">
+                <mat-option value="all">Any</mat-option>
+                <mat-option value="FOOD">Food</mat-option>
+                <mat-option value="DRINK">Drink</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>
+<div class="row">
+        <h2 *ngIf="totalSize === 0"> Search has no results. </h2>
+        <div *ngFor="let article of articles" class="col">
+            <app-article-card (renderList)="renderList()" [article]="article"></app-article-card>
+        </div>
+</div>
+<app-pagination class='pagination' [totalItems]="totalSize" [pageSize]="pageSize"
+        (pageSelected)="changePage($event)">
+</app-pagination>

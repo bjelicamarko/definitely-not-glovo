@@ -1,0 +1,61 @@
+<form class="row p-4 align-items-center justify-content-center" [formGroup]="searchFormGroup"
+    (keydown.enter)="$event.preventDefault()">
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Price From</mat-label>
+            <input style="color: white;"
+             id="priceFromInput" matInput type="number" formControlName="priceFrom">
+        </mat-form-field>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field class="example-form-field" appearance="fill" style="width: 100%">
+            <mat-label style="color: white;">Price To</mat-label>
+            <input style="color: white;"
+             id="priceToInput" matInput type="number" formControlName="priceTo">
+        </mat-form-field>
+    </div>
+    <div class="col-2" style="margin-left: 0px;">
+        <mat-form-field appearance="fill">
+            <mat-label style="color:white">Type</mat-label>
+            <mat-select formControlName="orderStatus" *ngIf="userRole === 'APPUSER'">
+                <mat-option  *ngFor="let status of appuserStatuses"
+                [value]="status">{{status}}</mat-option>
+            </mat-select>
+            <mat-select formControlName="orderStatus" *ngIf="userRole === 'DELIVERER'">
+                <mat-option  *ngFor="let status of delivererStatuses"
+                [value]="status">{{status}}</mat-option>
+            </mat-select>
+            <mat-select formControlName="orderStatus" *ngIf="userRole === 'EMPLOYEE'">
+                <mat-option  *ngFor="let status of employeeStatuses"
+                [value]="status">{{status}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>
+<div>
+        <table class="table table-dark table-hover">
+                <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Order Status</th>
+                          <th scope="col">Total Price</th>
+                          <th scope="col">Tip</th>
+                          <th scope="col">Date Time</th>
+                          <th scope="col">Note</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let order of orders" (click)="onUpdate(order)" >
+                                <td><h3>{{order.Id}}</h3></td>
+                                <td>{{order.OrderStatus}}</td>
+                                <td>{{order.TotalPrice}}</td>
+                                <td>{{order.Tip}}</td>
+                                <td>{{order.DateTime}}</td>
+                                <td>{{order.Note}}</td>
+                        </tr>
+                </tbody>
+        </table>
+</div>        
+<app-pagination class='pagination' [totalItems]="totalSize" [pageSize]="pageSize"
+        (pageSelected)="changePage($event)">
+</app-pagination>

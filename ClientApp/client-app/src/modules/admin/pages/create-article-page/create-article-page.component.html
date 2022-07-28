@@ -1,0 +1,76 @@
+<div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" 
+                    src="{{article.Image}}">
+                    <span class="font-weight-bold">{{article.ArticleName}}</span>
+                    <span></span>
+                </div>
+
+                <input
+                    style="display: none"
+                    type="file" (change)="onFileChanged($event)"
+                    #fileInput>
+                    <button style="margin-right: 10%;margin-left: 15%;" (click)="fileInput.click()" class="btn btn-primary profile-button" type="button">Select File</button>
+                    <p>{{selectedFile?.name}}</p>
+            </div>
+
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right" *ngIf="articleIdFromRoute === 0">
+                            Create Article
+                        </h4>
+                        <h4 class="text-right" *ngIf="articleIdFromRoute !== 0">
+                            Update Article
+                        </h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Article Name</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Article Name" value="{{article.ArticleName}}"
+                            [(ngModel)]="article.ArticleName">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Article Type</label>
+                            <input type="text" class="form-control" value="{{article.ArticleType}}"
+                             placeholder="Article Type"  [(ngModel)]="article.ArticleType">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Price</label>
+                            <input type="number" class="form-control" 
+                            placeholder="Price" value="{{article.Price}}"
+                            [(ngModel)]="article.Price">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Description</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Description" value="{{article.Description}}"
+                            [(ngModel)]="article.Description">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Restaurant Name</label>
+                            <input type="text" class="form-control" *ngIf="articleIdFromRoute !== 0"
+                            placeholder="Restaurant Name" value="{{article.RestaurantName}}"
+                            [(ngModel)]="article.RestaurantName" readonly>
+                            <mat-form-field style="margin-left: 2%; margin-top: 2%;"
+                            appearance="fill" *ngIf="articleIdFromRoute === 0">
+                                <mat-select [(ngModel)]="article.RestaurantName" name="restaurantName">
+                                  <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.RestaurantName">
+                                    {{restaurant.RestaurantName}}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button *ngIf="articleIdFromRoute === 0" class="btn btn-primary profile-button" 
+                        (click)="createArticle()" type="button">Create Article</button>
+                        <button *ngIf="articleIdFromRoute !== 0" class="btn btn-primary profile-button" 
+                        (click)="updateArticle()" type="button">Update Article</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

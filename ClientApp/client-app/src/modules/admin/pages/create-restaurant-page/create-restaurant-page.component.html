@@ -1,0 +1,81 @@
+<div>
+    <div id="ol-map" class="map-container"></div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" 
+                    src="{{restaurant.Image}}">
+                    <span class="font-weight-bold">{{restaurant.RestaurantName}}</span>
+                    <span class="text-black-50">{{restaurant.ContactPhone}}</span><span>
+                    </span>
+                </div>
+                <input
+                    style="display: none"
+                    type="file" (change)="onFileChanged($event)"
+                    #fileInput>
+                    <button style="margin-right: 10%;margin-left: 15%;" (click)="fileInput.click()" class="btn btn-primary profile-button" type="button">Select File</button>
+                    <p>{{selectedFile?.name}}</p>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right" *ngIf="restaurantIdFromRoute === 0">
+                            Create New Restaurant
+                        </h4>
+                        <h4 class="text-right" *ngIf="restaurantIdFromRoute !== 0">
+                            Update Restaurant
+                        </h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Restaurant Name</label>
+                            <input type="text" class="form-control" *ngIf="restaurantIdFromRoute === 0"
+                            placeholder="Restaurant Name" value="{{restaurant.RestaurantName}}"
+                            [(ngModel)]="restaurant.RestaurantName">
+                            <input type="text" class="form-control" *ngIf="restaurantIdFromRoute !== 0"
+                            placeholder="Restaurant Name" value="{{restaurant.RestaurantName}}"
+                            [(ngModel)]="restaurant.RestaurantName" readonly>
+                        </div>
+                        <div class="col-md-6"><label class="labels">Contact Phone</label>
+                            <input type="text" class="form-control" value="{{restaurant.ContactPhone}}"
+                             placeholder="Contact"  [(ngModel)]="restaurant.ContactPhone">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Country</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Country" value="{{restaurant.Country}}"
+                            [(ngModel)]="restaurant.Country">
+                        </div>
+                        <div class="col-md-12"><label class="labels">City</label>
+                            <input type="text" class="form-control" 
+                            placeholder="City" value="{{restaurant.City}}"
+                            [(ngModel)]="restaurant.City">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Street</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Street" value="{{restaurant.Street}}"
+                            [(ngModel)]="restaurant.Street">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Street Number</label>
+                            <input type="text" class="form-control"
+                             placeholder="Street Number" value="{{restaurant.StreetNumber}}"
+                             [(ngModel)]="restaurant.StreetNumber">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Ptt</label>
+                            <input type="text" class="form-control"
+                             placeholder="Ptt" value="{{restaurant.Ptt}}"
+                             [(ngModel)]="restaurant.Ptt">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button *ngIf="restaurantIdFromRoute === 0" class="btn btn-primary profile-button" 
+                        (click)="createRestaurant()" type="button">Create Restaurant</button>
+                        <button *ngIf="restaurantIdFromRoute !== 0" class="btn btn-primary profile-button" 
+                        (click)="updateRestaurant()" type="button">Update Restaurant</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
