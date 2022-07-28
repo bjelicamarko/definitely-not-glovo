@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/modules/auth/services/auth.service';
+import { OrderInfoDialogComponent } from '../../components/order-info-dialog/order-info-dialog.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { OrderDTO } from '../../models/OrderDTO';
 import { OrdersPageable } from '../../models/OrdersPageable';
@@ -29,7 +31,8 @@ export class OrdersPageComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private ordersUtilsService: OrdersUtilsService) { 
+    private ordersUtilsService: OrdersUtilsService,
+    public dialog: MatDialog) { 
     this.orders = []
     this.pageSize = 5;
     this.currentPage = 1;
@@ -103,5 +106,21 @@ export class OrdersPageComponent implements OnInit {
         }
       })   
     })
+  }
+
+  onUpdate(order: OrderDTO) {
+    const dialogRef = this.dialog.open(OrderInfoDialogComponent, {
+      data: {Id: order.Id, Role: this.userRole, IdUser: this.idUser},
+      autoFocus: false,
+      maxHeight: '90vh',
+      width: '100%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      order.OrderStatus = result.OrderStatus;
+      order.IdDeliverer = result.IdDeliverer;
+      order.IdEmployee = result.IdEmployee;
+    });
   }
 }

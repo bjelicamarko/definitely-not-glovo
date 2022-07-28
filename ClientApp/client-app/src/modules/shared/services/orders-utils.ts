@@ -1,7 +1,9 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { OrderDTOMessage } from "../models/OrderDTOMessage";
 import { OrdersPageable } from "../models/OrdersPageable"
+import { OrderStatusDTO } from "../models/OrderStatusDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -41,5 +43,29 @@ export class OrdersUtilsService {
 
         return this.http.get<HttpResponse<OrdersPageable>>
         ("not-glovo/api/orders/searchOrders", queryParams);
+    }
+
+    findOrderById(id: number): Observable<HttpResponse<OrderDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+            headers: this.headers,
+            observe: "response",
+        }
+
+        return this.http.get<HttpResponse<OrderDTOMessage>>
+        ("not-glovo/api/orders/findOrderById/" + id, queryParams);
+    }
+
+    changeStatusOfOrder(orderStatusDTO: OrderStatusDTO): Observable<HttpResponse<OrderDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+            headers: this.headers,
+            observe: "response",
+        }
+
+        return this.http.put<HttpResponse<OrderDTOMessage>>
+        ("not-glovo/api/orders/changeStatusOfOrder", orderStatusDTO,  queryParams);
     }
 }

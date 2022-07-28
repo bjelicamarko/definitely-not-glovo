@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 func (order *Order) ToOrderDTO() OrderDTO {
 	return OrderDTO{
@@ -14,6 +16,14 @@ func (order *Order) ToOrderDTO() OrderDTO {
 		Tip:          order.Tip,
 		Note:         order.Note,
 		DateTime:     order.DateTime,
+		Country:      order.Country,
+		City:         order.City,
+		Street:       order.Street,
+		StreetNumber: order.StreetNumber,
+		Ptt:          order.Ptt,
+		DisplayName:  order.DisplayName,
+		Longitude:    order.Longitude,
+		Latitude:     order.Latitude,
 	}
 }
 
@@ -39,6 +49,14 @@ func (orderDTO *OrderDTO) ToOrder() Order {
 		Tip:          orderDTO.Tip,
 		Note:         orderDTO.Note,
 		DateTime:     orderDTO.DateTime,
+		Country:      orderDTO.Country,
+		City:         orderDTO.City,
+		Street:       orderDTO.Street,
+		StreetNumber: orderDTO.StreetNumber,
+		Ptt:          orderDTO.Ptt,
+		DisplayName:  orderDTO.DisplayName,
+		Longitude:    orderDTO.Longitude,
+		Latitude:     orderDTO.Latitude,
 	}
 }
 

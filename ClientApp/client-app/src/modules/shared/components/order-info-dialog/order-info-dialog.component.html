@@ -1,0 +1,66 @@
+<div>
+    <div id="ol-map" class="map-container"></div>
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                Order Status: <b>{{order.OrderStatus}}</b>
+            </div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                TotalPrice: <b>{{order.TotalPrice}} RSD</b>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="p-3 py-5">
+                <div>
+                    <button type="button" class="btn btn-dark"
+                    *ngIf="data.Role === 'APPUSER' && 
+                    order.OrderStatus === 'ORDERED'" 
+                    (click)="changeStatus('CANCELLED')">Cancel</button>
+
+                    <button type="button" class="btn btn-dark"
+                    *ngIf="data.Role === 'EMPLOYEE' && 
+                    order.OrderStatus === 'ORDERED'"
+                    (click)="changeStatus('ACCEPTED')">Accept</button>
+                    <button type="button" class="btn btn-dark"
+                    *ngIf="data.Role === 'EMPLOYEE' && 
+                    order.OrderStatus === 'ACCEPTED'"
+                    (click)="changeStatus('READY')">Ready</button>
+
+                    <button type="button" class="btn btn-dark"
+                    *ngIf="data.Role === 'DELIVERER' && 
+                    order.OrderStatus === 'READY'"
+                    (click)="changeStatus('TAKEN')">Take</button>
+                    <button type="button" class="btn btn-dark"
+                    *ngIf="data.Role === 'DELIVERER' && 
+                    order.OrderStatus === 'TAKEN'"
+                    (click)="changeStatus('DELIVERED')">Deliver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Article Name</th>
+                <th scope="col">Current Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">TotalPrice</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let orderItem of order.OrderItemsDTO" >
+                    <td><h3>{{orderItem.Id}}</h3></td>
+                    <td>{{orderItem.ArticleName}}</td>
+                    <td>{{orderItem.CurrentPrice}}</td>
+                    <td>{{orderItem.Quantity}}</td>
+                    <td>{{orderItem.TotalPrice}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

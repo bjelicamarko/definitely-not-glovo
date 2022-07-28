@@ -21,6 +21,14 @@ type OrderDTO struct {
 	Tip           float32        `json:"Tip"`
 	Note          string         `json:"Note"`
 	DateTime      string         `json:"DateTime"`
+	Country       string         `json:"Country"`
+	City          string         `json:"City"`
+	Street        string         `json:"Street"`
+	StreetNumber  string         `json:"StreetNumber"`
+	Ptt           uint           `json:"Ptt"`
+	DisplayName   string         `json:"DisplayName"`
+	Longitude     float32        `json:"Longitude"`
+	Latitude      float32        `json:"Latitude"`
 	OrderItemsDTO []OrderItemDTO `json:"OrderItemsDTO"`
 }
 

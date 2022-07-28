@@ -15,6 +15,14 @@ type Order struct {
 	Tip          float32     `gorm:"min:0.0"`
 	Note         string      `gorm:"not null"`
 	DateTime     string      `gorm:"not null"`
+	Country      string      `gorm:"not null"`
+	City         string      `gorm:"not null"`
+	Street       string      `gorm:"not null"`
+	StreetNumber string      `gorm:"not null"`
+	Ptt          uint        `gorm:"not null"`
+	DisplayName  string      `gorm:"not null"`
+	Longitude    float32     `gorm:"not null"`
+	Latitude     float32     `gorm:"not null"`
 }
 
 type OrderItem struct {

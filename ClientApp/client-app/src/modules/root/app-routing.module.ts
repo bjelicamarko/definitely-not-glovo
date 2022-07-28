@@ -36,11 +36,21 @@ const routes: Routes = [
               import("./../appuser/appuser.module").then((m) => m.AppUserModule)
           },
           {
+            path: "deliverer",
+            loadChildren: () =>
+              import("./../deliverer/deliverer.module").then((m) => m.DelivererModule)
+          },
+          {
+            path: "employee",
+            loadChildren: () =>
+              import("./../employee/employee.module").then((m) => m.EmployeeModule)
+          },
+          {
             path: "profile",
             component: UserInfoComponent,
             canActivate: [RoleGuard],
-            data: { expectedRoles: "ADMIN|APPUSER" },
-          }
+            data: { expectedRoles: "ADMIN|APPUSER|DELIVERER|EMPLOYEE" },
+          },
         ]
       }
     ]

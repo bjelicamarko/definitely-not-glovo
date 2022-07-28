@@ -37,8 +37,6 @@ export class LoginComponent implements OnInit {
       Password: this.form.value.password,
     };
 
-    console.log(auth)
-    
     this.authService.login(auth)
     .subscribe((result: any) => {
 
@@ -56,6 +54,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/app/main/admin/users"]);
         } else if (role === "APPUSER") {
           this.router.navigate(["app/main/appuser/restaurants"]);
+        } else if (role === "DELIVERER") {
+          this.router.navigate(["app/main/deliverer/orders"]);
+        } else if (role === "EMPLOYEE") {
+          this.router.navigate(["app/main/employee/orders"]);
         } else {
           this.router.navigate(["app/main"]);
         }

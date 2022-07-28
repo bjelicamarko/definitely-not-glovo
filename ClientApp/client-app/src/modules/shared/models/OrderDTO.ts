@@ -11,5 +11,13 @@ export interface OrderDTO {
     Tip: number;
     Note: string;
     DateTime: string;
-    OrderItemsDTO: OrderItemDTO[]
+    Country: string;
+    City: string;
+    Street: string;
+    StreetNumber: string;
+    Ptt: number;
+    DisplayName: string;
+    Longitude: number;
+    Latitude: number;
+    OrderItemsDTO: OrderItemDTO[];
 }

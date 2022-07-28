@@ -19,6 +19,7 @@ import { ArticlesPageComponent } from './pages/articles-page/articles-page.compo
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Interceptor } from "./interceptors/interceptor.interceptor";
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
+import { OrderInfoDialogComponent } from './components/order-info-dialog/order-info-dialog.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
             UserInfoComponent,
             ArticleCardComponent,
             ArticlesPageComponent,
-            OrdersPageComponent
+            OrdersPageComponent,
+            OrderInfoDialogComponent
   ],
     imports: [
         CommonModule,
