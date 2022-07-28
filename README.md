@@ -8,20 +8,24 @@
   - Prijava
   - Registracija
   
+- _Korisnik_ (funkcionalnosti koje imaju svi korisnici)
+
+   - Pregled i izmjena profila
+   
 - Registrovani korisnik
   
-  - Pregled i izmjena profila
   - Pregled i pretraga restorana
   - Pregled i pretraga hrane i pića unutar restorana
-  - Naručivanje (kreiranje poruđbenice)
-  - Pregled istorije poruđbenica
+  - Naručivanje (kreiranje poruđbine)
+  - Mogućnost izmjene ili odustajanja od poruđbine sve dok nije prihvaćena od strane radnika (+)
+  - Pregled i pretraga istorije poruđbenica
   - Ostavljanje recenzije u vidu komentara i ocjene nakon primljene porudžbine
   - Mogućnost ostavljanja napojnice dostavljaču (+)
   
 - Radnik
 
-  - Pregled poruđbenica
-  - Prihvatanje poruđbenice
+  - Pregled i pretraga poruđbenica
+  - Prihvatanje i spremanje porudžbine 
   - Prijava neprikladnih komentara
   
 - Administrator
@@ -33,8 +37,9 @@
   - Mogućnost blokiranja i odblokiranja korisnika
   
 - Dostavljač (+)
-  
-  - Preuzimanje i dostavljanje porudžbine (+)
+
+  - Pregled i pretraga poruđbenica (+)
+  - Preuzimanje i dostavljanje poruđbine (+)
   
 ## Arhitektura sistema
 Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
@@ -50,6 +55,6 @@ Web aplikacija će biti zasnovana na mikroservisnoj arhitekturi.
 
 Podaci će biti čuvani u SQL bazi (PostgreSQL), svaki mikroservis će imati odvojenu instancu SQL baze. <br />
 Za kontejnerizaciju biće korišćen Docker. (+)  
-Kreiranje lokacije restorana uz pomoć mape i prikaz lokacije restorana na mapi. (+) <br />  <br />
+Kreiranje lokacije restorana, prikaz lokacije restorana, kao i unos adrese tokom naručivanja uz pomoć mape. (+) <br />  <br />
 
 **_Funkcionalnosti označene sa (+) su proširenja za diplomski rad._**
