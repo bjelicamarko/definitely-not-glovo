@@ -45,7 +45,7 @@
 <div class="row">
         <h2 *ngIf="totalSize === 0"> Search has no results. </h2>
         <div *ngFor="let article of articles" class="col">
-            <app-article-card (renderList)="renderList()" [article]="article"></app-article-card>
+            <app-article-card (sendItemToArticlesPage)="addItemToOrder($event)" (renderList)="renderList()" [article]="article"></app-article-card>
         </div>
 </div>
 <app-pagination class='pagination' [totalItems]="totalSize" [pageSize]="pageSize"

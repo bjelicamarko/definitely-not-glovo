@@ -20,6 +20,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Interceptor } from "./interceptors/interceptor.interceptor";
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { OrderInfoDialogComponent } from './components/order-info-dialog/order-info-dialog.component';
+import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog/orderitem-init-dialog.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { OrderInfoDialogComponent } from './components/order-info-dialog/order-i
             ArticleCardComponent,
             ArticlesPageComponent,
             OrdersPageComponent,
-            OrderInfoDialogComponent
+            OrderInfoDialogComponent,
+            OrderitemInitDialogComponent
   ],
     imports: [
         CommonModule,

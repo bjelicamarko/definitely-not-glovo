@@ -119,12 +119,12 @@ export class CreateRestaurantPageComponent implements OnInit {
       var coordinate = transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
       this.restaurant.Longitude = coordinate[0];
       this.restaurant.Latitude = coordinate[1];
-      this.http.get(`http://nominatim.openstreetmap.org/reverse?format=json&lon=${coordinate[0]}&lat=${coordinate[1]}`)
+      this.http.get(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${coordinate[0]}&lat=${coordinate[1]}`)
       .subscribe((response) => {
           console.log(response)
           var temp = response as MapAddress
           
-          this.restaurant.City = temp.address.town;
+          this.restaurant.City = temp.address.city;
           this.restaurant.Country = temp.address.country;
           this.restaurant.Street = temp.address.road;
           this.restaurant.StreetNumber = temp.address.house_number;

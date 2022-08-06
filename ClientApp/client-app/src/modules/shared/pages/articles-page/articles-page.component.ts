@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { ArticleDTO } from '../../models/ArticleDTO';
 import { ArticlesPageable } from '../../models/ArticlesPageable';
+import { OrderItemDTO } from '../../models/OrderItemDTO';
 import { ArticlesUtilsService } from '../../services/articles-utils';
 
 @Component({
@@ -21,6 +22,8 @@ export class ArticlesPageComponent implements OnInit {
   changed: boolean = false;
 
   searchFormGroup: FormGroup;
+  
+  @Output() sendItemToRestaurantInfoPage: EventEmitter<OrderItemDTO> = new EventEmitter();
   
   constructor(private fb: FormBuilder,
     private articlesUtilsService: ArticlesUtilsService) {
@@ -116,5 +119,9 @@ export class ArticlesPageComponent implements OnInit {
           }
         })
     })
+  }
+
+  addItemToOrder(item: OrderItemDTO) {
+    this.sendItemToRestaurantInfoPage.emit(item)
   }
 }

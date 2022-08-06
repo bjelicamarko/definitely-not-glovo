@@ -1,7 +1,7 @@
 export interface MapAddress {
     display_name: string;
     address: {
-        town: string,
+        city: string,
         country: string,
         house_number: string,
         postcode: string,

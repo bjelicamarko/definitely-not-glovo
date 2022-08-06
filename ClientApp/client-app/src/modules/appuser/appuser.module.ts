@@ -10,9 +10,7 @@ import { RestaurantInfoPageComponent } from './pages/restaurant-info-page/restau
 
 @NgModule({
     declarations: [
-
-    
-    RestaurantInfoPageComponent
+    RestaurantInfoPageComponent,
   ],
     imports: [
         CommonModule,
