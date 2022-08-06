@@ -3,12 +3,13 @@
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                Order Status: <b>{{order.OrderStatus}}</b>
+                Order Status: <b>{{order.OrderStatus}}</b> <br>
+                Total Price: <b>{{order.TotalPrice}} RSD</b>
             </div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
-                TotalPrice: <b>{{order.TotalPrice}} RSD</b>
+                Address: <b>{{order.DisplayName}}</b>
             </div>
         </div>
         <div class="col-md-3">

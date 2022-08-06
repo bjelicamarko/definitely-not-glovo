@@ -54,6 +54,23 @@ func (rh *RestaurantsHandler) FindRestaurantById(resWriter http.ResponseWriter, 
 	json.NewEncoder(resWriter).Encode(models.RestaurantDTOMessage{Message: "restaurant successfully found", RestaurantDTO: *restaurantDTO})
 }
 
+func (rh *RestaurantsHandler) FindRestaurantByName(resWriter http.ResponseWriter, req *http.Request) {
+	AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	name := params["name"]
+
+	restaurantDTO, err := rh.repository.FindRestaurantByName(name)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.RestaurantDTOMessage{Message: err.Error()})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.RestaurantDTOMessage{Message: "restaurant successfully found", RestaurantDTO: *restaurantDTO})
+}
+
 func (rh *RestaurantsHandler) CreateRestaurant(resWriter http.ResponseWriter, req *http.Request) {
 	AdjustResponseHeaderJson(&resWriter)
 

@@ -23,6 +23,8 @@ import { ConformationDialogComponent } from 'src/modules/shared/components/confo
 import { HttpClient } from '@angular/common/http';
 import { MapAddress } from 'src/modules/shared/models/MapAddress';
 import * as moment from 'moment';
+import { OrdersService } from '../../services/orders.service';
+import { OrderDTOMessage } from 'src/modules/shared/models/OrderDTOMessage';
 
 @Component({
   selector: 'app-restaurant-info-page',
@@ -83,7 +85,8 @@ export class RestaurantInfoPageComponent implements OnInit {
     private restaurantsUtilsService: RestaurantsUtilsService,
     private snackBarService: SnackBarService,
     private authService: AuthService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private ordersService: OrdersService) {
     this.restaurantIdFromRoute = 0
     this.idUser = 0
   }
@@ -225,22 +228,57 @@ export class RestaurantInfoPageComponent implements OnInit {
   }
 
   createOrder() {
-    console.log(moment().format('DD.MM.YYYY. HH:mm'));
-    // if (this.newOrder.Tip >= 0 && this.newOrder.Country && 
-    //   this.newOrder.City && this.newOrder.Street && this.newOrder.StreetNumber &&
-    //   this.newOrder.Ptt && this.newOrder.DisplayName) {
+    if (this.newOrder.Tip >= 0 && this.newOrder.Country && 
+      this.newOrder.City && this.newOrder.Street && this.newOrder.StreetNumber &&
+      this.newOrder.Ptt && this.newOrder.DisplayName) {
 
-    //     this.dialog.open(ConformationDialogComponent, {
-    //       data:
-    //       {
-    //         title: "Creating Order",
-    //         body: "You want to order?"
-    //       },
-    //     }).afterClosed().subscribe(result => {
-    //       if (result) {
-            
-    //       }
-    //     })
-    // }
+        this.dialog.open(ConformationDialogComponent, {
+          data:
+          {
+            title: "Creating Order",
+            body: "You want to order?"
+          },
+        }).afterClosed().subscribe(result => {
+          if (result) {
+            this.newOrder.IdRestaurant = this.restaurant.Id
+            this.newOrder.OrderStatus = 'ORDERED'
+            this.newOrder.IdAppUser = this.idUser
+            this.newOrder.DateTime = moment().format('DD.MM.YYYY. HH:mm')
+            this.ordersService.createOrder(this.newOrder)
+            .subscribe((response) => {
+              var temp = response.body as OrderDTOMessage;
+              this.snackBarService.openSnackBar(temp.Message)
+              if (temp.Message === 'order successfully created') {
+                this.resetOrder();
+              }
+            })
+          }
+        })
+    }
+  }
+
+  resetOrder() {
+    this.newOrder = {
+      Id: 0,
+      IdRestaurant: 0,
+      IdAppUser: 0,
+      IdEmployee: 0,
+      IdDeliverer: 0,
+      OrderStatus: '',
+      TotalPrice: 0,
+      Tip: 0,
+      Note: '',
+      DateTime: '',
+      Country: '',
+      City: '',
+      Street: '',
+      StreetNumber: '',
+      Ptt: 0,
+      DisplayName: '',
+      Longitude: 0,
+      Latitude: 0,
+      OrderItemsDTO: []
+    }
+    
   }
 }

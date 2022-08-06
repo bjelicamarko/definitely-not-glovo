@@ -11,6 +11,7 @@ import (
 func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	role := r.URL.Query().Get("role")
 	userId := r.URL.Query().Get("userId")
 	restaurantId := r.URL.Query().Get("restaurantId")
 	orderStatus := r.URL.Query().Get("orderStatus")
@@ -21,7 +22,7 @@ func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 
 	response, err := http.Get(
 		utils.OrdersServiceRoot.Next().Host + OrdersServiceApi +
-			"/searchOrders?userId=" + userId + "&restaurantId=" + restaurantId +
+			"/searchOrders?role=" + role + "&userId=" + userId + "&restaurantId=" + restaurantId +
 			"&orderStatus=" + orderStatus + "&priceFrom=" + priceFrom +
 			"&priceTo=" + priceTo + "&page=" + page + "&size=" + size)
 

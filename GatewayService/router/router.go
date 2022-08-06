@@ -25,6 +25,7 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/restaurants/findAllRestaurants", handlers.FindAllRestaurants).Methods(http.MethodGet)
 	router.HandleFunc("/api/restaurants/searchRestaurants", handlers.SearchRestaurants).Methods(http.MethodGet)
 	router.HandleFunc("/api/restaurants/findRestaurantById/{id:[0-9]+}", handlers.FindRestaurantById).Methods(http.MethodGet)
+	router.HandleFunc("/api/restaurants/findRestaurantByName/{name}", handlers.FindRestaurantByName).Methods(http.MethodGet)
 	router.HandleFunc("/api/restaurants/createRestaurant", handlers.CreateRestaurant).Methods(http.MethodPost)
 	router.HandleFunc("/api/restaurants/updateRestaurant", handlers.UpdateRestaurant).Methods(http.MethodPut)
 	router.HandleFunc("/api/restaurants/deleteRestaurant/{id:[0-9]+}", handlers.DeleteRestaurant).Methods(http.MethodDelete)

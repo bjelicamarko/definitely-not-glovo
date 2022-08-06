@@ -104,6 +104,18 @@ func (repo *Repository) FindRestaurantById(id uint) (*models.RestaurantDTO, erro
 	return &restaurantDTO, nil
 }
 
+func (repo *Repository) FindRestaurantByName(name string) (*models.RestaurantDTO, error) {
+	var restaurant models.Restaurant
+	result := repo.db.Table("restaurants").Where("restaurant_name = ?", name).First(&restaurant)
+
+	if result.Error != nil {
+		return nil, errors.New("restaurant cannot be found")
+	}
+
+	var restaurantDTO models.RestaurantDTO = restaurant.ToRestaurantDTO()
+	return &restaurantDTO, nil
+}
+
 func (repo *Repository) CreateRestaurant(restaurantDTO *models.RestaurantDTO) (*models.RestaurantDTO, error) {
 	var restaurant models.Restaurant = restaurantDTO.ToRestaurant()
 	result := repo.db.Table("restaurants").Create(&restaurant)
