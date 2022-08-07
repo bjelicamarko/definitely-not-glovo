@@ -38,6 +38,36 @@ func Paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
 	}
 }
 
+func (repo *Repository) GetReviewsOfRestaurant(r *http.Request) ([]models.ReviewDTO, int64, error) {
+	var reviewsDTO []models.ReviewDTO
+	var reviews []*models.Review
+	var totalElements int64
+
+	restaurantId := r.URL.Query().Get("restaurantId")
+
+	result := repo.db.Scopes(Paginate(r)).Table("reviews").
+		Where("deleted_at is null and id_restaurant = ?",
+			restaurantId).
+		Order("id desc").
+		Find(&reviews)
+
+	repo.db.Table("reviews").
+		Where("deleted_at is null and id_restaurant = ?",
+			restaurantId).
+		Order("id desc").
+		Count(&totalElements)
+
+	if result.Error != nil {
+		return nil, totalElements, result.Error
+	}
+
+	for _, review := range reviews {
+		reviewsDTO = append(reviewsDTO, review.ToReviewDTO())
+	}
+
+	return reviewsDTO, totalElements, nil
+}
+
 func (repo *Repository) SearchReviews(r *http.Request) ([]models.ReviewDTO, int64, error) {
 	var reviewsDTO []models.ReviewDTO
 	var reviews []*models.Review
@@ -47,18 +77,22 @@ func (repo *Repository) SearchReviews(r *http.Request) ([]models.ReviewDTO, int6
 	userId := r.URL.Query().Get("userId")
 	inappropriate := r.URL.Query().Get("inappropriate")
 
-	if restaurantId == "0" {
-		restaurantId = ""
+	if restaurantId == "" {
+		restaurantId = "0"
 	}
 
-	if userId == "0" {
-		userId = ""
+	if userId == "" {
+		userId = "0"
+	}
+
+	if inappropriate == "" {
+		inappropriate = "false"
 	}
 
 	result := repo.db.Scopes(Paginate(r)).Table("reviews").
 		Where("deleted_at is null and "+
-			"('' = ? or id_restaurant = ?) and "+
-			"('' = ? or id_user = ?) and "+
+			"('0' = ? or id_restaurant = ?) and "+
+			"('0' = ? or id_user = ?) and "+
 			"('' = ? or inappropriate_content = ?)",
 			restaurantId, restaurantId, userId, userId, inappropriate, inappropriate).
 		Order("id desc").
@@ -66,8 +100,8 @@ func (repo *Repository) SearchReviews(r *http.Request) ([]models.ReviewDTO, int6
 
 	repo.db.Table("reviews").
 		Where("deleted_at is null and "+
-			"('' = ? or id_restaurant = ?) and "+
-			"('' = ? or id_user = ?) and "+
+			"('0' = ? or id_restaurant = ?) and "+
+			"('0' = ? or id_user = ?) and "+
 			"('' = ? or inappropriate_content = ?)",
 			restaurantId, restaurantId, userId, userId, inappropriate, inappropriate).
 		Order("id desc").

@@ -19,6 +19,14 @@ func NewReviewsHandler(repository *repository.Repository) *ReviewsHandler {
 	return &ReviewsHandler{repository}
 }
 
+func (rh *ReviewsHandler) GetReviewsOfRestaurant(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	reviewsDTO, totalElements, _ := rh.repository.GetReviewsOfRestaurant(req)
+
+	json.NewEncoder(resWriter).Encode(models.ReviewsPageable{Elements: reviewsDTO, TotalElements: totalElements})
+}
+
 func (rh *ReviewsHandler) SearchReviews(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 
