@@ -13,6 +13,10 @@
                     class="text3"
                     (click)="reportReview(review)">Report?</span>
                 </div>
+                <div *ngIf="role === 'ADMIN'">
+                    <span class="text3"
+                    (click)="deleteReview(review)">Delete</span>
+                </div>
                 <div *ngIf="review.InappropriateContent">
                     <span class="text3" style="color: red; font-weight:bold">Reported</span>
                 </div>

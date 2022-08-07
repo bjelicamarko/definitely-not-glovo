@@ -18,5 +18,7 @@ func MapRoutesAndServe(handler *handlers.ReviewsHandler) {
 	router.HandleFunc("/api/reviews/reportReview", handler.ReportReview).Methods(http.MethodPut)
 	router.HandleFunc("/api/reviews/deleteReview/{id:[0-9]+}", handler.DeleteReview).Methods(http.MethodDelete)
 
+	router.HandleFunc("/api/reviews/averageRatingOfRestaurant/{id:[0-9]+}", handler.AverageRatingOfRestaurant).Methods(http.MethodGet)
+
 	http.ListenAndServe(":8085", router)
 }

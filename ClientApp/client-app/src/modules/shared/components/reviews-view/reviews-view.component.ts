@@ -26,4 +26,8 @@ export class ReviewsViewComponent implements OnInit {
     console.log(review);
     this.sendReviewToParent.emit(review)
   }
- }
+
+  deleteReview(review: ReviewDTO) {
+    this.sendReviewToParent.emit(review)
+  }
+}

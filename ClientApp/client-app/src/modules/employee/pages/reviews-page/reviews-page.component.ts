@@ -7,6 +7,7 @@ import { ReviewDTOMessage } from 'src/modules/shared/models/ReviewDTOMessage';
 import { ReviewsPageable } from 'src/modules/shared/models/ReviewsPageable';
 import { UserDTOMessage } from 'src/modules/shared/models/UserDTOMessage';
 import { RestaurantsUtilsService } from 'src/modules/shared/services/restaurants-utils';
+import { ReviewsUtilsService } from 'src/modules/shared/services/reviews-utils';
 import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { UsersUtilsService } from 'src/modules/shared/services/users-utils.service';
 import { ReviewsService } from '../../services/reviews.service';
@@ -25,16 +26,20 @@ export class ReviewsPageComponent implements OnInit {
   
   idRestaurantForSearch: number;
 
+  avg: number;
+
   constructor(private reviewsService: ReviewsService,
     private authService: AuthService,
     private usersUtilsService: UsersUtilsService,
     private restaurantsUtilsService: RestaurantsUtilsService,
-    private snackBarService: SnackBarService) { 
+    private snackBarService: SnackBarService,
+    private reviewsUtilsService: ReviewsUtilsService) { 
     this.reviews = []
     this.pageSize = 5;
     this.currentPage = 1;
     this.totalSize = 1;
     this.idRestaurantForSearch = 0;
+    this.avg = 0;
   }
 
   ngOnInit(): void {
@@ -53,6 +58,11 @@ export class ReviewsPageComponent implements OnInit {
             this.totalSize = temp.TotalElements;
             this.setPagination((this.totalSize).toString(), (this.currentPage-1).toString());
             this.reviews = temp.Elements as ReviewDTO[];
+          })
+
+          this.reviewsUtilsService.averageRatingOfRestaurant(this.idRestaurantForSearch)
+          .subscribe((response) => {
+            this.avg = response.body as number;
           })
       })
     })

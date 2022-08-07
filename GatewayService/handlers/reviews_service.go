@@ -126,3 +126,20 @@ func DeleteReview(resWriter http.ResponseWriter, r *http.Request) {
 
 	utils.DelegateResponse(response, resWriter)
 }
+
+func AverageRatingOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	restaurantId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	response, err := http.Get(
+		utils.ReviewsServiceRoot.Next().Host + ReviewsServiceApi + "/averageRatingOfRestaurant/" + strconv.FormatUint(uint64(restaurantId), 10))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}

@@ -15,5 +15,6 @@
     </div>
     <div class="card-body" *ngIf="role === 'APPUSER'">
       <button type="button" class="btn btn-light" (click)="restaurantInfo(restaurant.Id)">Details</button>
+      <button type="button" class="btn btn-light" style="margin-left: 10%;" (click)="restaurantReviews(restaurant.Id)">Reviews</button>
     </div>
 </div>

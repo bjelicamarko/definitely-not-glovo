@@ -10,7 +10,7 @@
         </mat-form-field>
     </div>
 </form>
-<app-reviews-view [reviews]="reviews"></app-reviews-view>
+<app-reviews-view (sendReviewToParent)="deleteReview($event)" [reviews]="reviews"></app-reviews-view>
 <app-pagination class='pagination' [totalItems]="totalSize" [pageSize]="pageSize"
         (pageSelected)="changePage($event)">
 </app-pagination>

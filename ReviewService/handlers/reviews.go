@@ -103,5 +103,16 @@ func (rh *ReviewsHandler) DeleteReview(resWriter http.ResponseWriter, req *http.
 	}
 
 	json.NewEncoder(resWriter).Encode(models.ReviewDTOMessage{Message: "review successfully deleted", ReviewDTO: *reviewDTO})
+}
 
+func (rh *ReviewsHandler) AverageRatingOfRestaurant(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idRestaurant, _ := strconv.ParseInt(idStr, 10, 64)
+
+	avg := rh.repository.AverageRatingOfRestaurant(uint(idRestaurant))
+
+	json.NewEncoder(resWriter).Encode(avg)
 }

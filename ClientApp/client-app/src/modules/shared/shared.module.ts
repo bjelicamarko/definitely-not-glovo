@@ -22,6 +22,7 @@ import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { OrderInfoDialogComponent } from './components/order-info-dialog/order-info-dialog.component';
 import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog/orderitem-init-dialog.component';
 import { ReviewsViewComponent } from './components/reviews-view/reviews-view.component';
+import { ReviewsDialogComponent } from './components/reviews-dialog/reviews-dialog.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { ReviewsViewComponent } from './components/reviews-view/reviews-view.com
             OrdersPageComponent,
             OrderInfoDialogComponent,
             OrderitemInitDialogComponent,
-            ReviewsViewComponent
+            ReviewsViewComponent,
+            ReviewsDialogComponent
   ],
     imports: [
         CommonModule,

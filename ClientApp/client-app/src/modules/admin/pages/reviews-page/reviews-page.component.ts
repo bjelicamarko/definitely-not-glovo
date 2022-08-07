@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConformationDialogComponent } from 'src/modules/shared/components/conformation-dialog/conformation-dialog.component';
 import { PaginationComponent } from 'src/modules/shared/components/pagination/pagination.component';
 import { ReviewDTO } from 'src/modules/shared/models/ReviewDTO';
+import { ReviewDTOMessage } from 'src/modules/shared/models/ReviewDTOMessage';
 import { ReviewsPageable } from 'src/modules/shared/models/ReviewsPageable';
+import { SnackBarService } from 'src/modules/shared/services/snack-bar.service';
 import { ReviewsService } from '../../services/reviews.service';
 
 @Component({
@@ -20,7 +24,9 @@ export class ReviewsPageComponent implements OnInit {
   searchFormGroup: FormGroup;
   
   constructor(private fb: FormBuilder,
-    private reviewsService: ReviewsService) { 
+    private reviewsService: ReviewsService,
+    private snackBarService: SnackBarService,
+    public dialog: MatDialog) { 
     this.reviews = []
     this.pageSize = 5;
     this.currentPage = 1;
@@ -57,7 +63,7 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   reset() {
-    this.reviewsService.searchReviews(0, 0, "false", 
+    this.reviewsService.searchReviews(0, 0, this.searchFormGroup.value.reported, 
       this.currentPage, this.pageSize)
       .subscribe((response) => {
         var temp = response.body as ReviewsPageable;
@@ -82,6 +88,25 @@ export class ReviewsPageComponent implements OnInit {
             } 
           }
         })
+    })
+  }
+
+  deleteReview(review: ReviewDTO) {
+    this.dialog.open(ConformationDialogComponent, {
+      data:
+      {
+        title: "Removing Review",
+        body: "You want to remove review?"
+      },
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.reviewsService.deleteReview(review.Id)
+        .subscribe((response) => {
+          var temp = response.body as ReviewDTOMessage
+          this.snackBarService.openSnackBar(temp.Message)
+          this.reset()
+        })
+      }
     })
   }
 }
