@@ -53,6 +53,24 @@ func (oh *OrdersHandler) FindOrderById(resWriter http.ResponseWriter, req *http.
 	json.NewEncoder(resWriter).Encode(models.OrderDTOMessage{Message: "order successfully found", OrderDTO: *orderDTO})
 }
 
+func (oh *OrdersHandler) ReviewOrder(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	params := mux.Vars(req)
+	idStr := params["id"]
+	idInt, _ := strconv.ParseInt(idStr, 10, 64)
+
+	orderDTO, err := oh.repository.ReviewOrder(uint(idInt))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(resWriter).Encode(models.OrderDTOMessage{Message: err.Error()})
+		return
+	}
+
+	json.NewEncoder(resWriter).Encode(models.OrderDTOMessage{Message: "order successfully reviewed", OrderDTO: *orderDTO})
+}
+
 func (oh *OrdersHandler) CreateOrder(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 

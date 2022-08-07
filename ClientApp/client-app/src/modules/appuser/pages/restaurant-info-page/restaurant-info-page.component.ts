@@ -71,7 +71,8 @@ export class RestaurantInfoPageComponent implements OnInit {
     DisplayName: '',
     Longitude: 0,
     Latitude: 0,
-    OrderItemsDTO: []
+    OrderItemsDTO: [],
+    Reviewed: false
   }
   
   idUser: number;
@@ -277,7 +278,8 @@ export class RestaurantInfoPageComponent implements OnInit {
       DisplayName: '',
       Longitude: 0,
       Latitude: 0,
-      OrderItemsDTO: []
+      OrderItemsDTO: [],
+      Reviewed: false
     }
     
   }

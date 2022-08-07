@@ -22,4 +22,15 @@ export class OrdersService{
 
         return this.http.post<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/createOrder", orderDTO, queryParams);
     }
+
+    reviewOrder(orderId: number): Observable<HttpResponse<OrderDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.patch<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/reviewOrder/" + orderId, queryParams);
+    }
 }

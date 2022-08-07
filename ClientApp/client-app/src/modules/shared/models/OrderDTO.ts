@@ -20,4 +20,5 @@ export interface OrderDTO {
     Longitude: number;
     Latitude: number;
     OrderItemsDTO: OrderItemDTO[];
+    Reviewed: boolean;
 }

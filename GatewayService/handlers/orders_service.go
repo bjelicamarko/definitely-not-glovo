@@ -73,6 +73,29 @@ func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
 	utils.DelegateResponse(response, resWriter)
 }
 
+func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	orderId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	req, _ := http.NewRequest(http.MethodPatch,
+		utils.OrdersServiceRoot.Next().Host+OrdersServiceApi+"/reviewOrder/"+strconv.FormatUint(uint64(orderId), 10),
+		r.Body)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
 func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 

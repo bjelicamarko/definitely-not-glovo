@@ -28,6 +28,7 @@ var orders = []models.Order{
 		Ptt:          25000,
 		Longitude:    18.3501358,
 		Latitude:     42.7060377,
+		Reviewed:     false,
 	},
 	{
 		Model:        gorm.Model{},
@@ -48,6 +49,7 @@ var orders = []models.Order{
 		Ptt:          25000,
 		Longitude:    18.3501358,
 		Latitude:     42.7060377,
+		Reviewed:     true,
 	},
 	{
 		Model:        gorm.Model{},
@@ -68,6 +70,7 @@ var orders = []models.Order{
 		Ptt:          25000,
 		Longitude:    18.3501358,
 		Latitude:     42.7060377,
+		Reviewed:     false,
 	},
 	{
 		Model:        gorm.Model{},
@@ -88,6 +91,7 @@ var orders = []models.Order{
 		Ptt:          25000,
 		Longitude:    18.3501358,
 		Latitude:     42.7060377,
+		Reviewed:     false,
 	},
 }
 

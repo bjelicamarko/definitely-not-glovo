@@ -50,7 +50,8 @@ export class OrderInfoDialogComponent implements OnInit {
     DisplayName: '',
     Longitude: 0,
     Latitude: 0,
-    OrderItemsDTO: []
+    OrderItemsDTO: [],
+    Reviewed: false
   }
 
   orderStatusDTO: OrderStatusDTO = {

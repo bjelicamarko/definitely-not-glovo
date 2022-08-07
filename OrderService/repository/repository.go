@@ -153,6 +153,25 @@ func (repo *Repository) FindOrderById(id uint) (*models.OrderDTO, error) {
 	return &orderDTO, nil
 }
 
+func (repo *Repository) ReviewOrder(id uint) (*models.OrderDTO, error) {
+	var order models.Order
+	result := repo.db.Table("orders").Where("id = ?", id).First(&order)
+
+	if result.Error != nil {
+		return nil, errors.New("order cannot be found")
+	}
+
+	order.Reviewed = true
+	result2 := repo.db.Table("orders").Save(&order)
+
+	if result2.Error != nil {
+		return nil, errors.New("error while reviewing order")
+	}
+
+	var retValue models.OrderDTO = order.ToOrderDTO()
+	return &retValue, nil
+}
+
 func (repo *Repository) CreateOrder(orderDTO *models.OrderDTO) (*models.OrderDTO, error) {
 	var order models.Order = orderDTO.ToOrder()
 	result := repo.db.Table("orders").Create(&order)
