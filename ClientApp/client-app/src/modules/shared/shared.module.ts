@@ -21,6 +21,7 @@ import { Interceptor } from "./interceptors/interceptor.interceptor";
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { OrderInfoDialogComponent } from './components/order-info-dialog/order-info-dialog.component';
 import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog/orderitem-init-dialog.component';
+import { ReviewsViewComponent } from './components/reviews-view/reviews-view.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog
             ArticlesPageComponent,
             OrdersPageComponent,
             OrderInfoDialogComponent,
-            OrderitemInitDialogComponent
+            OrderitemInitDialogComponent,
+            ReviewsViewComponent
   ],
     imports: [
         CommonModule,
@@ -46,7 +48,8 @@ import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog
     ],
     exports: [
         PaginationComponent,
-        ArticlesPageComponent
+        ArticlesPageComponent,
+        ReviewsViewComponent
     ],
     providers: [
         SnackBarService,

@@ -6,10 +6,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialExampleModule } from 'src/material.module';
 import { SharedModule } from "../shared/shared.module";
 import { EmployeeRoutes } from "./employee.routes";
+import { ReviewsPageComponent } from './pages/reviews-page/reviews-page.component';
 
 @NgModule({
     declarations: [
-    ],
+    
+    ReviewsPageComponent
+  ],
     imports: [
         CommonModule,
         RouterModule.forChild(EmployeeRoutes),

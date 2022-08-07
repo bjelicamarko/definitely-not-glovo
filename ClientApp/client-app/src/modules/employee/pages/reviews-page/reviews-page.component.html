@@ -1,0 +1,4 @@
+<app-reviews-view (sendReviewToParent)="reportReview($event)" [reviews]="reviews"></app-reviews-view>
+<app-pagination class='pagination' [totalItems]="totalSize" [pageSize]="pageSize"
+        (pageSelected)="changePage($event)">
+</app-pagination>

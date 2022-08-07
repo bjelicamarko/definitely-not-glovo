@@ -53,6 +53,17 @@ var reviews = []models.Review{
 		IdUser:               2,
 		EmailUser:            "pera@gmail.com",
 	},
+	{
+		Model:                gorm.Model{},
+		Comment:              "Drugi restoran  bas mnogo bolji",
+		Rating:               0,
+		InappropriateContent: true,
+		DateTime:             "08.07.2022. 12:16",
+		IdRestaurant:         1,
+		IdOrder:              5,
+		IdUser:               2,
+		EmailUser:            "pera@gmail.com",
+	},
 }
 
 func Init() *gorm.DB {
