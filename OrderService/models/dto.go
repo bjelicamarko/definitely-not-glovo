@@ -30,6 +30,7 @@ type OrderDTO struct {
 	Longitude     float32        `json:"Longitude"`
 	Latitude      float32        `json:"Latitude"`
 	OrderItemsDTO []OrderItemDTO `json:"OrderItemsDTO"`
+	Reviewed      bool           `json:"Reviewed"`
 }
 
 type OrderDTOMessage struct {

@@ -13,7 +13,7 @@ export class OrdersUtilsService {
     
     constructor(private http: HttpClient) {}
 
-    searchOrders(userId: number, restaurantId: number, 
+    searchOrders(role: string, userId: number, restaurantId: number, 
         orderStatus: string, priceFrom: number, priceTo: number,
         page: number, size: number)
     : Observable<HttpResponse<OrdersPageable>>  {
@@ -31,6 +31,7 @@ export class OrdersUtilsService {
             headers: this.headers,
             observe: "response",
             params: {
+                role: role,
                 userId: userId,
                 restaurantId: restaurantId,
                 orderStatus: orderStatus,
@@ -67,5 +68,16 @@ export class OrdersUtilsService {
 
         return this.http.put<HttpResponse<OrderDTOMessage>>
         ("not-glovo/api/orders/changeStatusOfOrder", orderStatusDTO,  queryParams);
+    }
+
+    reviewOrder(orderId: number): Observable<HttpResponse<OrderDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.patch<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/reviewOrder/" + orderId, null, queryParams);
     }
 }

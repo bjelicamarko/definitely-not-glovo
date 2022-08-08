@@ -23,6 +23,7 @@ type Order struct {
 	DisplayName  string      `gorm:"not null"`
 	Longitude    float32     `gorm:"not null"`
 	Latitude     float32     `gorm:"not null"`
+	Reviewed     bool        `gorm:"not null"`
 }
 
 type OrderItem struct {

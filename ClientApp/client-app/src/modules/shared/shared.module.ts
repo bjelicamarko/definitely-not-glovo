@@ -20,6 +20,11 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Interceptor } from "./interceptors/interceptor.interceptor";
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { OrderInfoDialogComponent } from './components/order-info-dialog/order-info-dialog.component';
+import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog/orderitem-init-dialog.component';
+import { ReviewsViewComponent } from './components/reviews-view/reviews-view.component';
+import { ReviewsDialogComponent } from './components/reviews-dialog/reviews-dialog.component';
+import { ReviewsUtilsService } from "./services/reviews-utils";
+import { CreateReviewDialogComponent } from './components/create-review-dialog/create-review-dialog.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +38,11 @@ import { OrderInfoDialogComponent } from './components/order-info-dialog/order-i
             ArticleCardComponent,
             ArticlesPageComponent,
             OrdersPageComponent,
-            OrderInfoDialogComponent
+            OrderInfoDialogComponent,
+            OrderitemInitDialogComponent,
+            ReviewsViewComponent,
+            ReviewsDialogComponent,
+            CreateReviewDialogComponent
   ],
     imports: [
         CommonModule,
@@ -44,7 +53,8 @@ import { OrderInfoDialogComponent } from './components/order-info-dialog/order-i
     ],
     exports: [
         PaginationComponent,
-        ArticlesPageComponent
+        ArticlesPageComponent,
+        ReviewsViewComponent
     ],
     providers: [
         SnackBarService,
@@ -52,6 +62,7 @@ import { OrderInfoDialogComponent } from './components/order-info-dialog/order-i
         RestaurantsUtilsService,
         UsersUtilsService,
         ArticlesUtilsService,
+        ReviewsUtilsService,
         { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     ]
 })

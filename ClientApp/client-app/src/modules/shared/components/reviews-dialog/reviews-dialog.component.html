@@ -1,0 +1,5 @@
+<h1 style="text-align:center">Average Rating: {{avg}}/10</h1>
+<app-reviews-view [reviews]="reviews"></app-reviews-view>
+<app-pagination class='pagination' [totalItems]="totalSize" [pageSize]="pageSize"
+        (pageSelected)="changePage($event)">
+</app-pagination>

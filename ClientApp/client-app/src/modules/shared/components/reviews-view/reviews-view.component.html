@@ -1,0 +1,27 @@
+<div class="container justify-content-center mt-5 border-left border-right">
+
+    <div class="d-flex justify-content-center py-2" *ngFor="let review of reviews">
+        <div class="second py-2 px-2"> 
+            <span class="text1">Comment: {{review.Comment}}</span> <br>
+            <span class="text1">Rating: {{review.Rating}}/10</span>
+            <div class="d-flex justify-content-between py-1 pt-2">
+                <div>
+                    <span class="text2">{{review.EmailUser}} ({{review.DateTime}})</span>
+                </div>
+                <div *ngIf="!review.InappropriateContent && role === 'EMPLOYEE'">
+                    <span 
+                    class="text3"
+                    (click)="reportReview(review)">Report?</span>
+                </div>
+                <div *ngIf="role === 'ADMIN'">
+                    <span class="text3"
+                    (click)="deleteReview(review)">Delete</span>
+                </div>
+                <div *ngIf="review.InappropriateContent">
+                    <span class="text3" style="color: red; font-weight:bold">Reported</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

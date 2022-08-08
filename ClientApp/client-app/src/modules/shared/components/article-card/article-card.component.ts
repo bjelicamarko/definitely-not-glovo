@@ -5,9 +5,12 @@ import { ArticlesService } from 'src/modules/admin/services/articles.service';
 import { AuthService } from 'src/modules/auth/services/auth.service';
 import { ArticleDTO } from '../../models/ArticleDTO';
 import { ArticleDTOMessage } from '../../models/ArticleDTOMessage';
+import { OrderDTO } from '../../models/OrderDTO';
+import { OrderItemDTO } from '../../models/OrderItemDTO';
 import { ArticlesUtilsService } from '../../services/articles-utils';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { ConformationDialogComponent } from '../conformation-dialog/conformation-dialog.component';
+import { OrderitemInitDialogComponent } from '../orderitem-init-dialog/orderitem-init-dialog.component';
 
 @Component({
   selector: 'app-article-card',
@@ -27,9 +30,10 @@ export class ArticleCardComponent implements OnInit {
     ImagePath: '',
     Changed: false
   }
-
-  @Output() renderList: EventEmitter<any> = new EventEmitter();
   
+  @Output() renderList: EventEmitter<any> = new EventEmitter();
+  @Output() sendItemToArticlesPage: EventEmitter<OrderItemDTO> = new EventEmitter();
+
   role: string = "";
 
   constructor(public dialog: MatDialog,
@@ -47,12 +51,20 @@ export class ArticleCardComponent implements OnInit {
     this.router.navigate(["/app/main/admin/article-info/" + id]);
   }
 
+  orderArticle(any: ArticleDTO) {
+    this.dialog.open(OrderitemInitDialogComponent, {
+      data: any
+    }).afterClosed().subscribe(result => {
+      this.sendItemToArticlesPage.emit(result as OrderItemDTO);
+    })
+  }
+  
   deleteArticle(id: number) {
     this.dialog.open(ConformationDialogComponent, {
       data:
       {
         title: "Deleting article",
-        body: "You want to article " + this.article.ArticleName + "?"
+        body: "You want to remove " + this.article.ArticleName + "?"
       },
     }).afterClosed().subscribe(result => {
       if (result) {

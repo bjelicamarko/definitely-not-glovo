@@ -7,6 +7,7 @@ import { RestaurantDTO } from '../../models/RestaurantDTO';
 import { RestaurantDTOMessage } from '../../models/RestaurantDTOMessage';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { ConformationDialogComponent } from '../conformation-dialog/conformation-dialog.component';
+import { ReviewsDialogComponent } from '../reviews-dialog/reviews-dialog.component';
 
 @Component({
   selector: 'app-restaurant-card',
@@ -71,5 +72,14 @@ export class RestaurantCardComponent implements OnInit {
         })
       }
     })
+  }
+
+  restaurantReviews(id: number) {
+    this.dialog.open(ReviewsDialogComponent, {
+      data: id,
+      autoFocus: false,
+      maxHeight: '90vh',
+      width: '45%',
+    });
   }
 }

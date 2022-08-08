@@ -11,6 +11,7 @@ import (
 func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	role := r.URL.Query().Get("role")
 	userId := r.URL.Query().Get("userId")
 	restaurantId := r.URL.Query().Get("restaurantId")
 	orderStatus := r.URL.Query().Get("orderStatus")
@@ -21,7 +22,7 @@ func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 
 	response, err := http.Get(
 		utils.OrdersServiceRoot.Next().Host + OrdersServiceApi +
-			"/searchOrders?userId=" + userId + "&restaurantId=" + restaurantId +
+			"/searchOrders?role=" + role + "&userId=" + userId + "&restaurantId=" + restaurantId +
 			"&orderStatus=" + orderStatus + "&priceFrom=" + priceFrom +
 			"&priceTo=" + priceTo + "&page=" + page + "&size=" + size)
 
@@ -63,6 +64,29 @@ func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
 
 	response, err := http.Get(
 		utils.OrdersServiceRoot.Next().Host + OrdersServiceApi + "/findOrderById/" + strconv.FormatUint(uint64(orderId), 10))
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
+func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	orderId, _ := strconv.ParseUint(params["id"], 10, 32)
+
+	req, _ := http.NewRequest(http.MethodPatch,
+		utils.OrdersServiceRoot.Next().Host+OrdersServiceApi+"/reviewOrder/"+strconv.FormatUint(uint64(orderId), 10),
+		r.Body)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
 
 	if err != nil {
 		resWriter.WriteHeader(http.StatusGatewayTimeout)

@@ -25,6 +25,7 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/restaurants/findAllRestaurants", handlers.FindAllRestaurants).Methods(http.MethodGet)
 	router.HandleFunc("/api/restaurants/searchRestaurants", handlers.SearchRestaurants).Methods(http.MethodGet)
 	router.HandleFunc("/api/restaurants/findRestaurantById/{id:[0-9]+}", handlers.FindRestaurantById).Methods(http.MethodGet)
+	router.HandleFunc("/api/restaurants/findRestaurantByName/{name}", handlers.FindRestaurantByName).Methods(http.MethodGet)
 	router.HandleFunc("/api/restaurants/createRestaurant", handlers.CreateRestaurant).Methods(http.MethodPost)
 	router.HandleFunc("/api/restaurants/updateRestaurant", handlers.UpdateRestaurant).Methods(http.MethodPut)
 	router.HandleFunc("/api/restaurants/deleteRestaurant/{id:[0-9]+}", handlers.DeleteRestaurant).Methods(http.MethodDelete)
@@ -40,8 +41,17 @@ func MapRoutesAndServe() {
 	router.HandleFunc("/api/orders/searchOrders", handlers.SearchOrders).Methods(http.MethodGet)
 	router.HandleFunc("/api/orders/searchOrdersByRestaurantAndStatus", handlers.SearchOrdersByRestaurantAndStatus).Methods(http.MethodGet)
 	router.HandleFunc("/api/orders/findOrderById/{id:[0-9]+}", handlers.FindOrderById).Methods(http.MethodGet)
+	router.HandleFunc("/api/orders/reviewOrder/{id:[0-9]+}", handlers.ReviewOrder).Methods(http.MethodPatch)
 	router.HandleFunc("/api/orders/createOrder", handlers.CreateOrder).Methods(http.MethodPost)
 	router.HandleFunc("/api/orders/changeStatusOfOrder", handlers.ChangeStatusOfOrder).Methods(http.MethodPut)
+
+	router.HandleFunc("/api/reviews/getReviewsOfRestaurant", handlers.GetReviewsOfRestaurant).Methods(http.MethodGet)
+	router.HandleFunc("/api/reviews/searchReviews", handlers.SearchReviews).Methods(http.MethodGet)
+	router.HandleFunc("/api/reviews/findReviewByOrder/{id:[0-9]+}", handlers.FindReviewByOrder).Methods(http.MethodGet)
+	router.HandleFunc("/api/reviews/createReview", handlers.CreateReview).Methods(http.MethodPost)
+	router.HandleFunc("/api/reviews/reportReview", handlers.ReportReview).Methods(http.MethodPut)
+	router.HandleFunc("/api/reviews/deleteReview/{id:[0-9]+}", handlers.DeleteReview).Methods(http.MethodDelete)
+	router.HandleFunc("/api/reviews/averageRatingOfRestaurant/{id:[0-9]+}", handlers.AverageRatingOfRestaurant).Methods(http.MethodGet)
 
 	http.ListenAndServe(":8080", router)
 }

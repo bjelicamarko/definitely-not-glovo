@@ -24,6 +24,7 @@ func (order *Order) ToOrderDTO() OrderDTO {
 		DisplayName:  order.DisplayName,
 		Longitude:    order.Longitude,
 		Latitude:     order.Latitude,
+		Reviewed:     order.Reviewed,
 	}
 }
 
@@ -57,6 +58,7 @@ func (orderDTO *OrderDTO) ToOrder() Order {
 		DisplayName:  orderDTO.DisplayName,
 		Longitude:    orderDTO.Longitude,
 		Latitude:     orderDTO.Latitude,
+		Reviewed:     orderDTO.Reviewed,
 	}
 }
 

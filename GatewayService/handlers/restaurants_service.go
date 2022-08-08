@@ -60,6 +60,23 @@ func FindRestaurantById(resWriter http.ResponseWriter, r *http.Request) {
 	utils.DelegateResponse(response, resWriter)
 }
 
+func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
+	utils.SetupResponse(&resWriter, r)
+
+	params := mux.Vars(r)
+	restaurantName := params["name"]
+
+	response, err := http.Get(
+		utils.RestaurantsServiceRoot.Next().Host + RestaurantsServiceApi + "/findRestaurantByName/" + restaurantName)
+
+	if err != nil {
+		resWriter.WriteHeader(http.StatusGatewayTimeout)
+		return
+	}
+
+	utils.DelegateResponse(response, resWriter)
+}
+
 func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 

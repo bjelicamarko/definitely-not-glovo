@@ -42,6 +42,7 @@ func (repo *Repository) SearchOrders(r *http.Request) ([]models.OrderDTO, int64,
 	var orders []*models.Order
 	var totalElements int64
 
+	role := r.URL.Query().Get("role")
 	userId := r.URL.Query().Get("userId")
 	restaurantId := r.URL.Query().Get("restaurantId")
 	orderStatus := r.URL.Query().Get("orderStatus")
@@ -64,18 +65,24 @@ func (repo *Repository) SearchOrders(r *http.Request) ([]models.OrderDTO, int64,
 		Where("deleted_at IS NULL and "+
 			"('0' = ? or id_restaurant = ?) and "+
 			"('' = ? or order_status = ?) and "+
-			"(id_app_user = ? or id_employee = ? or id_deliverer = ?) and "+
+			"((id_app_user = ? and 'APPUSER' = ?) or ((id_employee = ? or order_status = 'ORDERED') and 'EMPLOYEE' = ?) "+
+			"or ((id_deliverer = ? or order_status = 'READY') and 'DELIVERER' = ?)) and "+
 			"(total_price >= ? and total_price <= ?)",
-			restaurantId, restaurantId, orderStatus, orderStatus, userId, userId, userId, priceFrom, priceTo).
+			restaurantId, restaurantId, orderStatus, orderStatus, userId, role, userId, role, userId, role,
+			priceFrom, priceTo).
+		Order("id desc").
 		Find(&orders)
 
 	repo.db.Table("orders").
 		Where("deleted_at IS NULL and "+
 			"('0' = ? or id_restaurant = ?) and "+
 			"('' = ? or order_status = ?) and "+
-			"(id_app_user = ? or id_employee = ? or id_deliverer = ?) and "+
+			"((id_app_user = ? and 'APPUSER' = ?) or ((id_employee = ? or order_status = 'ORDERED') and 'EMPLOYEE' = ?) "+
+			"or ((id_deliverer = ? or order_status = 'READY') and 'DELIVERER' = ?)) and "+
 			"(total_price >= ? and total_price <= ?)",
-			restaurantId, restaurantId, orderStatus, orderStatus, userId, userId, userId, priceFrom, priceTo).
+			restaurantId, restaurantId, orderStatus, orderStatus, userId, role, userId, role, userId, role,
+			priceFrom, priceTo).
+		Order("id desc").
 		Count(&totalElements)
 
 	if result.Error != nil {
@@ -101,12 +108,14 @@ func (repo *Repository) SearchOrdersByRestaurantAndStatus(r *http.Request) ([]mo
 		Where("(deleted_at IS NULL and id_restaurant = ?) and "+
 			"('' = ? or order_status = ?)",
 			restaurantId, orderStatus, orderStatus).
+		Order("id desc").
 		Find(&orders)
 
 	repo.db.Table("orders").
 		Where("(deleted_at IS NULL and id_restaurant = ?) and "+
 			"('' = ? or order_status = ?)",
 			restaurantId, orderStatus, orderStatus).
+		Order("id desc").
 		Count(&totalElements)
 
 	if result.Error != nil {
@@ -142,6 +151,25 @@ func (repo *Repository) FindOrderById(id uint) (*models.OrderDTO, error) {
 	}
 
 	return &orderDTO, nil
+}
+
+func (repo *Repository) ReviewOrder(id uint) (*models.OrderDTO, error) {
+	var order models.Order
+	result := repo.db.Table("orders").Where("id = ?", id).First(&order)
+
+	if result.Error != nil {
+		return nil, errors.New("order cannot be found")
+	}
+
+	order.Reviewed = true
+	result2 := repo.db.Table("orders").Save(&order)
+
+	if result2.Error != nil {
+		return nil, errors.New("error while reviewing order")
+	}
+
+	var retValue models.OrderDTO = order.ToOrderDTO()
+	return &retValue, nil
 }
 
 func (repo *Repository) CreateOrder(orderDTO *models.OrderDTO) (*models.OrderDTO, error) {

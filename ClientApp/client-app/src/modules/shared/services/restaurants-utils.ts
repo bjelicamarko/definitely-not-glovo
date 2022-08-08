@@ -53,4 +53,15 @@ export class RestaurantsUtilsService {
 
         return this.http.get<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/findRestaurantById/" + id, queryParams);
     }
+
+    findRestaurantByName(name: string): Observable<HttpResponse<RestaurantDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.get<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/findRestaurantByName/" + name, queryParams);
+    }
 }

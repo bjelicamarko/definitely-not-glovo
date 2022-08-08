@@ -55,7 +55,7 @@ var users = []models.User{
 		Role:           models.EMPLOYEE,
 		Banned:         false,
 		Image:          "images/default.jpg",
-		RestaurantName: "KFC",
+		RestaurantName: "McDonalds",
 	},
 	{
 		Model:          gorm.Model{},

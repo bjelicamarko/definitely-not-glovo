@@ -13,6 +13,7 @@ func MapRoutesAndServe(handler *handlers.OrdersHandler) {
 	router.HandleFunc("/api/orders/searchOrders", handler.SearchOrders).Methods("GET")
 	router.HandleFunc("/api/orders/searchOrdersByRestaurantAndStatus", handler.SearchOrdersByRestaurantAndStatus).Methods("GET")
 	router.HandleFunc("/api/orders/findOrderById/{id:[0-9]+}", handler.FindOrderById).Methods("GET")
+	router.HandleFunc("/api/orders/reviewOrder/{id:[0-9]+}", handler.ReviewOrder).Methods("PATCH")
 
 	router.HandleFunc("/api/orders/createOrder", handler.CreateOrder).Methods("POST")
 	router.HandleFunc("/api/orders/changeStatusOfOrder", handler.ChangeStatusOfOrder).Methods("PUT")

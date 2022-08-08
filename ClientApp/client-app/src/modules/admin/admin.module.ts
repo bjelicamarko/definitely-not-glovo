@@ -11,6 +11,7 @@ import { UserCardComponent } from './components/user-card/user-card.component';
 import { CreateUserPageComponent } from './pages/create-user-page/create-user-page.component';
 import { CreateRestaurantPageComponent } from './pages/create-restaurant-page/create-restaurant-page.component';
 import { CreateArticlePageComponent } from './pages/create-article-page/create-article-page.component';
+import { ReviewsPageComponent } from './pages/reviews-page/reviews-page.component';
 
 @NgModule({
    declarations: [
@@ -19,6 +20,7 @@ import { CreateArticlePageComponent } from './pages/create-article-page/create-a
     CreateUserPageComponent,
     CreateRestaurantPageComponent,
     CreateArticlePageComponent,
+    ReviewsPageComponent,
   ],
     imports: [
         CommonModule,
