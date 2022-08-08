@@ -64,4 +64,26 @@
             </tbody>
         </table>
     </div>
+
+    <div style="margin-top: 3%;" *ngIf="order.Reviewed">
+        <h2>Review:</h2>
+        <div class="second py-2 px-2"> 
+            <span class="text1">Comment: {{review.Comment}}</span> <br>
+            <span class="text1">Rating: {{review.Rating}}/10</span>
+            <div class="d-flex justify-content-between py-1 pt-2">
+                <div>
+                    <span class="text2">{{review.EmailUser}} ({{review.DateTime}})</span>
+                </div>
+                <div *ngIf="review.InappropriateContent">
+                    <span class="text3" style="color: red; font-weight:bold">Reported</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 3%;" *ngIf="!order.Reviewed && data.Role === 'APPUSER' && 
+    order.OrderStatus === 'DELIVERED'">
+        <button type="button" class="btn btn-dark" 
+        (click)="reviewIt()">Review it</button>
+    </div>
 </div>

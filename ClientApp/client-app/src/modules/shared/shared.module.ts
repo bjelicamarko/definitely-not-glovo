@@ -23,6 +23,8 @@ import { OrderInfoDialogComponent } from './components/order-info-dialog/order-i
 import { OrderitemInitDialogComponent } from './components/orderitem-init-dialog/orderitem-init-dialog.component';
 import { ReviewsViewComponent } from './components/reviews-view/reviews-view.component';
 import { ReviewsDialogComponent } from './components/reviews-dialog/reviews-dialog.component';
+import { ReviewsUtilsService } from "./services/reviews-utils";
+import { CreateReviewDialogComponent } from './components/create-review-dialog/create-review-dialog.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +41,8 @@ import { ReviewsDialogComponent } from './components/reviews-dialog/reviews-dial
             OrderInfoDialogComponent,
             OrderitemInitDialogComponent,
             ReviewsViewComponent,
-            ReviewsDialogComponent
+            ReviewsDialogComponent,
+            CreateReviewDialogComponent
   ],
     imports: [
         CommonModule,
@@ -59,6 +62,7 @@ import { ReviewsDialogComponent } from './components/reviews-dialog/reviews-dial
         RestaurantsUtilsService,
         UsersUtilsService,
         ArticlesUtilsService,
+        ReviewsUtilsService,
         { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     ]
 })

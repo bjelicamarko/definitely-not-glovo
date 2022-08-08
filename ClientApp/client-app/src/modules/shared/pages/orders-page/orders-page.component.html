@@ -52,11 +52,6 @@
                                 <td>{{order.Tip}}</td>
                                 <td>{{order.DateTime}}</td>
                                 <td>{{order.Note}}</td>
-                                <div *ngIf="userRole === 'APPUSER' && !order.Reviewed && 
-                                order.OrderStatus === 'DELIVERED'">
-                                    <button class="btn btn-primary profile-button" 
-                                     type="button">Review</button>
-                                </div>
                         </tr>
                 </tbody>
         </table>

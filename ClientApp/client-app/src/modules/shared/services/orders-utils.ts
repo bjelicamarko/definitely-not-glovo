@@ -69,4 +69,15 @@ export class OrdersUtilsService {
         return this.http.put<HttpResponse<OrderDTOMessage>>
         ("not-glovo/api/orders/changeStatusOfOrder", orderStatusDTO,  queryParams);
     }
+
+    reviewOrder(orderId: number): Observable<HttpResponse<OrderDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.patch<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/reviewOrder/" + orderId, null, queryParams);
+    }
 }

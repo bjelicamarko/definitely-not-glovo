@@ -1,6 +1,8 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { OrderDTOMessage } from "../models/OrderDTOMessage";
+import { ReviewDTO } from "../models/ReviewDTO";
 import { ReviewDTOMessage } from "../models/ReviewDTOMessage";
 import { ReviewsPageable } from "../models/ReviewsPageable";
 
@@ -50,4 +52,16 @@ export class ReviewsUtilsService {
 
         return this.http.get<HttpResponse<number>>("not-glovo/api/reviews/averageRatingOfRestaurant/" + idRestaurant, queryParams);
     }
+
+    createReview(reviewDTO: ReviewDTO): Observable<HttpResponse<ReviewDTOMessage>> {
+        let queryParams = {};
+
+        queryParams = {
+        headers: this.headers,
+        observe: "response",
+        }
+
+        return this.http.post<HttpResponse<ReviewDTOMessage>>("not-glovo/api/reviews/createReview", reviewDTO, queryParams);
+    }
+
 }
