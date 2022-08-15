@@ -1,0 +1,12 @@
+C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\deps\yansi-ecfb1c15c9fa1ef7.rmeta: C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\lib.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\macros.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\windows.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\paint.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\style.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\color.rs
+
+C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\deps\libyansi-ecfb1c15c9fa1ef7.rlib: C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\lib.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\macros.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\windows.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\paint.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\style.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\color.rs
+
+C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\deps\yansi-ecfb1c15c9fa1ef7.d: C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\lib.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\macros.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\windows.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\paint.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\style.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\color.rs
+
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\lib.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\macros.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\windows.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\paint.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\style.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\yansi-0.5.1\src\color.rs:

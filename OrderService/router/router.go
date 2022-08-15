@@ -10,6 +10,7 @@ import (
 func MapRoutesAndServe(handler *handlers.OrdersHandler) {
 	router := mux.NewRouter()
 
+	router.HandleFunc("/api/orders/ordersForReport", handler.OrdersForReport).Methods("GET")
 	router.HandleFunc("/api/orders/searchOrders", handler.SearchOrders).Methods("GET")
 	router.HandleFunc("/api/orders/searchOrdersByRestaurantAndStatus", handler.SearchOrdersByRestaurantAndStatus).Methods("GET")
 	router.HandleFunc("/api/orders/findOrderById/{id:[0-9]+}", handler.FindOrderById).Methods("GET")

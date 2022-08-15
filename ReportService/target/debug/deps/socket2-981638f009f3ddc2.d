@@ -1,0 +1,11 @@
+C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\deps\socket2-981638f009f3ddc2.rmeta: C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\lib.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockaddr.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\socket.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockref.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sys\windows.rs
+
+C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\deps\libsocket2-981638f009f3ddc2.rlib: C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\lib.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockaddr.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\socket.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockref.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sys\windows.rs
+
+C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\deps\socket2-981638f009f3ddc2.d: C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\lib.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockaddr.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\socket.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockref.rs C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sys\windows.rs
+
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\lib.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockaddr.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\socket.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sockref.rs:
+C:\Users\marko\.cargo\registry\src\github.com-1ecc6299db9ec823\socket2-0.4.4\src\sys\windows.rs:

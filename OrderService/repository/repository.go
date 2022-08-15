@@ -37,6 +37,39 @@ func Paginate(r *http.Request) func(db *gorm.DB) *gorm.DB {
 	}
 }
 
+func (repo *Repository) OrdersForReport(r *http.Request) ([]models.OrderForReportDTO, error) {
+	var ordersForReportDTO []models.OrderForReportDTO
+	var orders []*models.Order
+
+	result := repo.db.Table("orders").
+		Where("deleted_at IS NULL and order_status = 'DELIVERED'").
+		Order("id desc").
+		Find(&orders)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	for _, order := range orders {
+		var orderForReportDTO = order.ToOrderForReportDTO()
+
+		var orderItems []models.OrderItem
+		result2 := repo.db.Table("order_items").Where("id_order = ?", orderForReportDTO.IdOrder).Find(&orderItems)
+
+		if result2.Error != nil {
+			return nil, result.Error
+		}
+
+		for _, orderItem := range orderItems {
+			orderForReportDTO.OrderItemsForReportDTO = append(orderForReportDTO.OrderItemsForReportDTO, orderItem.ToOrderItemForReportDTO())
+		}
+
+		ordersForReportDTO = append(ordersForReportDTO, orderForReportDTO)
+	}
+
+	return ordersForReportDTO, nil
+}
+
 func (repo *Repository) SearchOrders(r *http.Request) ([]models.OrderDTO, int64, error) {
 	var ordersDTO []models.OrderDTO
 	var orders []*models.Order

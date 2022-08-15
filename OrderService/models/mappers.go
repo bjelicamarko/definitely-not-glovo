@@ -73,3 +73,28 @@ func (orderItemDTO *OrderItemDTO) ToOrderItem() OrderItem {
 		TotalPrice:   orderItemDTO.TotalPrice,
 	}
 }
+func (order *Order) ToOrderForReportDTO() OrderForReportDTO {
+	return OrderForReportDTO{
+		IdOrder:      order.ID,
+		IdRestaurant: order.IdRestaurant,
+		IdAppUser:    order.IdAppUser,
+		IdEmployee:   order.IdEmployee,
+		IdDeliverer:  order.IdDeliverer,
+		TotalPrice:   order.TotalPrice,
+		Tip:          order.Tip,
+		DateTime:     order.DateTime,
+		OrderStatus:  string(order.OrderStatus),
+	}
+}
+
+func (orderItem *OrderItem) ToOrderItemForReportDTO() OrderItemForReportDTO {
+	return OrderItemForReportDTO{
+		Id:           orderItem.ID,
+		IdOrder:      orderItem.IdOrder,
+		IdArticle:    orderItem.IdArticle,
+		ArticleName:  orderItem.ArticleName,
+		CurrentPrice: orderItem.CurrentPrice,
+		Quantity:     orderItem.Quantity,
+		TotalPrice:   orderItem.TotalPrice,
+	}
+}
