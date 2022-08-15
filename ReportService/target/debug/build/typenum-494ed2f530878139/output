@@ -1,2 +1,0 @@
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\build\typenum-494ed2f530878139\out\consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=C:\SIIT\4. GODINA\2. Semestar\Napredne tehnike programiranja\Projekat\nije-glovo\ReportService\target\debug\build\typenum-494ed2f530878139\out\op.rs
