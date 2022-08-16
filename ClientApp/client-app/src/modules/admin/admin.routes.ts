@@ -5,6 +5,7 @@ import { RestaurantsPageComponent } from "../shared/pages/restaurants-page/resta
 import { CreateArticlePageComponent } from "./pages/create-article-page/create-article-page.component";
 import { CreateRestaurantPageComponent } from "./pages/create-restaurant-page/create-restaurant-page.component";
 import { CreateUserPageComponent } from "./pages/create-user-page/create-user-page.component";
+import { ReportsPageComponent } from "./pages/reports-page/reports-page.component";
 import { ReviewsPageComponent } from "./pages/reviews-page/reviews-page.component";
 import { UsersPageComponent } from "./pages/users-page/users-page.component";
 
@@ -55,6 +56,13 @@ export const AdminRoutes: Routes = [
         path: "reviews",
         pathMatch: "full",
         component: ReviewsPageComponent,
+        canActivate: [RoleGuard],
+        data: { expectedRoles: "ADMIN" },
+    },
+    {
+        path: "reports",
+        pathMatch: "full",
+        component: ReportsPageComponent,
         canActivate: [RoleGuard],
         data: { expectedRoles: "ADMIN" },
     }

@@ -19,6 +19,14 @@ func NewOrdersHandler(repository *repository.Repository) *OrdersHandler {
 	return &OrdersHandler{repository}
 }
 
+func (oh *OrdersHandler) OrdersForReport(resWriter http.ResponseWriter, req *http.Request) {
+	utils.AdjustResponseHeaderJson(&resWriter)
+
+	ordersForReportDTO, _ := oh.repository.OrdersForReport(req)
+
+	json.NewEncoder(resWriter).Encode(ordersForReportDTO)
+}
+
 func (oh *OrdersHandler) SearchOrders(resWriter http.ResponseWriter, req *http.Request) {
 	utils.AdjustResponseHeaderJson(&resWriter)
 

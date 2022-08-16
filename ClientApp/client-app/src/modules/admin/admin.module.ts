@@ -12,6 +12,11 @@ import { CreateUserPageComponent } from './pages/create-user-page/create-user-pa
 import { CreateRestaurantPageComponent } from './pages/create-restaurant-page/create-restaurant-page.component';
 import { CreateArticlePageComponent } from './pages/create-article-page/create-article-page.component';
 import { ReviewsPageComponent } from './pages/reviews-page/reviews-page.component';
+import { ReportsPageComponent } from './pages/reports-page/reports-page.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
+
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
    declarations: [
@@ -21,6 +26,9 @@ import { ReviewsPageComponent } from './pages/reviews-page/reviews-page.componen
     CreateRestaurantPageComponent,
     CreateArticlePageComponent,
     ReviewsPageComponent,
+    ReportsPageComponent,
+    PieChartComponent,
+    DoughnutChartComponent,
   ],
     imports: [
         CommonModule,
@@ -28,7 +36,8 @@ import { ReviewsPageComponent } from './pages/reviews-page/reviews-page.componen
         MaterialExampleModule,
         FormsModule,
         ReactiveFormsModule,
-        SharedModule
+        SharedModule,
+        NgChartsModule
     ]
 })
 export class AdminModule { }

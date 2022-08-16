@@ -13,6 +13,7 @@ var RestaurantsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:
 var ArticlesServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8083"})
 var OrdersServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8084"})
 var ReviewsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8085"})
+var ReportsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8086"})
 
 func DelegateResponse(response *http.Response, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", response.Header.Get("Content-Type"))
