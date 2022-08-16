@@ -72,7 +72,8 @@ export class RestaurantInfoPageComponent implements OnInit {
     Longitude: 0,
     Latitude: 0,
     OrderItemsDTO: [],
-    Reviewed: false
+    Reviewed: false,
+    RestaurantName: ''
   }
   
   idUser: number;
@@ -241,6 +242,7 @@ export class RestaurantInfoPageComponent implements OnInit {
           },
         }).afterClosed().subscribe(result => {
           if (result) {
+            this.newOrder.RestaurantName = this.restaurant.RestaurantName
             this.newOrder.IdRestaurant = this.restaurant.Id
             this.newOrder.OrderStatus = 'ORDERED'
             this.newOrder.IdAppUser = this.idUser
@@ -279,7 +281,8 @@ export class RestaurantInfoPageComponent implements OnInit {
       Longitude: 0,
       Latitude: 0,
       OrderItemsDTO: [],
-      Reviewed: false
+      Reviewed: false,
+      RestaurantName: ''
     }
     
   }

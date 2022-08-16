@@ -2,6 +2,7 @@ import { OrderItemDTO } from "./OrderItemDTO";
 
 export interface OrderDTO {
     Id: number;
+    RestaurantName: string;
     IdRestaurant: number;
     IdAppUser: number;
     IdEmployee: number;
