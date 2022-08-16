@@ -48,8 +48,8 @@ struct ArticlePriceQuantity {
 
 #[derive(Deserialize, Serialize, Debug)]
 struct Report {
-    pub map_restaurants: HashMap<&str, f32>,
-    pub map_articles: HashMap<&str, ArticlePriceQuantity>,
+    pub map_restaurants: HashMap<String, f32>,
+    pub map_articles: HashMap<String, ArticlePriceQuantity>,
     pub date: String,
 }
 
@@ -63,20 +63,20 @@ fn api_call() -> Result<Vec<OrderForReportDTO>, Box<dyn std::error::Error>> {
 fn get_reports() -> Result<Json<Report>, Error> {
     let mut orders: Vec<OrderForReportDTO> = api_call().ok().unwrap();
 
-    let mut map_restaurants: HashMap<&str, f32> = HashMap::new();
-    let mut map_articles: HashMap<&str, ArticlePriceQuantity> = HashMap::new();
+    let mut map_restaurants: HashMap<String, f32> = HashMap::new();
+    let mut map_articles: HashMap<String, ArticlePriceQuantity> = HashMap::new();
 
     orders.iter_mut().for_each(|el| {
-        *map_restaurants.entry(&el.restaurant_name).or_insert(0.0) += el.total_price;
+        *map_restaurants.entry(el.restaurant_name.clone()).or_insert(0.0) += el.total_price;
 
         el.order_items_for_report_dto.iter_mut().for_each(|el2| {
             if map_articles.contains_key(&el2.article_name as &str) {
-                map_articles.insert(&el2.article_name, ArticlePriceQuantity { 
+                map_articles.insert(el2.article_name.clone(), ArticlePriceQuantity { 
                     total_price: map_articles.get(&el2.article_name as &str).unwrap().total_price + el2.total_price, 
                     quantity: map_articles.get(&el2.article_name as &str).unwrap().quantity + el2.quantity
                 });
             } else {
-                map_articles.insert(&el2.article_name, ArticlePriceQuantity { total_price: el2.total_price, quantity: el2.quantity });
+                map_articles.insert(el2.article_name.clone(), ArticlePriceQuantity { total_price: el2.total_price, quantity: el2.quantity });
             }
         });
     });
@@ -86,7 +86,7 @@ fn get_reports() -> Result<Json<Report>, Error> {
     let now: DateTime<Utc> = Utc::now();
     println!("Now: {}", now.format("%d.%m.%Y."));
 
-    let mut report: Report = Report {
+    let report: Report = Report {
         map_restaurants: map_restaurants,
         map_articles: map_articles,
         date: (now.format("%d.%m.%Y.")).to_string()
