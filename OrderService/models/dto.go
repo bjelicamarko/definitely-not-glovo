@@ -11,26 +11,27 @@ type OrderItemDTO struct {
 }
 
 type OrderDTO struct {
-	Id            uint           `json:"Id"`
-	IdRestaurant  uint           `json:"IdRestaurant"`
-	IdAppUser     uint           `json:"IdAppUser"`
-	IdEmployee    uint           `json:"IdEmployee"`
-	IdDeliverer   uint           `json:"IdDeliverer"`
-	OrderStatus   string         `json:"OrderStatus"`
-	TotalPrice    float32        `json:"TotalPrice"`
-	Tip           float32        `json:"Tip"`
-	Note          string         `json:"Note"`
-	DateTime      string         `json:"DateTime"`
-	Country       string         `json:"Country"`
-	City          string         `json:"City"`
-	Street        string         `json:"Street"`
-	StreetNumber  string         `json:"StreetNumber"`
-	Ptt           uint           `json:"Ptt"`
-	DisplayName   string         `json:"DisplayName"`
-	Longitude     float32        `json:"Longitude"`
-	Latitude      float32        `json:"Latitude"`
-	OrderItemsDTO []OrderItemDTO `json:"OrderItemsDTO"`
-	Reviewed      bool           `json:"Reviewed"`
+	Id             uint           `json:"Id"`
+	RestaurantName string         `json:"RestaurantName"`
+	IdRestaurant   uint           `json:"IdRestaurant"`
+	IdAppUser      uint           `json:"IdAppUser"`
+	IdEmployee     uint           `json:"IdEmployee"`
+	IdDeliverer    uint           `json:"IdDeliverer"`
+	OrderStatus    string         `json:"OrderStatus"`
+	TotalPrice     float32        `json:"TotalPrice"`
+	Tip            float32        `json:"Tip"`
+	Note           string         `json:"Note"`
+	DateTime       string         `json:"DateTime"`
+	Country        string         `json:"Country"`
+	City           string         `json:"City"`
+	Street         string         `json:"Street"`
+	StreetNumber   string         `json:"StreetNumber"`
+	Ptt            uint           `json:"Ptt"`
+	DisplayName    string         `json:"DisplayName"`
+	Longitude      float32        `json:"Longitude"`
+	Latitude       float32        `json:"Latitude"`
+	OrderItemsDTO  []OrderItemDTO `json:"OrderItemsDTO"`
+	Reviewed       bool           `json:"Reviewed"`
 }
 
 type OrderDTOMessage struct {
@@ -52,6 +53,7 @@ type OrderStatusDTO struct {
 
 type OrderForReportDTO struct {
 	IdOrder                uint                    `json:"id_order"`
+	RestaurantName         string                  `json:"restaurant_name"`
 	IdRestaurant           uint                    `json:"id_restaurant"`
 	IdAppUser              uint                    `json:"id_app_user"`
 	IdEmployee             uint                    `json:"id_employee"`
