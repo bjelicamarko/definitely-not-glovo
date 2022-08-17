@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Feature, View } from 'ol';
 import { Geometry, Point } from 'ol/geom';
 import TileLayer from 'ol/layer/Tile';
@@ -89,7 +89,8 @@ export class RestaurantInfoPageComponent implements OnInit {
     private snackBarService: SnackBarService,
     private authService: AuthService,
     private dialog: MatDialog,
-    private ordersService: OrdersService) {
+    private ordersService: OrdersService,
+    private router: Router) {
     this.restaurantIdFromRoute = 0
     this.idUser = 0
   }
@@ -257,6 +258,7 @@ export class RestaurantInfoPageComponent implements OnInit {
               this.snackBarService.openSnackBar(temp.Message)
               if (temp.Message === 'order successfully created') {
                 this.resetOrder();
+                this.router.navigate(["/app/main/appuser/orders"]);
               }
             })
           }

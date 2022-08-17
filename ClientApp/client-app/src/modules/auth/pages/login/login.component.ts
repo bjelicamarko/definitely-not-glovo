@@ -62,6 +62,9 @@ export class LoginComponent implements OnInit {
         }
       }
       
+    },
+    (error) => {
+      this.snackBarService.openSnackBar("Unsuccessful login!");
     });
   }
 }

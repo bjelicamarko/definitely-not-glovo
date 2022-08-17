@@ -80,7 +80,7 @@ func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
 func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
-	if utils.AuthorizeRole(r, "appuser") != nil {
+	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -104,7 +104,7 @@ func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
-	if utils.AuthorizeRole(r, "appuser") != nil {
+	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -128,7 +128,7 @@ func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 func DeleteRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
-	if utils.AuthorizeRole(r, "appuser") != nil {
+	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
 	}

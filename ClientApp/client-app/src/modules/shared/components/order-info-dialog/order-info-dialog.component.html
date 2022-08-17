@@ -67,7 +67,7 @@
 
     <div style="margin-top: 3%;" *ngIf="order.Reviewed">
         <h2>Review:</h2>
-        <div class="second py-2 px-2"> 
+        <div class="second py-2 px-2" *ngIf="!deleted"> 
             <span class="text1">Comment: {{review.Comment}}</span> <br>
             <span class="text1">Rating: {{review.Rating}}/10</span>
             <div class="d-flex justify-content-between py-1 pt-2">
@@ -79,6 +79,9 @@
                 </div>
             </div>
         </div>
+        <div class="second py-2 px-2" *ngIf="deleted">
+            <span class="text3" style="color: red; font-weight:bold">Review Deleted</span>
+        </div> 
     </div>
 
     <div style="margin-top: 3%;" *ngIf="!order.Reviewed && data.Role === 'APPUSER' && 
