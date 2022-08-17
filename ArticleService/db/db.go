@@ -10,7 +10,7 @@ import (
 
 var articles = []models.Article{
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 1
 		ArticleName:    "Punjeno bijelo meso",
 		ArticleType:    "FOOD",
 		Price:          400.0,
@@ -19,16 +19,16 @@ var articles = []models.Article{
 		Image:          "images/default.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 2
 		ArticleName:    "Coca-Cola 0.5",
 		ArticleType:    "DRINK",
 		Price:          200.0,
 		Description:    "Refreshing",
 		RestaurantName: "McDonalds",
-		Image:          "images/default.jpg",
+		Image:          "images/drinks.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 3
 		ArticleName:    "Big Mac",
 		ArticleType:    "FOOD",
 		Price:          500.0,
@@ -37,16 +37,16 @@ var articles = []models.Article{
 		Image:          "images/default.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 4
 		ArticleName:    "Water 0.5",
 		ArticleType:    "DRINK",
 		Price:          150.0,
 		Description:    "Refreshing",
 		RestaurantName: "KFC",
-		Image:          "images/default.jpg",
+		Image:          "images/drinks.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 5
 		ArticleName:    "Chicken Nuggets",
 		ArticleType:    "FOOD",
 		Price:          500.0,
@@ -55,16 +55,16 @@ var articles = []models.Article{
 		Image:          "images/default.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 6
 		ArticleName:    "Coca Cola Zero 0.5",
 		ArticleType:    "DRINK",
 		Price:          200.0,
 		Description:    "Refreshing",
 		RestaurantName: "KFC",
-		Image:          "images/default.jpg",
+		Image:          "images/drinks.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 7
 		ArticleName:    "Premium piletina sandwich",
 		ArticleType:    "FOOD",
 		Price:          450.0,
@@ -73,16 +73,16 @@ var articles = []models.Article{
 		Image:          "images/default.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 8
 		ArticleName:    "Sprite 0.5",
 		ArticleType:    "DRINK",
 		Price:          200.0,
 		Description:    "Refreshing",
 		RestaurantName: "FOODIC",
-		Image:          "images/default.jpg",
+		Image:          "images/drinks.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 9
 		ArticleName:    "Index sandwich",
 		ArticleType:    "FOOD",
 		Price:          350.0,
@@ -91,16 +91,16 @@ var articles = []models.Article{
 		Image:          "images/default.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 10
 		ArticleName:    "Orange Juice 0.3",
 		ArticleType:    "DRINK",
 		Price:          180.0,
 		Description:    "Refreshing",
 		RestaurantName: "FOODIC",
-		Image:          "images/default.jpg",
+		Image:          "images/drinks.jpg",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 11
 		ArticleName:    "Chips",
 		ArticleType:    "FOOD",
 		Price:          200.0,

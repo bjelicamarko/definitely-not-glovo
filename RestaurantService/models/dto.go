@@ -15,6 +15,7 @@ type RestaurantDTO struct {
 	Longitude      float32 `json:"Longitude"`
 	Latitude       float32 `json:"Latitude"`
 	Changed        bool    `json:"Changed"`
+	Delivery       float32 `gorm:"not null"`
 }
 
 type RestaurantDTOMessage struct {

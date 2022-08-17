@@ -29,7 +29,8 @@ export class RestaurantCardComponent implements OnInit {
     DisplayName: '',
     Longitude: 0,
     Latitude: 0,
-    Changed: false
+    Changed: false,
+    Delivery: 0
   }
 
   @Output() renderList: EventEmitter<any> = new EventEmitter();

@@ -149,6 +149,7 @@ func (repo *Repository) UpdateRestaurant(restaurantDTO *models.RestaurantDTO) (*
 	restaurant.DisplayName = restaurantDTO.DisplayName
 	restaurant.Longitude = restaurantDTO.Longitude
 	restaurant.Latitude = restaurantDTO.Latitude
+	restaurant.Delivery = restaurantDTO.Delivery
 
 	result2 := repo.db.Table("restaurants").Save(&restaurant)
 

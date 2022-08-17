@@ -49,7 +49,8 @@ export class RestaurantInfoPageComponent implements OnInit {
     DisplayName: '',
     Longitude: 0,
     Latitude: 0,
-    Changed: false
+    Changed: false,
+    Delivery: 0
   }
   
   newOrder: OrderDTO = {
@@ -111,6 +112,9 @@ export class RestaurantInfoPageComponent implements OnInit {
       var temp = response.body as RestaurantDTOMessage;
       this.restaurant = temp.RestaurantDTO;
       this.snackBarService.openSnackBar(temp.Message);
+
+      // dodati odmah dostavu na ukupnu cijenu
+      this.newOrder.TotalPrice = this.restaurant.Delivery;
 
       if (this.articlesPageComponent) {
         this.articlesPageComponent.setRestaurantName(this.restaurant.RestaurantName);
