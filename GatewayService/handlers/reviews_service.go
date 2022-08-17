@@ -69,6 +69,11 @@ func FindReviewByOrder(resWriter http.ResponseWriter, r *http.Request) {
 func CreateReview(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "appuser") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPost,
 		utils.ReviewsServiceRoot.Next().Host+ReviewsServiceApi+"/createReview", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -88,6 +93,11 @@ func CreateReview(resWriter http.ResponseWriter, r *http.Request) {
 func ReportReview(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "employee") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPut,
 		utils.ReviewsServiceRoot.Next().Host+ReviewsServiceApi+"/reportReview", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -106,6 +116,11 @@ func ReportReview(resWriter http.ResponseWriter, r *http.Request) {
 
 func DeleteReview(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	params := mux.Vars(r)
 	reviewId, _ := strconv.ParseUint(params["id"], 10, 32)

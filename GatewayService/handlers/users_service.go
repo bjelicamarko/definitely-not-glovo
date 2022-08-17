@@ -49,6 +49,11 @@ func Register(resWriter http.ResponseWriter, r *http.Request) {
 func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	page := r.URL.Query().Get("page")
 	size := r.URL.Query().Get("size")
 
@@ -65,6 +70,11 @@ func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 
 func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	searchField := r.URL.Query().Get("searchField")
 	userType := r.URL.Query().Get("userType")
@@ -101,6 +111,11 @@ func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
 
 func CreateUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	req, _ := http.NewRequest(http.MethodPost,
 		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/createUser", r.Body)
@@ -140,6 +155,11 @@ func UpdateUser(resWriter http.ResponseWriter, r *http.Request) {
 func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	params := mux.Vars(r)
 	userId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -163,6 +183,11 @@ func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
 func BanUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	params := mux.Vars(r)
 	userId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -185,6 +210,11 @@ func BanUser(resWriter http.ResponseWriter, r *http.Request) {
 
 func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	params := mux.Vars(r)
 	userId, _ := strconv.ParseUint(params["id"], 10, 32)

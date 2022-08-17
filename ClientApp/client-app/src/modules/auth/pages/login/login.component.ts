@@ -42,8 +42,7 @@ export class LoginComponent implements OnInit {
 
       if (result !== null) {
         this.snackBarService.openSnackBar("Successful login!");
-
-        const token = JSON.stringify(result);
+        const token = JSON.stringify(result.Token);
         localStorage.setItem("user", token);
 
         const jwt: JwtHelperService = new JwtHelperService();

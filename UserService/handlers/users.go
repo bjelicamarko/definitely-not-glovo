@@ -51,7 +51,6 @@ func (uh *UsersHandler) Login(resWriter http.ResponseWriter, req *http.Request) 
 func Authorize(r *http.Request) (*jwt.Token, error) {
 	cookie := r.Header.Values("Authorization")
 	tokenString := strings.Split(cookie[0], " ")[1]
-
 	claims := models.Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, &claims,
 		func(t *jwt.Token) (interface{}, error) {
