@@ -10,7 +10,7 @@ import (
 
 var users = []models.User{
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 1
 		Email:          "admin@gmail.com",
 		Password:       "admin",
 		FirstName:      "Adminko",
@@ -22,7 +22,7 @@ var users = []models.User{
 		RestaurantName: "",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 2
 		Email:          "pera@gmail.com",
 		Password:       "admin",
 		FirstName:      "Pera",
@@ -34,7 +34,7 @@ var users = []models.User{
 		RestaurantName: "",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 3
 		Email:          "zika@gmail.com",
 		Password:       "admin",
 		FirstName:      "Zika",
@@ -46,7 +46,7 @@ var users = []models.User{
 		RestaurantName: "McDonalds",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 4
 		Email:          "dunja@gmail.com",
 		Password:       "admin",
 		FirstName:      "Dunja",
@@ -58,7 +58,7 @@ var users = []models.User{
 		RestaurantName: "McDonalds",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 5
 		Email:          "visnja@gmail.com",
 		Password:       "admin",
 		FirstName:      "Visnja",
@@ -70,7 +70,7 @@ var users = []models.User{
 		RestaurantName: "McDonalds",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 6
 		Email:          "mrvica@gmail.com",
 		Password:       "admin",
 		FirstName:      "Mrva",
@@ -82,19 +82,19 @@ var users = []models.User{
 		RestaurantName: "KFC",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 7
 		Email:          "dzoni@gmail.com",
 		Password:       "admin",
 		FirstName:      "Dzoni",
 		LastName:       "Dzonic",
 		Contact:        "231321",
-		Role:           models.APPUSER,
+		Role:           models.DELIVERER,
 		Banned:         false,
 		Image:          "images/default.jpg",
-		RestaurantName: "",
+		RestaurantName: "KFC",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 8
 		Email:          "calvin@gmail.com",
 		Password:       "admin",
 		FirstName:      "Calvin",
@@ -106,19 +106,19 @@ var users = []models.User{
 		RestaurantName: "",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 9
 		Email:          "dule@gmail.com",
 		Password:       "admin",
 		FirstName:      "Dule",
 		LastName:       "Dule",
 		Contact:        "231321",
-		Role:           models.APPUSER,
+		Role:           models.EMPLOYEE,
 		Banned:         false,
 		Image:          "images/default.jpg",
-		RestaurantName: "",
+		RestaurantName: "FOODIC",
 	},
 	{
-		Model:          gorm.Model{},
+		Model:          gorm.Model{}, // 10
 		Email:          "branka@gmail.com",
 		Password:       "admin",
 		FirstName:      "Branka",
@@ -127,7 +127,7 @@ var users = []models.User{
 		Role:           models.DELIVERER,
 		Banned:         false,
 		Image:          "images/default.jpg",
-		RestaurantName: "McDonalds",
+		RestaurantName: "FOODIC",
 	},
 }
 

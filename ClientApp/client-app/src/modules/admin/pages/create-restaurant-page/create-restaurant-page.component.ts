@@ -41,7 +41,8 @@ export class CreateRestaurantPageComponent implements OnInit {
     ImagePath: 'assets/restaurant.png',
     Country: '',
     DisplayName: '',
-    Changed: false
+    Changed: false,
+    Delivery: 0
   }
   
   public selectedFile: File | undefined
@@ -141,7 +142,7 @@ export class CreateRestaurantPageComponent implements OnInit {
     if (this.restaurant.RestaurantName && this.restaurant.ContactPhone && 
       this.restaurant.City && this.restaurant.Street && this.restaurant.StreetNumber &&
       this.restaurant.Image && this.restaurant.Country && 
-      this.restaurant.ImagePath !== 'assets/restaurant.png') {
+      this.restaurant.ImagePath !== 'assets/restaurant.png' && this.restaurant.Delivery >= 0) {
         let reader = new FileReader();
         reader.readAsDataURL(this.selectedFile!);
         reader.onload = () => {
@@ -164,7 +165,7 @@ export class CreateRestaurantPageComponent implements OnInit {
     if (this.restaurant.RestaurantName && this.restaurant.ContactPhone && 
       this.restaurant.City && this.restaurant.Street && this.restaurant.StreetNumber &&
       this.restaurant.Image && this.restaurant.Country && 
-      this.restaurant.ImagePath !== 'assets/restaurant.png') {
+      this.restaurant.ImagePath !== 'assets/restaurant.png' && this.restaurant.Delivery >= 0) {
       
       if (this.restaurant.Changed) {
         let reader = new FileReader();

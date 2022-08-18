@@ -76,6 +76,11 @@ func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
 func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "appuser") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	params := mux.Vars(r)
 	orderId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -99,6 +104,11 @@ func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
 func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "appuser") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPost,
 		utils.OrdersServiceRoot.Next().Host+OrdersServiceApi+"/createOrder", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -117,6 +127,12 @@ func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
 
 func ChangeStatusOfOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if utils.AuthorizeRole(r, "appuser") != nil && utils.AuthorizeRole(r, "deliverer") != nil &&
+		utils.AuthorizeRole(r, "employee") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	req, _ := http.NewRequest(http.MethodPut,
 		utils.OrdersServiceRoot.Next().Host+OrdersServiceApi+"/changeStatusOfOrder", r.Body)

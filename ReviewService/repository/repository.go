@@ -176,7 +176,7 @@ func (repo *Repository) DeleteReview(id uint) (*models.ReviewDTO, error) {
 
 func (repo *Repository) AverageRatingOfRestaurant(id uint) float64 {
 	var f float64
-	repo.db.Table("reviews").Where("id_restaurant = ?", id).Select("AVG(rating)").Row().Scan(&f)
+	repo.db.Table("reviews").Where("id_restaurant = ? and deleted_at is null", id).Select("AVG(rating)").Row().Scan(&f)
 
 	return f
 }

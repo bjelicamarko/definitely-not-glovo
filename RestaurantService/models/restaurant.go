@@ -15,4 +15,5 @@ type Restaurant struct {
 	DisplayName    string  `gorm:"not null"`
 	Longitude      float32 `gorm:"not null"`
 	Latitude       float32 `gorm:"not null"`
+	Delivery       float32 `gorm:"not null"`
 }

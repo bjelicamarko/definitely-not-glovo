@@ -80,6 +80,11 @@ func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
 func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPost,
 		utils.RestaurantsServiceRoot.Next().Host+RestaurantsServiceApi+"/createRestaurant", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -99,6 +104,11 @@ func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPut,
 		utils.RestaurantsServiceRoot.Next().Host+RestaurantsServiceApi+"/updateRestaurant", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -117,6 +127,11 @@ func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 
 func DeleteRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if utils.AuthorizeRole(r, "admin") != nil {
+		resWriter.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	params := mux.Vars(r)
 	userId, _ := strconv.ParseUint(params["id"], 10, 32)

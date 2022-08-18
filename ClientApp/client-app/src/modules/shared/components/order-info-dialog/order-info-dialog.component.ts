@@ -82,6 +82,8 @@ export class OrderInfoDialogComponent implements OnInit {
   
   info: any = {}
 
+  deleted: boolean = false;
+
   constructor(public dialogRef: MatDialogRef<OrderInfoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IdRole,
     private ordersUtilsService: OrdersUtilsService,
@@ -112,6 +114,10 @@ export class OrderInfoDialogComponent implements OnInit {
           .subscribe((response) => {
             var temp = response.body as ReviewDTOMessage;
             this.review = temp.ReviewDTO;
+            console.log(this.review)
+          },
+          (error) => {
+            this.deleted = true;
           })
       }
     })

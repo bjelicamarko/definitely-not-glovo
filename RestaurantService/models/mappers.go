@@ -22,6 +22,7 @@ func (restaurant *Restaurant) ToRestaurantDTO() RestaurantDTO {
 		Longitude:      restaurant.Longitude,
 		Latitude:       restaurant.Latitude,
 		Changed:        false,
+		Delivery:       restaurant.Delivery,
 	}
 }
 
@@ -39,5 +40,6 @@ func (restaurantDTO *RestaurantDTO) ToRestaurant() Restaurant {
 		DisplayName:    restaurantDTO.DisplayName,
 		Longitude:      restaurantDTO.Longitude,
 		Latitude:       restaurantDTO.Latitude,
+		Delivery:       restaurantDTO.Delivery,
 	}
 }
