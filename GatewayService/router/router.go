@@ -2,6 +2,7 @@ package router
 
 import (
 	"GatewayService/handlers"
+	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -9,6 +10,13 @@ import (
 
 func MapRoutesAndServe() {
 	router := mux.NewRouter()
+
+	router.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+		response := map[string]string{
+			"message": "Welcome to Dockerized Gateway",
+		}
+		json.NewEncoder(rw).Encode(response)
+	})
 
 	router.HandleFunc("/api/users/login", handlers.Login).Methods(http.MethodPost)
 	router.HandleFunc("/api/users/register", handlers.Register).Methods(http.MethodPost)
