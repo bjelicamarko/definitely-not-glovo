@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { Report } from "../models/Report";
 
 @Injectable({
@@ -9,7 +10,9 @@ import { Report } from "../models/Report";
 export class ReportsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     getReports():  Observable<HttpResponse<Report>> {
         let queryParams = {};
@@ -19,6 +22,6 @@ export class ReportsService {
         observe: "response",
         }
 
-        return this.http.get<HttpResponse<Report>>("not-glovo/api/reports/getReports", queryParams);
+        return this.http.get<HttpResponse<Report>>(environment.url + "/api/reports/getReports", queryParams);
     }
 }

@@ -3,6 +3,7 @@ import { Token } from "@angular/compiler";
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { Login } from "src/modules/shared/models/Login";
 
 
@@ -12,10 +13,12 @@ import { Login } from "src/modules/shared/models/Login";
 export class AuthService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     login(auth: Login): Observable<Token> {
-        return this.http.post<Token>("not-glovo/api/users/login", auth, {
+        return this.http.post<Token>(environment.url + "/api/users/login", auth, {
           headers: this.headers,
           responseType: "json",
         });

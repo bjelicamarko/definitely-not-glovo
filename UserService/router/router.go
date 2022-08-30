@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func MapRoutesAndServe(handler *handlers.UsersHandler) {
@@ -36,5 +37,9 @@ func MapRoutesAndServe(handler *handlers.UsersHandler) {
 	router.HandleFunc("/api/users/banUser/{id:[0-9]+}", handler.BanUser).Methods("PATCH")
 	router.HandleFunc("/api/users/unbanUser/{id:[0-9]+}", handler.UnbanUser).Methods("PATCH")
 
-	http.ListenAndServe(":8081", router)
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+	})
+	handlers := c.Handler(router)
+	http.ListenAndServe(":8081", handlers)
 }

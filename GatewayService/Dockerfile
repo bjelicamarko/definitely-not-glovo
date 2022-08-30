@@ -6,4 +6,6 @@ COPY . .
 
 RUN go build -o ./GatewayService
 
+EXPOSE 8080
+
 CMD [ "./GatewayService" ] 

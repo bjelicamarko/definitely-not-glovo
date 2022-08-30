@@ -137,3 +137,9 @@ services:
     ports:
       - 8086:8086
     container_name: report-service
+
+  client-service:
+    container_name: client-service
+    build: ./ClientApp/client-app
+    ports:
+      - 4200:80

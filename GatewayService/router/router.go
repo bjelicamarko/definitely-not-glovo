@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func MapRoutesAndServe() {
@@ -63,5 +64,9 @@ func MapRoutesAndServe() {
 
 	router.HandleFunc("/api/reports/getReports", handlers.GetReports).Methods(http.MethodGet)
 
-	http.ListenAndServe(":8080", router)
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+	})
+	handler := c.Handler(router)
+	http.ListenAndServe(":8080", handler)
 }

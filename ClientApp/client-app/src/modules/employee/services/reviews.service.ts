@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { ReviewDTO } from "src/modules/shared/models/ReviewDTO";
 import { ReviewDTOMessage } from "src/modules/shared/models/ReviewDTOMessage";
 import { ReviewsPageable } from "src/modules/shared/models/ReviewsPageable";
@@ -11,7 +12,9 @@ import { ReviewsPageable } from "src/modules/shared/models/ReviewsPageable";
 export class ReviewsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     getReviewsOfRestaurant(idRestaurant: number, pageNum: number, pageSize: number)
     : Observable<HttpResponse<ReviewsPageable>> {
@@ -27,7 +30,7 @@ export class ReviewsService {
             page: pageNum
         }};
 
-        return this.http.get<HttpResponse<ReviewsPageable>>("not-glovo/api/reviews/getReviewsOfRestaurant", queryParams);
+        return this.http.get<HttpResponse<ReviewsPageable>>(environment.url + "/api/reviews/getReviewsOfRestaurant", queryParams);
     }
 
     reportReview(reviewDTO: ReviewDTO): Observable<HttpResponse<ReviewDTOMessage>> {
@@ -38,6 +41,6 @@ export class ReviewsService {
         observe: "response",
         };
 
-        return this.http.put<HttpResponse<ReviewDTOMessage>>("not-glovo/api/reviews/reportReview", reviewDTO, queryParams); 
+        return this.http.put<HttpResponse<ReviewDTOMessage>>(environment.url + "/api/reviews/reportReview", reviewDTO, queryParams); 
     }
 }
