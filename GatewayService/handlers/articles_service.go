@@ -11,6 +11,10 @@ import (
 func FindAllArticles(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	page := r.URL.Query().Get("page")
 	size := r.URL.Query().Get("size")
 
@@ -27,6 +31,10 @@ func FindAllArticles(resWriter http.ResponseWriter, r *http.Request) {
 
 func FindAllArticlesFromRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	restaurantName := r.URL.Query().Get("restaurantName")
 	page := r.URL.Query().Get("page")
@@ -45,6 +53,10 @@ func FindAllArticlesFromRestaurant(resWriter http.ResponseWriter, r *http.Reques
 
 func SearchArticles(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	restaurantName := r.URL.Query().Get("restaurantName")
 	searchField := r.URL.Query().Get("searchField")
@@ -71,6 +83,10 @@ func SearchArticles(resWriter http.ResponseWriter, r *http.Request) {
 func FindArticleById(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	params := mux.Vars(r)
 	restaurantId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -87,6 +103,10 @@ func FindArticleById(resWriter http.ResponseWriter, r *http.Request) {
 
 func CreateArticle(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -112,6 +132,10 @@ func CreateArticle(resWriter http.ResponseWriter, r *http.Request) {
 func UpdateArticle(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
@@ -135,6 +159,10 @@ func UpdateArticle(resWriter http.ResponseWriter, r *http.Request) {
 
 func DeleteArticle(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)

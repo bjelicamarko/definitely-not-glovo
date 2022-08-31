@@ -8,6 +8,10 @@ import (
 func GetReports(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return

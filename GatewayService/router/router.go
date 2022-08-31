@@ -64,9 +64,7 @@ func MapRoutesAndServe() {
 
 	router.HandleFunc("/api/reports/getReports", handlers.GetReports).Methods(http.MethodGet)
 
-	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-	})
-	handler := c.Handler(router)
+	handler := cors.AllowAll().Handler(router)
+
 	http.ListenAndServe(":8080", handler)
 }

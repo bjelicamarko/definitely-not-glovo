@@ -11,6 +11,10 @@ import (
 func GetReviewsOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	restaurantId := r.URL.Query().Get("restaurantId")
 	page := r.URL.Query().Get("page")
 	size := r.URL.Query().Get("size")
@@ -29,6 +33,10 @@ func GetReviewsOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 
 func SearchReviews(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	restaurantId := r.URL.Query().Get("restaurantId")
 	userId := r.URL.Query().Get("userId")
@@ -52,6 +60,10 @@ func SearchReviews(resWriter http.ResponseWriter, r *http.Request) {
 func FindReviewByOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	params := mux.Vars(r)
 	orderId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -68,6 +80,10 @@ func FindReviewByOrder(resWriter http.ResponseWriter, r *http.Request) {
 
 func CreateReview(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "appuser") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -93,6 +109,10 @@ func CreateReview(resWriter http.ResponseWriter, r *http.Request) {
 func ReportReview(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	if utils.AuthorizeRole(r, "employee") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
@@ -116,6 +136,10 @@ func ReportReview(resWriter http.ResponseWriter, r *http.Request) {
 
 func DeleteReview(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -144,6 +168,10 @@ func DeleteReview(resWriter http.ResponseWriter, r *http.Request) {
 
 func AverageRatingOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	params := mux.Vars(r)
 	restaurantId, _ := strconv.ParseUint(params["id"], 10, 32)

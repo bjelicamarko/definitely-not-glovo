@@ -11,6 +11,10 @@ import (
 func Login(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPost,
 		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/login", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -30,6 +34,10 @@ func Login(resWriter http.ResponseWriter, r *http.Request) {
 func Register(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPost,
 		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/register", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -48,6 +56,10 @@ func Register(resWriter http.ResponseWriter, r *http.Request) {
 
 func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -70,6 +82,10 @@ func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 
 func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -95,6 +111,10 @@ func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
 func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	params := mux.Vars(r)
 	userId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -111,6 +131,10 @@ func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
 
 func CreateUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -136,6 +160,10 @@ func CreateUser(resWriter http.ResponseWriter, r *http.Request) {
 func UpdateUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	req, _ := http.NewRequest(http.MethodPut,
 		utils.UsersServiceRoot.Next().Host+UsersServiceApi+"/updateUser", r.Body)
 	req.Header.Set("Accept", "application/json")
@@ -154,6 +182,10 @@ func UpdateUser(resWriter http.ResponseWriter, r *http.Request) {
 
 func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -183,6 +215,10 @@ func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
 func BanUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
@@ -210,6 +246,10 @@ func BanUser(resWriter http.ResponseWriter, r *http.Request) {
 
 func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)

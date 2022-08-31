@@ -11,6 +11,10 @@ import (
 func FindAllRestaurants(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	page := r.URL.Query().Get("page")
 	size := r.URL.Query().Get("size")
 
@@ -27,6 +31,10 @@ func FindAllRestaurants(resWriter http.ResponseWriter, r *http.Request) {
 
 func SearchRestaurants(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	searchField := r.URL.Query().Get("searchField")
 	page := r.URL.Query().Get("page")
@@ -46,6 +54,10 @@ func SearchRestaurants(resWriter http.ResponseWriter, r *http.Request) {
 func FindRestaurantById(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	params := mux.Vars(r)
 	restaurantId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -63,6 +75,10 @@ func FindRestaurantById(resWriter http.ResponseWriter, r *http.Request) {
 func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	params := mux.Vars(r)
 	restaurantName := params["name"]
 
@@ -79,6 +95,10 @@ func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
 
 func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -104,6 +124,10 @@ func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
@@ -127,6 +151,10 @@ func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 
 func DeleteRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "admin") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
