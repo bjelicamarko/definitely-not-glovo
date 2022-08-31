@@ -2,6 +2,7 @@ package router
 
 import (
 	"OrderService/handlers"
+	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -9,6 +10,13 @@ import (
 
 func MapRoutesAndServe(handler *handlers.OrdersHandler) {
 	router := mux.NewRouter()
+
+	router.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+		response := map[string]string{
+			"message": "Welcome to Dockerized Order Backend",
+		}
+		json.NewEncoder(rw).Encode(response)
+	})
 
 	router.HandleFunc("/api/orders/ordersForReport", handler.OrdersForReport).Methods("GET")
 	router.HandleFunc("/api/orders/searchOrders", handler.SearchOrders).Methods("GET")

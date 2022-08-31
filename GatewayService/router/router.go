@@ -2,13 +2,22 @@ package router
 
 import (
 	"GatewayService/handlers"
+	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func MapRoutesAndServe() {
 	router := mux.NewRouter()
+
+	router.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+		response := map[string]string{
+			"message": "Welcome to Dockerized Gateway",
+		}
+		json.NewEncoder(rw).Encode(response)
+	})
 
 	router.HandleFunc("/api/users/login", handlers.Login).Methods(http.MethodPost)
 	router.HandleFunc("/api/users/register", handlers.Register).Methods(http.MethodPost)
@@ -55,5 +64,7 @@ func MapRoutesAndServe() {
 
 	router.HandleFunc("/api/reports/getReports", handlers.GetReports).Methods(http.MethodGet)
 
-	http.ListenAndServe(":8080", router)
+	handler := cors.AllowAll().Handler(router)
+
+	http.ListenAndServe(":8080", handler)
 }

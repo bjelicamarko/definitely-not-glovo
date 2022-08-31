@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { OrderDTO } from "src/modules/shared/models/OrderDTO";
 import { OrderDTOMessage } from "src/modules/shared/models/OrderDTOMessage";
 
@@ -10,7 +11,9 @@ import { OrderDTOMessage } from "src/modules/shared/models/OrderDTOMessage";
 export class OrdersService{
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     createOrder(orderDTO: OrderDTO): Observable<HttpResponse<OrderDTOMessage>> {
         let queryParams = {};
@@ -20,7 +23,7 @@ export class OrdersService{
         observe: "response",
         }
 
-        return this.http.post<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/createOrder", orderDTO, queryParams);
+        return this.http.post<HttpResponse<OrderDTOMessage>>(environment.url + "/api/orders/createOrder", orderDTO, queryParams);
     }
 
     reviewOrder(orderId: number): Observable<HttpResponse<OrderDTOMessage>> {
@@ -31,6 +34,6 @@ export class OrdersService{
         observe: "response",
         }
 
-        return this.http.patch<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/reviewOrder/" + orderId, queryParams);
+        return this.http.patch<HttpResponse<OrderDTOMessage>>(environment.url + "/api/orders/reviewOrder/" + orderId, queryParams);
     }
 }

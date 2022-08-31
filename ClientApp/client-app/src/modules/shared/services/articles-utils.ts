@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { ArticleDTOMessage } from "../models/ArticleDTOMessage";
 import { ArticlesPageable } from "../models/ArticlesPageable";
 
@@ -10,7 +11,9 @@ import { ArticlesPageable } from "../models/ArticlesPageable";
 export class ArticlesUtilsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     findAllArticles(page: number, size: number): Observable<HttpResponse<ArticlesPageable>> {
         let queryParams = {};
@@ -23,7 +26,7 @@ export class ArticlesUtilsService {
             .append("size", String(size))
         };
 
-        return this.http.get<HttpResponse<ArticlesPageable>>("not-glovo/api/articles/findAllArticles", queryParams);
+        return this.http.get<HttpResponse<ArticlesPageable>>(environment.url + "/api/articles/findAllArticles", queryParams);
     }
 
     findAllArticlesFromRestaurant(restaurantName: string, page: number, size: number): 
@@ -39,7 +42,7 @@ export class ArticlesUtilsService {
             .append("size", String(size))
         };
 
-        return this.http.get<HttpResponse<ArticlesPageable>>("not-glovo/api/articles/findAllArticlesFromRestaurant", queryParams);
+        return this.http.get<HttpResponse<ArticlesPageable>>(environment.url + "/api/articles/findAllArticlesFromRestaurant", queryParams);
     }
 
     searchArticles(restaurantName: string, searchField: string, articleType: string, 
@@ -72,7 +75,7 @@ export class ArticlesUtilsService {
                 size: size,
         }};
 
-        return this.http.get<HttpResponse<ArticlesPageable>>("not-glovo/api/articles/searchArticles", queryParams);
+        return this.http.get<HttpResponse<ArticlesPageable>>(environment.url + "/api/articles/searchArticles", queryParams);
     }
 
     findArticleById(id: number): Observable<HttpResponse<ArticleDTOMessage>> {
@@ -83,6 +86,6 @@ export class ArticlesUtilsService {
         observe: "response",
         }
 
-        return this.http.get<HttpResponse<ArticleDTOMessage>>("not-glovo/api/articles/findArticleById/" + id, queryParams);
+        return this.http.get<HttpResponse<ArticleDTOMessage>>(environment.url + "/api/articles/findArticleById/" + id, queryParams);
     }
 }

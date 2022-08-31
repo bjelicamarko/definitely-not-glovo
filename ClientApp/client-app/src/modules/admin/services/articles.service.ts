@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { ArticleDTO } from "src/modules/shared/models/ArticleDTO";
 import { ArticleDTOMessage } from "src/modules/shared/models/ArticleDTOMessage";
 
@@ -9,8 +10,10 @@ import { ArticleDTOMessage } from "src/modules/shared/models/ArticleDTOMessage";
 })
 export class ArticlesService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
-    
-    constructor(private http: HttpClient) {}
+       
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     createArticle(articleDTO: ArticleDTO): Observable<HttpResponse<ArticleDTOMessage>> {
         let queryParams = {};
@@ -20,7 +23,7 @@ export class ArticlesService {
         observe: "response",
         }
 
-        return this.http.post<HttpResponse<ArticleDTOMessage>>("not-glovo/api/articles/createArticle", articleDTO, queryParams);
+        return this.http.post<HttpResponse<ArticleDTOMessage>>(environment.url + "/api/articles/createArticle", articleDTO, queryParams);
     } 
 
     updateArticle(articleDTO: ArticleDTO): Observable<HttpResponse<ArticleDTOMessage>> {
@@ -31,7 +34,7 @@ export class ArticlesService {
         observe: "response",
         }
 
-        return this.http.put<HttpResponse<ArticleDTOMessage>>("not-glovo/api/articles/updateArticle", articleDTO, queryParams);
+        return this.http.put<HttpResponse<ArticleDTOMessage>>(environment.url + "/api/articles/updateArticle", articleDTO, queryParams);
     } 
 
     deleteArticle(id: number): Observable<HttpResponse<ArticleDTOMessage>> {
@@ -42,6 +45,6 @@ export class ArticlesService {
         observe: "response",
         }
 
-        return this.http.delete<HttpResponse<ArticleDTOMessage>>("not-glovo/api/articles/deleteArticle/" + id, queryParams);
+        return this.http.delete<HttpResponse<ArticleDTOMessage>>(environment.url + "/api/articles/deleteArticle/" + id, queryParams);
     } 
 }

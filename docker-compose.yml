@@ -1,0 +1,145 @@
+version: "3.8"
+
+services:
+  gateway-service:
+    build: ./GatewayService
+    container_name: gateway-service
+    ports:
+      - 8080:8080
+
+  user-service:
+    build: ./UserService
+    ports:
+      - 8081:8081
+    depends_on:
+      - users-db
+    container_name: user-service
+    environment:
+      pgHost: users-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: usersDB
+
+  users-db:
+    image: postgres:14.5-alpine
+    restart: always
+    container_name: users-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: usersDB
+    ports:
+      - 5434:5432
+
+  restaurant-service:
+    build: ./RestaurantService
+    ports: 
+      - 8082:8082
+    depends_on:
+      - restaurants-db
+    container_name: restaurant-service
+    environment:
+      pgHost: restaurants-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: restaurantsDB
+
+  restaurants-db:
+    image: postgres:14.5-alpine
+    restart: always
+    container_name: restaurants-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: restaurantsDB
+    ports:
+      - 5435:5432
+
+  article-service:
+    build: ./ArticleService
+    ports:
+      - 8083:8083
+    depends_on:
+      - articles-db
+    container_name: article-service
+    environment:
+      pgHost: articles-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: articlesDB
+
+  articles-db:
+    image: postgres:14.5-alpine
+    restart: always
+    container_name: articles-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: articlesDB
+    ports:
+      - 5436:5432
+
+  order-service:
+    build: ./OrderService
+    ports:
+      - 8084:8084
+    depends_on:
+      - orders-db
+    container_name: order-service
+    environment:
+      pgHost: orders-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: ordersDB  
+
+  orders-db:
+    image: postgres:14.5-alpine
+    restart: always
+    container_name: orders-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ordersDB
+    ports:
+      - 5433:5432
+
+  review-service:
+    build: ./ReviewService
+    ports:
+      - 8085:8085
+    depends_on:
+      - review-db
+    container_name: review-service
+    environment:
+      pgHost: review-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: reviewsDB    
+
+  review-db:
+    image: postgres:14.5-alpine
+    restart: always
+    container_name: review-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: reviewsDB
+    ports:
+      - 5432:5432
+
+  report-service:
+    build: ./ReportService
+    ports:
+      - 8086:8086
+    container_name: report-service
+
+  client-service:
+    container_name: client-service
+    build: ./ClientApp/client-app
+    ports:
+      - 4200:80

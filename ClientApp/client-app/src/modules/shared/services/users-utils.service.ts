@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { UserDTO } from "../models/UserDTO";
 import { UserDTOMessage } from "../models/UserDTOMessage";
 
@@ -10,7 +11,9 @@ import { UserDTOMessage } from "../models/UserDTOMessage";
 export class UsersUtilsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     findUserById(id: number): Observable<HttpResponse<UserDTOMessage>> {
         let queryParams = {};
@@ -20,7 +23,7 @@ export class UsersUtilsService {
         observe: "response",
         }
 
-        return this.http.get<HttpResponse<UserDTOMessage>>("not-glovo/api/users/findUserById/" + id, queryParams);
+        return this.http.get<HttpResponse<UserDTOMessage>>(environment.url + "/api/users/findUserById/" + id, queryParams);
     }
 
     updateUser(userDTO: UserDTO): Observable<HttpResponse<UserDTOMessage>> {
@@ -31,6 +34,6 @@ export class UsersUtilsService {
         observe: "response",
         };
 
-        return this.http.put<HttpResponse<UserDTOMessage>>("not-glovo/api/users/updateUser", userDTO, queryParams); 
+        return this.http.put<HttpResponse<UserDTOMessage>>(environment.url + "/api/users/updateUser", userDTO, queryParams); 
     }
 }

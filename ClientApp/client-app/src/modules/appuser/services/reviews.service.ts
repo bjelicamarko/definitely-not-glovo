@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { ReviewDTO } from "src/modules/shared/models/ReviewDTO";
 import { ReviewDTOMessage } from "src/modules/shared/models/ReviewDTOMessage";
 
@@ -10,7 +11,9 @@ import { ReviewDTOMessage } from "src/modules/shared/models/ReviewDTOMessage";
 export class ReviewsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     createReview(reviewDTO: ReviewDTO): Observable<HttpResponse<ReviewDTOMessage>> {
         let queryParams = {};
@@ -20,7 +23,7 @@ export class ReviewsService {
         observe: "response",
         }
 
-        return this.http.post<HttpResponse<ReviewDTOMessage>>("not-glovo/api/reviews/createReview", reviewDTO, queryParams);
+        return this.http.post<HttpResponse<ReviewDTOMessage>>(environment.url + "/api/reviews/createReview", reviewDTO, queryParams);
     }
 
 }

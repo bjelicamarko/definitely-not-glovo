@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { OrderDTOMessage } from "../models/OrderDTOMessage";
 import { OrdersPageable } from "../models/OrdersPageable"
 import { OrderStatusDTO } from "../models/OrderStatusDTO";
@@ -11,7 +12,9 @@ import { OrderStatusDTO } from "../models/OrderStatusDTO";
 export class OrdersUtilsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     searchOrders(role: string, userId: number, restaurantId: number, 
         orderStatus: string, priceFrom: number, priceTo: number,
@@ -43,7 +46,7 @@ export class OrdersUtilsService {
         };
 
         return this.http.get<HttpResponse<OrdersPageable>>
-        ("not-glovo/api/orders/searchOrders", queryParams);
+        (environment.url + "/api/orders/searchOrders", queryParams);
     }
 
     findOrderById(id: number): Observable<HttpResponse<OrderDTOMessage>> {
@@ -55,7 +58,7 @@ export class OrdersUtilsService {
         }
 
         return this.http.get<HttpResponse<OrderDTOMessage>>
-        ("not-glovo/api/orders/findOrderById/" + id, queryParams);
+        (environment.url + "/api/orders/findOrderById/" + id, queryParams);
     }
 
     changeStatusOfOrder(orderStatusDTO: OrderStatusDTO): Observable<HttpResponse<OrderDTOMessage>> {
@@ -67,7 +70,7 @@ export class OrdersUtilsService {
         }
 
         return this.http.put<HttpResponse<OrderDTOMessage>>
-        ("not-glovo/api/orders/changeStatusOfOrder", orderStatusDTO,  queryParams);
+        (environment.url + "/api/orders/changeStatusOfOrder", orderStatusDTO,  queryParams);
     }
 
     reviewOrder(orderId: number): Observable<HttpResponse<OrderDTOMessage>> {
@@ -78,6 +81,6 @@ export class OrdersUtilsService {
         observe: "response",
         }
 
-        return this.http.patch<HttpResponse<OrderDTOMessage>>("not-glovo/api/orders/reviewOrder/" + orderId, null, queryParams);
+        return this.http.patch<HttpResponse<OrderDTOMessage>>(environment.url + "/api/orders/reviewOrder/" + orderId, null, queryParams);
     }
 }

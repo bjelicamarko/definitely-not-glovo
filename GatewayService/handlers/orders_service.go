@@ -11,6 +11,10 @@ import (
 func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	role := r.URL.Query().Get("role")
 	userId := r.URL.Query().Get("userId")
 	restaurantId := r.URL.Query().Get("restaurantId")
@@ -37,6 +41,10 @@ func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 func SearchOrdersByRestaurantAndStatus(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	restaurantId := r.URL.Query().Get("restaurantId")
 	orderStatus := r.URL.Query().Get("orderStatus")
 	page := r.URL.Query().Get("page")
@@ -59,6 +67,10 @@ func SearchOrdersByRestaurantAndStatus(resWriter http.ResponseWriter, r *http.Re
 func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	params := mux.Vars(r)
 	orderId, _ := strconv.ParseUint(params["id"], 10, 32)
 
@@ -75,6 +87,10 @@ func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
 
 func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "appuser") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
@@ -104,6 +120,10 @@ func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
 func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
 
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	if utils.AuthorizeRole(r, "appuser") != nil {
 		resWriter.WriteHeader(http.StatusUnauthorized)
 		return
@@ -127,6 +147,10 @@ func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
 
 func ChangeStatusOfOrder(resWriter http.ResponseWriter, r *http.Request) {
 	utils.SetupResponse(&resWriter, r)
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	if utils.AuthorizeRole(r, "appuser") != nil && utils.AuthorizeRole(r, "deliverer") != nil &&
 		utils.AuthorizeRole(r, "employee") != nil {

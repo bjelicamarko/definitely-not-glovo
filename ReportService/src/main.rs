@@ -55,8 +55,13 @@ struct Report {
 
 fn api_call() -> Result<Vec<OrderForReportDTO>, Box<dyn std::error::Error>> {
     let orders: Vec<OrderForReportDTO> =
-        reqwest::get("http://localhost:8084/api/orders/ordersForReport")?.json()?;
+        reqwest::get("http://order-service:8084/api/orders/ordersForReport")?.json()?;
     return Ok(orders);
+}
+
+#[get("/greetings")]
+fn greetings() ->  &'static str {
+    "Greetings!"
 }
 
 #[get("/getReports")] //Result<Json<Vec<OrderForReportDTO>>
@@ -97,6 +102,6 @@ fn get_reports() -> Result<Json<Report>, Error> {
 
 fn main() {
     rocket::ignite()
-        .mount("/api/reports", routes![get_reports])
+        .mount("/api/reports", routes![get_reports, greetings])
         .launch();
 }

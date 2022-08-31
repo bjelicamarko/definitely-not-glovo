@@ -8,12 +8,12 @@ import (
 	roundrobin "github.com/hlts2/round-robin"
 )
 
-var UsersServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8081"})
-var RestaurantsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8082"})
-var ArticlesServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8083"})
-var OrdersServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8084"})
-var ReviewsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8085"})
-var ReportsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://localhost:8086"})
+var UsersServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://user-service:8081"})
+var RestaurantsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://restaurant-service:8082"})
+var ArticlesServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://article-service:8083"})
+var OrdersServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://order-service:8084"})
+var ReviewsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://review-service:8085"})
+var ReportsServiceRoot, _ = roundrobin.New(&url.URL{Host: "http://report-service:8086"})
 
 func DelegateResponse(response *http.Response, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", response.Header.Get("Content-Type"))

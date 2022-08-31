@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { RestaurantDTOMessage } from "../models/RestaurantDTOMessage";
 import { RestaurantsPageable } from "../models/RestaurantsPageable";
 
@@ -10,7 +11,9 @@ import { RestaurantsPageable } from "../models/RestaurantsPageable";
 export class RestaurantsUtilsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     findAllRestaurants(page: number, size: number): Observable<HttpResponse<RestaurantsPageable>> {
         let queryParams = {};
@@ -23,7 +26,7 @@ export class RestaurantsUtilsService {
             .append("size", String(size))
         };
 
-        return this.http.get<HttpResponse<RestaurantsPageable>>("not-glovo/api/restaurants/findAllRestaurants", queryParams);
+        return this.http.get<HttpResponse<RestaurantsPageable>>(environment.url + "/api/restaurants/findAllRestaurants", queryParams);
     }
 
     searchRestaurants(searchFieldVal: string, pageNum: number, pageSize: number): Observable<HttpResponse<RestaurantsPageable>> {
@@ -40,7 +43,7 @@ export class RestaurantsUtilsService {
                 page: pageNum
         }};
 
-        return this.http.get<HttpResponse<RestaurantsPageable>>("not-glovo/api/restaurants/searchRestaurants", queryParams);
+        return this.http.get<HttpResponse<RestaurantsPageable>>(environment.url + "/api/restaurants/searchRestaurants", queryParams);
     }
 
     findRestaurantById(id: number): Observable<HttpResponse<RestaurantDTOMessage>> {
@@ -51,7 +54,7 @@ export class RestaurantsUtilsService {
         observe: "response",
         }
 
-        return this.http.get<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/findRestaurantById/" + id, queryParams);
+        return this.http.get<HttpResponse<RestaurantDTOMessage>>(environment.url + "/api/restaurants/findRestaurantById/" + id, queryParams);
     }
 
     findRestaurantByName(name: string): Observable<HttpResponse<RestaurantDTOMessage>> {
@@ -62,6 +65,6 @@ export class RestaurantsUtilsService {
         observe: "response",
         }
 
-        return this.http.get<HttpResponse<RestaurantDTOMessage>>("not-glovo/api/restaurants/findRestaurantByName/" + name, queryParams);
+        return this.http.get<HttpResponse<RestaurantDTOMessage>>(environment.url + "/api/restaurants/findRestaurantByName/" + name, queryParams);
     }
 }

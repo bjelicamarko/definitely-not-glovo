@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { ReviewDTOMessage } from "src/modules/shared/models/ReviewDTOMessage";
 import { ReviewsPageable } from "src/modules/shared/models/ReviewsPageable";
 
@@ -10,7 +11,9 @@ import { ReviewsPageable } from "src/modules/shared/models/ReviewsPageable";
 export class ReviewsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     searchReviews(restaurantId: number, userId: number, inappropriate: string, 
         pageNum: number, pageSize: number)  : Observable<HttpResponse<ReviewsPageable>> {
@@ -27,7 +30,7 @@ export class ReviewsService {
             page: pageNum
         }};
 
-        return this.http.get<HttpResponse<ReviewsPageable>>("not-glovo/api/reviews/searchReviews", queryParams);
+        return this.http.get<HttpResponse<ReviewsPageable>>(environment.url + "/api/reviews/searchReviews", queryParams);
     }
 
     deleteReview(id: number): Observable<HttpResponse<ReviewDTOMessage>> {
@@ -38,6 +41,6 @@ export class ReviewsService {
             observe: "response",
         }
 
-        return this.http.delete<HttpResponse<ReviewDTOMessage>>("not-glovo/api/reviews/deleteReview/" + id, queryParams);
+        return this.http.delete<HttpResponse<ReviewDTOMessage>>(environment.url + "/api/reviews/deleteReview/" + id, queryParams);
     }
 }

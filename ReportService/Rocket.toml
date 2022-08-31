@@ -1,2 +1,5 @@
 [development]
 port = 8086
+
+[production]
+port = 8086

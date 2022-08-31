@@ -3,6 +3,8 @@ package db
 import (
 	"RestaurantService/models"
 	"fmt"
+	"log"
+	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -57,7 +59,21 @@ var restaurants = []models.Restaurant{
 }
 
 func Init() *gorm.DB {
-	dsn := "host=localhost user=postgres password=admin dbname=restaurantsDB port=5432 sslmode=disable"
+	host := os.Getenv("pgHost")
+	port := os.Getenv("pgPort")
+	user := os.Getenv("pgUser")
+	password := os.Getenv("pgPassword")
+	dbname := os.Getenv("pgDbName")
+
+	log.Println("host = ", host)
+	log.Println("port = ", port)
+	log.Println("user = ", user)
+	log.Println("password = ", password)
+	log.Println("dbname = ", dbname)
+
+	log.Printf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", user, password, host, port, dbname)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {

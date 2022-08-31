@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.prod";
 import { OrderDTOMessage } from "../models/OrderDTOMessage";
 import { ReviewDTO } from "../models/ReviewDTO";
 import { ReviewDTOMessage } from "../models/ReviewDTOMessage";
@@ -12,7 +13,9 @@ import { ReviewsPageable } from "../models/ReviewsPageable";
 export class ReviewsUtilsService {
     private headers = new HttpHeaders({ "Content-Type": "application/json" });
     
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.headers.set('Access-Control-Allow-Origin', '*');
+    }
 
     findReviewByOrder(id: number): Observable<HttpResponse<ReviewDTOMessage>> {
         let queryParams = {};
@@ -22,7 +25,7 @@ export class ReviewsUtilsService {
             observe: "response",
         }
 
-        return this.http.get<HttpResponse<ReviewDTOMessage>>("not-glovo/api/reviews/findReviewByOrder/" + id, queryParams);
+        return this.http.get<HttpResponse<ReviewDTOMessage>>(environment.url + "/api/reviews/findReviewByOrder/" + id, queryParams);
     }
 
     getReviewsOfRestaurant(idRestaurant: number, pageNum: number, pageSize: number)
@@ -39,7 +42,7 @@ export class ReviewsUtilsService {
             page: pageNum
         }};
 
-        return this.http.get<HttpResponse<ReviewsPageable>>("not-glovo/api/reviews/getReviewsOfRestaurant", queryParams);
+        return this.http.get<HttpResponse<ReviewsPageable>>(environment.url + "/api/reviews/getReviewsOfRestaurant", queryParams);
     }
 
     averageRatingOfRestaurant(idRestaurant: number) : Observable<HttpResponse<number>>{
@@ -50,7 +53,7 @@ export class ReviewsUtilsService {
         observe: "response",
         }
 
-        return this.http.get<HttpResponse<number>>("not-glovo/api/reviews/averageRatingOfRestaurant/" + idRestaurant, queryParams);
+        return this.http.get<HttpResponse<number>>(environment.url + "/api/reviews/averageRatingOfRestaurant/" + idRestaurant, queryParams);
     }
 
     createReview(reviewDTO: ReviewDTO): Observable<HttpResponse<ReviewDTOMessage>> {
@@ -61,7 +64,7 @@ export class ReviewsUtilsService {
         observe: "response",
         }
 
-        return this.http.post<HttpResponse<ReviewDTOMessage>>("not-glovo/api/reviews/createReview", reviewDTO, queryParams);
+        return this.http.post<HttpResponse<ReviewDTOMessage>>(environment.url + "/api/reviews/createReview", reviewDTO, queryParams);
     }
 
 }
