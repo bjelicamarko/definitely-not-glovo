@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   gateway-service:
@@ -6,20 +6,6 @@ services:
     container_name: gateway-service
     ports:
       - 8080:8080
-
-  user-service:
-    build: ./UserService
-    ports:
-      - 8081:8081
-    depends_on:
-      - users-db
-    container_name: user-service
-    environment:
-      pgHost: users-db
-      pgPort: 5432
-      pgUser: postgres
-      pgPassword: postgres
-      pgDbName: usersDB
 
   users-db:
     image: postgres:14.5-alpine
@@ -31,20 +17,11 @@ services:
       POSTGRES_DB: usersDB
     ports:
       - 5434:5432
-
-  restaurant-service:
-    build: ./RestaurantService
-    ports: 
-      - 8082:8082
-    depends_on:
-      - restaurants-db
-    container_name: restaurant-service
-    environment:
-      pgHost: restaurants-db
-      pgPort: 5432
-      pgUser: postgres
-      pgPassword: postgres
-      pgDbName: restaurantsDB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U users-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   restaurants-db:
     image: postgres:14.5-alpine
@@ -56,20 +33,11 @@ services:
       POSTGRES_DB: restaurantsDB
     ports:
       - 5435:5432
-
-  article-service:
-    build: ./ArticleService
-    ports:
-      - 8083:8083
-    depends_on:
-      - articles-db
-    container_name: article-service
-    environment:
-      pgHost: articles-db
-      pgPort: 5432
-      pgUser: postgres
-      pgPassword: postgres
-      pgDbName: articlesDB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U restaurants-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   articles-db:
     image: postgres:14.5-alpine
@@ -81,20 +49,11 @@ services:
       POSTGRES_DB: articlesDB
     ports:
       - 5436:5432
-
-  order-service:
-    build: ./OrderService
-    ports:
-      - 8084:8084
-    depends_on:
-      - orders-db
-    container_name: order-service
-    environment:
-      pgHost: orders-db
-      pgPort: 5432
-      pgUser: postgres
-      pgPassword: postgres
-      pgDbName: ordersDB  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U articles-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   orders-db:
     image: postgres:14.5-alpine
@@ -106,20 +65,11 @@ services:
       POSTGRES_DB: ordersDB
     ports:
       - 5433:5432
-
-  review-service:
-    build: ./ReviewService
-    ports:
-      - 8085:8085
-    depends_on:
-      - review-db
-    container_name: review-service
-    environment:
-      pgHost: review-db
-      pgPort: 5432
-      pgUser: postgres
-      pgPassword: postgres
-      pgDbName: reviewsDB    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orders-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   review-db:
     image: postgres:14.5-alpine
@@ -131,6 +81,86 @@ services:
       POSTGRES_DB: reviewsDB
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U review-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build: ./UserService
+    ports:
+      - 8081:8081
+    depends_on:
+      users-db:
+        condition: service_healthy
+    container_name: user-service
+    environment:
+      pgHost: users-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: usersDB
+
+  restaurant-service:
+    build: ./RestaurantService
+    ports: 
+      - 8082:8082
+    depends_on:
+      restaurants-db:
+        condition: service_healthy
+    container_name: restaurant-service
+    environment:
+      pgHost: restaurants-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: restaurantsDB
+
+  article-service:
+    build: ./ArticleService
+    ports:
+      - 8083:8083
+    depends_on:
+      articles-db:
+        condition: service_healthy
+    container_name: article-service
+    environment:
+      pgHost: articles-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: articlesDB
+
+  order-service:
+    build: ./OrderService
+    ports:
+      - 8084:8084
+    depends_on:
+      orders-db:
+        condition: service_healthy
+    container_name: order-service
+    environment:
+      pgHost: orders-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: ordersDB  
+
+  review-service:
+    build: ./ReviewService
+    ports:
+      - 8085:8085
+    depends_on:
+      review-db:
+        condition: service_healthy
+    container_name: review-service
+    environment:
+      pgHost: review-db
+      pgPort: 5432
+      pgUser: postgres
+      pgPassword: postgres
+      pgDbName: reviewsDB    
 
   report-service:
     build: ./ReportService
