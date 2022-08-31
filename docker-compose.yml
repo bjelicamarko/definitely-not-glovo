@@ -168,6 +168,17 @@ services:
       - 8086:8086
     container_name: report-service
 
+  pgadmin-service:
+   container_name: pgadmin-service
+   image: dpage/pgadmin4
+   restart: always
+   environment:
+     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+     PGADMIN_DEFAULT_PASSWORD: admin
+     PGADMIN_LISTEN_PORT: 80
+   ports:
+     - "8087:80"
+  
   client-service:
     container_name: client-service
     build: ./ClientApp/client-app
