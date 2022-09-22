@@ -9,7 +9,7 @@ import (
 )
 
 func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -39,7 +39,7 @@ func SearchOrders(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func SearchOrdersByRestaurantAndStatus(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -65,7 +65,7 @@ func SearchOrdersByRestaurantAndStatus(resWriter http.ResponseWriter, r *http.Re
 }
 
 func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -86,7 +86,7 @@ func FindOrderById(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -118,7 +118,7 @@ func ReviewOrder(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -146,7 +146,7 @@ func CreateOrder(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func ChangeStatusOfOrder(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return

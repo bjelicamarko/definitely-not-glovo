@@ -6,7 +6,7 @@ import (
 )
 
 func GetReports(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return

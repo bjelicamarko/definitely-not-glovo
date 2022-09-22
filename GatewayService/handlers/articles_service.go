@@ -9,7 +9,7 @@ import (
 )
 
 func FindAllArticles(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -30,7 +30,7 @@ func FindAllArticles(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindAllArticlesFromRestaurant(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -52,7 +52,7 @@ func FindAllArticlesFromRestaurant(resWriter http.ResponseWriter, r *http.Reques
 }
 
 func SearchArticles(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -81,7 +81,7 @@ func SearchArticles(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindArticleById(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -102,7 +102,7 @@ func FindArticleById(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func CreateArticle(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -130,7 +130,7 @@ func CreateArticle(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateArticle(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -158,7 +158,7 @@ func UpdateArticle(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteArticle(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return

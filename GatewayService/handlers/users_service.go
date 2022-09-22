@@ -9,7 +9,7 @@ import (
 )
 
 func Login(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -32,7 +32,7 @@ func Login(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func Register(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -55,7 +55,7 @@ func Register(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -81,7 +81,7 @@ func FindAllUsers(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -109,7 +109,7 @@ func SeachUsers(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -130,7 +130,7 @@ func FindUserById(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func CreateUser(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -158,7 +158,7 @@ func CreateUser(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -181,7 +181,7 @@ func UpdateUser(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -213,7 +213,7 @@ func DeleteUser(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func BanUser(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -245,7 +245,7 @@ func BanUser(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func UnbanUser(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return

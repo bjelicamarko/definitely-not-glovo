@@ -9,7 +9,7 @@ import (
 )
 
 func GetReviewsOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -32,7 +32,7 @@ func GetReviewsOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func SearchReviews(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -58,7 +58,7 @@ func SearchReviews(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindReviewByOrder(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -79,7 +79,7 @@ func FindReviewByOrder(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func CreateReview(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -107,7 +107,7 @@ func CreateReview(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func ReportReview(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -135,7 +135,7 @@ func ReportReview(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteReview(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -167,7 +167,7 @@ func DeleteReview(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func AverageRatingOfRestaurant(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return

@@ -9,7 +9,7 @@ import (
 )
 
 func FindAllRestaurants(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -30,7 +30,7 @@ func FindAllRestaurants(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func SearchRestaurants(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -52,7 +52,7 @@ func SearchRestaurants(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindRestaurantById(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -73,7 +73,7 @@ func FindRestaurantById(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -94,7 +94,7 @@ func FindRestaurantByName(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -122,7 +122,7 @@ func CreateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
@@ -150,7 +150,7 @@ func UpdateRestaurant(resWriter http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteRestaurant(resWriter http.ResponseWriter, r *http.Request) {
-	utils.SetupResponse(&resWriter, r)
+	utils.SetupResponse(&resWriter)
 
 	if r.Method == "OPTIONS" {
 		return
