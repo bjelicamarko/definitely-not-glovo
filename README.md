@@ -1,5 +1,5 @@
 # Nije Glovo
-## Projekat iz predmeta Napredne tehnike programiranja
+## Projekat iz predmeta Napredne tehnike programiranjaa
 **Nije Glovo je web aplikacija za naručivanje hrane i pića zasnovana na mikroservisnoj arhitekturi.**
 
 ## Funkcionalnosti
